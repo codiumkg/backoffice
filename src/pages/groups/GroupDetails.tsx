@@ -2,13 +2,17 @@ import Button from "@/components/shared/Button/Button";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
+import { QUERY_KEYS } from "@/constants/queryKeys";
+import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
 import { IGroupCreate } from "@/interfaces/group";
 import { useGroupMutation } from "@/queries/groups";
 import { useSubjectsQuery } from "@/queries/subjects";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
 export const groupValidationSchema = Yup.object({
@@ -36,6 +40,9 @@ function GroupDetails() {
 
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   const {
     data: subjects,
     isFetching,
@@ -46,6 +53,13 @@ function GroupDetails() {
 
   const { mutate: createGroup, isPending } = useGroupMutation({
     onSuccess: () => {
+      queryClient.invalidateQueries({
+        refetchType: "all",
+        queryKey: [QUERY_KEYS.GROUPS],
+      });
+
+      navigate(ROUTES.GROUPS);
+
       showSuccessNotification();
     },
     onError: () => {

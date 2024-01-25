@@ -6,7 +6,7 @@ function SectionsPage() {
   const { data: sections } = useSectionsQuery();
 
   return (
-    <ResourceList title="">
+    <ResourceList title="Разделы">
       <Table
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Предмет" }]}
       >
