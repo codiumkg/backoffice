@@ -1,0 +1,25 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.card {
+  background: var(--secondary-color);
+  width: clamp(280px, 50vw, 420px);
+  padding: 20px;
+  border-radius: var(--primary-radius);
+  border: 1px solid var(--highlight-color);
+}
+
+.heading {
+  margin-bottom: 48px;
+  text-align: center;
+}
+
+.highlight {
+  color: var(--accent-color);
+  font-weight: bold;
+}

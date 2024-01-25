@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  min-height: 46px;
+  margin-bottom: 16px;
+
+  label {
+    font-size: 12px;
+    font-weight: 300;
+  }
+
+  input {
+    font-size: 14px;
+    font-weight: 500;
+    outline: none;
+    background: var(--primary-color);
+    padding: 16px;
+    border: none;
+    border-radius: var(--secondary-radius);
+    height: 100%;
+    width: 100%;
+    margin: 6px 0;
+    color: var(--text-color);
+  }
+}
+
+.error {
+  margin-left: 12px;
+  margin-bottom: 16px;
+}

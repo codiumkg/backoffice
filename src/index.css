@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800&display=swap');
+
+:root {
+  --accent-color: #FFC38D;
+  --accent-color-dark: #b29175;
+  --accent-secondary-color: #a0f538;
+  --text-color: #f0dbd3;
+  --text-color-dark: #1a1817;
+  --primary-color: #1a1817;
+  --secondary-color: #23211f;
+  --highlight-color: #403f3d;
+  --danger-color: #ef673d;
+
+  --primary-radius: 16px;
+  --secondary-radius: 12px;
+  --extra-radius: 32px;
+}
+
+* { 
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  background: var(--primary-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+  font-family: Inter, sans-serif;
+}
+
+a {
+  text-decoration: none;
+  color: var(--text-color);
+}
+
+main {
+  width: 100%;
+  min-height: 100vh;
+}
+
+section {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.center {
+  justify-content: center;
+  align-items: center;
+}
+
+.font-bold {
+  font-weight: bold;
+}

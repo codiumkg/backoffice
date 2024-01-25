@@ -1,0 +1,33 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.container {
+  top: -24px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 300px;
+  max-width: 342px;
+  background: var(--primary-color);
+  box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.2);
+  border-radius: var(--secondary-radius);
+  z-index: 10;
+}
+
+.item {
+  width: 100%;
+  padding: 12px;
+  cursor: pointer;
+}
+
+.loading-wrapper {
+  padding: 16px;
+}

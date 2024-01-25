@@ -1,0 +1,3 @@
+interface IError {
+  error: Error;
+}

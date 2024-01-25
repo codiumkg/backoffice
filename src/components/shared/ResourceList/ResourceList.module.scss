@@ -1,0 +1,28 @@
+.wrapper {
+  width: 100%;
+  min-height: 100%;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  width: 100%;
+  height: 56px;
+  padding: 16px;
+  background: var(--secondary-color);
+  border-radius: var(--secondary-radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.icon {
+  font-size: 32px;
+  margin-right: 8px;
+}
+
+.content {
+  width: 100%;
+  min-height: 100%;
+}

@@ -1,0 +1,39 @@
+.wrapper {
+  width: 100%;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.header {
+  width: 100%;
+  height: 46px;
+  padding: 16px;
+  border-radius: var(--primary-radius);
+  align-items: center;
+  background: var(--secondary-color);
+}
+
+.column {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row {
+  width: 100%;
+  padding: 16px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    background: var(--highlight-color);
+    transition: background 0.4s ease-out;
+  }
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}

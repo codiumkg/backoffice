@@ -1,0 +1,24 @@
+.wrapper {
+  width: 100%;
+  height: 100vh;
+  overflow-y: scroll;
+  padding: 24px;
+}
+
+.header {
+  width: 100%;
+  height: 56px;
+  padding: 16px;
+  background: var(--secondary-color);
+  border-radius: var(--secondary-radius);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.content {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--secondary-color);
+  border-radius: var(--primary-radius);
+}
