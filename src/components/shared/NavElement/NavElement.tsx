@@ -2,6 +2,7 @@ import Typography from "../Typography/Typography";
 import { CiCirclePlus } from "react-icons/ci";
 import cn from "classnames";
 import styles from "./NavElement.module.scss";
+import { Link, useLocation } from "react-router-dom";
 
 interface Props {
   title: string;
@@ -9,19 +10,19 @@ interface Props {
 }
 
 export default function NavElement({ title, href }: Props) {
-  const pathname = window.location.pathname;
+  const location = useLocation();
 
   return (
-    <a href={`/office${href}`}>
+    <Link to={`/office${href}`}>
       <div
         className={cn(
           styles.container,
-          pathname === `/office${href}` ? styles.active : ""
+          location.pathname === `/office${href}` ? styles.active : ""
         )}
       >
         <Typography>{title}</Typography>
         <CiCirclePlus className={styles.addIcon} />
       </div>
-    </a>
+    </Link>
   );
 }

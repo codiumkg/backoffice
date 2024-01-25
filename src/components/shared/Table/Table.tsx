@@ -1,9 +1,8 @@
-import { ITableHeader, ITableRow } from "@/interfaces/table";
+import { ITableHeader } from "@/interfaces/table";
 import { ReactNode } from "react";
 import cn from "classnames";
 
 import styles from "./Table.module.scss";
-import Button from "../Button/Button";
 
 interface Props {
   headers: ITableHeader[];

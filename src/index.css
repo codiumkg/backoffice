@@ -25,7 +25,7 @@ html, body {
   margin: 0;
   background: var(--primary-color);
   color: var(--text-color);
-  overflow-x: hidden;
+  overflow-x: scroll;
   font-family: Inter, sans-serif;
 }
 
