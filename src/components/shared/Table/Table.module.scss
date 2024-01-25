@@ -15,6 +15,8 @@
 
 .column {
   display: flex;
+  align-items: center;
+  padding: 8px;
   flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -23,7 +25,7 @@
 .row {
   width: 100%;
   padding: 16px;
-  height: 52px;
+  height: 64px;
   display: flex;
   align-items: center;
 

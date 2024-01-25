@@ -5,4 +5,5 @@ export interface IResource {
   title: string;
   href: string;
   roles?: Role[];
+  detailsHref?: string;
 }

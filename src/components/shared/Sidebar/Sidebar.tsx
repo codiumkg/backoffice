@@ -4,9 +4,12 @@ import Typography from "../Typography/Typography";
 import styles from "./Sidebar.module.scss";
 import { useUserData } from "@/queries/userdata";
 import { Role } from "@/interfaces/auth";
+import { useNavigate } from "react-router-dom";
 
 export default function Sidebar() {
   const { data: userData } = useUserData();
+
+  const navigate = useNavigate();
 
   const role = userData?.role;
 
@@ -25,6 +28,10 @@ export default function Sidebar() {
                   key={resource.id}
                   title={resource.title}
                   href={resource.href}
+                  onCreateClick={() =>
+                    resource.detailsHref &&
+                    navigate(`office${resource.detailsHref}`)
+                  }
                 />
               )
           )}

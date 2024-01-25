@@ -13,6 +13,7 @@ export const RESOURCES: IResource[] = [
     title: "Группы",
     href: "/groups",
     roles: [Role.MANAGER],
+    detailsHref: "/group",
   },
   {
     id: "subjects",

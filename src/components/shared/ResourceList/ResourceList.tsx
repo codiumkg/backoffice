@@ -29,14 +29,16 @@ export default function ResourceList({
           <Typography>{title}</Typography>
         </div>
 
-        <div className={styles.buttons}>
-          <Button
-            text="Добавить"
-            height="36px"
-            icon={<CiCirclePlus />}
-            onClick={onCreateClick}
-          />
-        </div>
+        {onCreateClick && (
+          <div className={styles.buttons}>
+            <Button
+              text="Добавить"
+              height="36px"
+              icon={<CiCirclePlus />}
+              onClick={onCreateClick}
+            />
+          </div>
+        )}
       </div>
 
       <div className={styles.content}>{children}</div>

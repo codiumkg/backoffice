@@ -3,14 +3,22 @@ import { CiCirclePlus } from "react-icons/ci";
 import cn from "classnames";
 import styles from "./NavElement.module.scss";
 import { Link, useLocation } from "react-router-dom";
+import React from "react";
 
 interface Props {
   title: string;
   href: string;
+  onCreateClick?: () => void;
 }
 
-export default function NavElement({ title, href }: Props) {
+export default function NavElement({ title, href, onCreateClick }: Props) {
   const location = useLocation();
+
+  const handleCreateClick = (e: React.MouseEvent<SVGElement, MouseEvent>) => {
+    e.stopPropagation();
+
+    onCreateClick?.();
+  };
 
   return (
     <Link to={`/office${href}`}>
@@ -21,7 +29,12 @@ export default function NavElement({ title, href }: Props) {
         )}
       >
         <Typography>{title}</Typography>
-        <CiCirclePlus className={styles.addIcon} />
+        {onCreateClick && (
+          <CiCirclePlus
+            className={styles.addIcon}
+            onClick={handleCreateClick}
+          />
+        )}
       </div>
     </Link>
   );
