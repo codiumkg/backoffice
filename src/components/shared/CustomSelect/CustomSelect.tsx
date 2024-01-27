@@ -1,10 +1,7 @@
 import Typography from "../Typography/Typography";
-import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import React, { useState } from "react";
 
 import styles from "./CustomSelect.module.scss";
 import CustomInput from "../CustomInput/CustomInput";
-import Dropdown from "../Dropdown/Dropdown";
 
 interface Props {
   name: string;
