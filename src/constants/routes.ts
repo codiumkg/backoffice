@@ -6,8 +6,11 @@ export const ROUTES = {
   GROUPS: "/office/groups",
   GROUP: "/office/group",
   SUBJECTS: "/office/subjects",
+  SUBJECT: "/office/subject",
   SECTIONS: "/office/sections",
+  SECTION: "/office/section",
   LECTURES: "/office/lectures",
+  LECTURE: "/office/lecture",
   TASKS: "/office/tasks",
   TASK_RESULTS: "/office/task-results",
 };

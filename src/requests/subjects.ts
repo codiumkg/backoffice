@@ -1,6 +1,6 @@
 import axios from "axios";
 import { API_SUBJECTS } from "../constants/apiConstants";
-import { ISubject } from "../interfaces/subject";
+import { ISubject, ISubjectCreate } from "../interfaces/subject";
 
 export function getSubjects(search?: string): Promise<ISubject[]> {
   return axios
@@ -12,6 +12,6 @@ export function getSubjects(search?: string): Promise<ISubject[]> {
     .then(({ data }) => data);
 }
 
-export function createSubject(data: ISubject): Promise<ISubject> {
+export function createSubject(data: ISubjectCreate): Promise<ISubject> {
   return axios.post(API_SUBJECTS, data);
 }

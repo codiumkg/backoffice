@@ -6,6 +6,7 @@ import LecturesPage from "@/pages/lectures/LecturesPage";
 import Login from "@/pages/login/Login";
 import RegRequestsPage from "@/pages/req-requests/RegRequestsPage";
 import SectionsPage from "@/pages/sections/SectionsPage";
+import SubjectDetails from "@/pages/subjects/SubjectDetails";
 import SubjectsPage from "@/pages/subjects/SubjectsPage";
 import TopicsPage from "@/pages/topics/TopicsPage";
 import {
@@ -27,6 +28,7 @@ const router = createBrowserRouter(
         <Route path="topics" element={<TopicsPage />} />
         <Route path="lectures" element={<LecturesPage />} />
         <Route path="subjects" element={<SubjectsPage />} />
+        <Route path="subject" element={<SubjectDetails />} />
         <Route path="reg-requests" element={<RegRequestsPage />} />
       </Route>
     </Route>

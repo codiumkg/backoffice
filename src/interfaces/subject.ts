@@ -5,3 +5,8 @@ export interface ISubject {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ISubjectCreate {
+  title: string;
+  image?: string;
+}

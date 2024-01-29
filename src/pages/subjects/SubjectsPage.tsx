@@ -1,14 +1,21 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
 import { DATE_FORMAT } from "@/constants/common";
+import { ROUTES } from "@/constants/routes";
 import { useSubjectsQuery } from "@/queries/subjects";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 function SubjectsPage() {
   const { data: subjects } = useSubjectsQuery({});
 
+  const navigate = useNavigate();
+
   return (
-    <ResourceList title="Предметы">
+    <ResourceList
+      title="Предметы"
+      onCreateClick={() => navigate(ROUTES.SUBJECT)}
+    >
       <Table
         headers={[
           { title: "ID" },

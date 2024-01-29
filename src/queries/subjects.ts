@@ -1,7 +1,7 @@
 import { QUERY_KEYS } from "../constants/queryKeys";
 import { ISubject } from "../interfaces/subject";
-import { getSubjects } from "../requests/subjects";
-import { useQuery } from "@tanstack/react-query";
+import { createSubject, getSubjects } from "../requests/subjects";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface QueryParams {
   params?: any;
@@ -24,5 +24,24 @@ export const useSubjectsQuery = ({ params, enabled }: QueryParams) => {
     isSuccess,
     isError,
     refetch,
+  };
+};
+
+interface MutationQuery {
+  onSuccess?: (data: ISubject) => void;
+  onError?: () => void;
+}
+
+export const useSubjectMutation = ({ onSuccess, onError }: MutationQuery) => {
+  const { data, mutate, isPending } = useMutation({
+    mutationFn: createSubject,
+    onSuccess,
+    onError,
+  });
+
+  return {
+    data,
+    isPending,
+    mutate,
   };
 };
