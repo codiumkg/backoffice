@@ -5,6 +5,7 @@ import Underline from "@tiptap/extension-underline";
 import CodeBlock from "@tiptap/extension-code-block-lowlight";
 import YouTube from "@tiptap/extension-youtube";
 import Image from "@tiptap/extension-image";
+import Heading from "@tiptap/extension-heading";
 import { createLowlight } from "lowlight";
 import { FC, forwardRef, useEffect, useState } from "react";
 
@@ -52,6 +53,7 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
         },
         allowBase64: true,
       }),
+      Heading,
     ],
     content: value,
     editable,

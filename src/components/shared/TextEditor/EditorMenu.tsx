@@ -21,6 +21,8 @@ function EditorMenu({ editor, onYoutubeClick, onImageClick }: Props) {
       onImageClick();
     }
 
+    console.log(option);
+
     option.onClick(editor);
   };
 

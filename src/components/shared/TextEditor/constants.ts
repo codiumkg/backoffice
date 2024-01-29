@@ -8,6 +8,7 @@ import {
   FaUnderline,
   FaStrikethrough,
   FaImage,
+  FaHeading,
 } from "react-icons/fa";
 import { GoListOrdered, GoListUnordered } from "react-icons/go";
 import { IconType } from "react-icons/lib";
@@ -20,6 +21,13 @@ export interface ToolbarOption {
 }
 
 export const TOOLBAR_OPTIONS: ToolbarOption[] = [
+  {
+    name: "heading",
+    icon: FaHeading,
+    getIsActive: (editor) => editor?.isActive("heading") ?? false,
+    onClick: (editor) =>
+      editor?.chain().focus().toggleHeading({ level: 1 }).run(),
+  },
   {
     name: "bold",
     icon: FaBold,

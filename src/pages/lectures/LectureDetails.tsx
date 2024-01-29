@@ -88,7 +88,7 @@ function LectureDetails() {
   const lectureForm = useForm<ILectureCreate>({
     defaultValues: initialValues,
     resolver: yupResolver<ILectureCreate>(lectureValidationSchema),
-    mode: "onBlur",
+    // mode: "onBlur",
   });
 
   const isValid = Object.values(lectureForm.formState.errors).length === 0;
