@@ -5,14 +5,19 @@ import { TOOLBAR_OPTIONS, ToolbarOption } from "./constants";
 
 interface Props {
   editor: Editor | null;
+  onYoutubeClick?: () => void;
 }
 
-function EditorMenu({ editor }: Props) {
+function EditorMenu({ editor, onYoutubeClick }: Props) {
   if (!editor) {
     return null;
   }
 
   const handleClick = (option: ToolbarOption) => {
+    if (option.name === "youtube") {
+      onYoutubeClick?.();
+    }
+
     option.onClick(editor);
   };
 
@@ -27,7 +32,7 @@ function EditorMenu({ editor }: Props) {
           key={option.name}
           onClick={() => handleClick(option)}
         >
-          {option.icon}
+          {<option.icon />}
         </div>
       ))}
     </div>
