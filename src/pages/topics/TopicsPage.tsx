@@ -1,12 +1,16 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
+import { ROUTES } from "@/constants/routes";
 import { useTopicsQuery } from "@/queries/topics";
+import { useNavigate } from "react-router-dom";
 
 function TopicsPage() {
   const { data: topics } = useTopicsQuery();
 
+  const navigate = useNavigate();
+
   return (
-    <ResourceList title="Топики">
+    <ResourceList title="Топики" onCreateClick={() => navigate(ROUTES.TOPIC)}>
       <Table
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Раздел" }]}
       >

@@ -5,7 +5,7 @@ import { useSectionsQuery } from "@/queries/sections";
 import { useNavigate } from "react-router-dom";
 
 function SectionsPage() {
-  const { data: sections } = useSectionsQuery();
+  const { data: sections } = useSectionsQuery({});
 
   const navigate = useNavigate();
 

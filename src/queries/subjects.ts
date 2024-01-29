@@ -12,7 +12,7 @@ export const useSubjectsQuery = ({ params, enabled }: QueryParams) => {
   const { data, isFetching, isSuccess, isError, refetch } = useQuery<
     ISubject[]
   >({
-    queryKey: [QUERY_KEYS.SUBJECTS, params?.title],
+    queryKey: [QUERY_KEYS.SUBJECTS, params?.search],
     queryFn: () => getSubjects(params?.search || ""),
     refetchOnWindowFocus: false,
     enabled,

@@ -11,6 +11,8 @@ export const ROUTES = {
   SECTION: "/office/section",
   LECTURES: "/office/lectures",
   LECTURE: "/office/lecture",
+  TOPICS: "/office/topics",
+  TOPIC: "/office/topic",
   TASKS: "/office/tasks",
   TASK_RESULTS: "/office/task-results",
 };
