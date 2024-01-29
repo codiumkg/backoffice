@@ -76,3 +76,9 @@ section {
   height: 0;
   pointer-events: none;
 }
+
+.rich-text-image {
+  max-width: 100%;
+  max-height: 420px;
+  object-fit: scale-down;
+}

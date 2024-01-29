@@ -7,6 +7,7 @@ import {
   FaYoutube,
   FaUnderline,
   FaStrikethrough,
+  FaImage,
 } from "react-icons/fa";
 import { GoListOrdered, GoListUnordered } from "react-icons/go";
 import { IconType } from "react-icons/lib";
@@ -61,6 +62,14 @@ export const TOOLBAR_OPTIONS: ToolbarOption[] = [
     icon: FaCode,
     getIsActive: (editor) => editor?.isActive("codeBlock") ?? false,
     onClick: (editor) => editor?.chain().focus().toggleCodeBlock().run(),
+  },
+  {
+    name: "image",
+    icon: FaImage,
+    getIsActive: (editor) => editor?.isActive("image") ?? false,
+    onClick: (editor) => {
+      if (!editor) return;
+    },
   },
   {
     name: "youtube",

@@ -4,6 +4,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Underline from "@tiptap/extension-underline";
 import CodeBlock from "@tiptap/extension-code-block-lowlight";
 import YouTube from "@tiptap/extension-youtube";
+import Image from "@tiptap/extension-image";
 import { createLowlight } from "lowlight";
 import { FC, forwardRef, useEffect, useState } from "react";
 
@@ -29,9 +30,11 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
   { value, label, onChange, editable = true, placeholder = "" },
   ref
 ) {
+  const [showImageModal, setShowImageModal] = useState(false);
   const [showYoutubeModal, setShowYoutubeModal] = useState(false);
 
   const [youtubeLink, setYoutubeLink] = useState("");
+  const [imageLink, setImageLink] = useState("");
 
   const editor = useEditor({
     extensions: [
@@ -43,6 +46,12 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
         allowFullscreen: true,
         interfaceLanguage: "ru",
       }),
+      Image.configure({
+        HTMLAttributes: {
+          class: "rich-text-image",
+        },
+        allowBase64: true,
+      }),
     ],
     content: value,
     editable,
@@ -51,10 +60,19 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
     },
   });
 
+  const handleImageClick = () => {
+    editor?.commands.setImage({ src: imageLink });
+
+    setImageLink("");
+    setShowImageModal(false);
+  };
+
   const handleYoutubeClick = () => {
     editor?.commands.setYoutubeVideo({
       src: youtubeLink,
     });
+
+    setYoutubeLink("");
 
     setShowYoutubeModal(false);
   };
@@ -72,6 +90,7 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
         <EditorMenu
           editor={editor}
           onYoutubeClick={() => setShowYoutubeModal(true)}
+          onImageClick={() => setShowImageModal(true)}
         />
         <EditorContent editor={editor} ref={ref} />
       </div>
@@ -85,7 +104,22 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
       >
         <CustomInput
           name="video"
+          autoFocus
           onChangeCallback={(value) => setYoutubeLink(value)}
+        />
+      </Modal>
+
+      <Modal
+        title="Картинка"
+        subtitle="Вставьте ссылку на картинку"
+        show={showImageModal}
+        onPrimaryClick={handleImageClick}
+        onClose={() => setShowImageModal(false)}
+      >
+        <CustomInput
+          name="image"
+          autoFocus
+          onChangeCallback={(value) => setImageLink(value)}
         />
       </Modal>
     </>

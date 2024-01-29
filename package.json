@@ -13,6 +13,7 @@
     "@hookform/resolvers": "^3.3.4",
     "@tanstack/react-query": "^5.17.19",
     "@tiptap/extension-code-block-lowlight": "^2.2.0",
+    "@tiptap/extension-image": "^2.2.0",
     "@tiptap/extension-placeholder": "^2.2.0",
     "@tiptap/extension-underline": "^2.2.0",
     "@tiptap/extension-youtube": "^2.2.0",

@@ -5,17 +5,20 @@ import { TOOLBAR_OPTIONS, ToolbarOption } from "./constants";
 
 interface Props {
   editor: Editor | null;
-  onYoutubeClick?: () => void;
+  onYoutubeClick: () => void;
+  onImageClick: () => void;
 }
 
-function EditorMenu({ editor, onYoutubeClick }: Props) {
+function EditorMenu({ editor, onYoutubeClick, onImageClick }: Props) {
   if (!editor) {
     return null;
   }
 
   const handleClick = (option: ToolbarOption) => {
     if (option.name === "youtube") {
-      onYoutubeClick?.();
+      onYoutubeClick();
+    } else if (option.name === "image") {
+      onImageClick();
     }
 
     option.onClick(editor);
