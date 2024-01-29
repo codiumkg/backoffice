@@ -1,6 +1,6 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { IGroup } from "../interfaces/auth";
-import { createGroup, getGroups } from "../requests/groups";
+import { createGroup, getGroups, removeGroup } from "../requests/groups";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface MutationQuery {
@@ -33,5 +33,20 @@ export const useGroupsQuery = () => {
   return {
     data,
     isLoading,
+  };
+};
+
+export const useGroupDeletion = (
+  id: number,
+  { onSuccess, onError }: MutationQuery
+) => {
+  const { isPending } = useMutation({
+    mutationFn: () => removeGroup(id),
+    onError,
+    onSuccess,
+  });
+
+  return {
+    isPending,
   };
 };

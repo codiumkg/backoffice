@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_REG_REQUESTS } from "../constants/apiConstants";
 
-export function getRegRequests(id?: number) {
+export async function getRegRequests(id?: number) {
   const paramId = id || "";
 
   if (paramId) {
@@ -9,4 +9,8 @@ export function getRegRequests(id?: number) {
   }
 
   return axios.get(API_REG_REQUESTS).then(({ data }) => data);
+}
+
+export async function removeRegRequest(id: number) {
+  return axios.delete(`${API_REG_REQUESTS}${id}`).then(({ data }) => data);
 }

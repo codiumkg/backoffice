@@ -1,6 +1,10 @@
 import { QUERY_KEYS } from "../constants/queryKeys";
 import { ISubject } from "../interfaces/subject";
-import { createSubject, getSubjects } from "../requests/subjects";
+import {
+  createSubject,
+  getSubjects,
+  removeSubject,
+} from "../requests/subjects";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface QueryParams {
@@ -43,5 +47,20 @@ export const useSubjectMutation = ({ onSuccess, onError }: MutationQuery) => {
     data,
     isPending,
     mutate,
+  };
+};
+
+export const useSubjectDeletion = (
+  id: number,
+  { onSuccess, onError }: MutationQuery
+) => {
+  const { isPending } = useMutation({
+    mutationFn: () => removeSubject(id),
+    onSuccess,
+    onError,
+  });
+
+  return {
+    isPending,
   };
 };

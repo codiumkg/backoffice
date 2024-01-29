@@ -13,3 +13,7 @@ export async function getLectures(id?: number): Promise<ILecture[]> {
 export async function createLecture(data: ILectureCreate) {
   return axios.post(API_LECTURES, data).then(({ data }) => data);
 }
+
+export async function removeLecture(id: number) {
+  return axios.delete(`${API_LECTURES}${id}`).then(({ data }) => data);
+}

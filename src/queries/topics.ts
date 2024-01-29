@@ -1,6 +1,6 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ITopic } from "@/interfaces/topic";
-import { createTopic, getTopics } from "@/requests/topics";
+import { createTopic, getTopics, removeTopic } from "@/requests/topics";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface QueryParams {
@@ -39,5 +39,20 @@ export const useTopicMutation = ({ onError, onSuccess }: MutationQuery) => {
     data,
     isPending,
     mutate,
+  };
+};
+
+export const useTopicDeletion = (
+  id: number,
+  { onError, onSuccess }: MutationQuery
+) => {
+  const { isPending } = useMutation({
+    mutationFn: () => removeTopic(id),
+    onError,
+    onSuccess,
+  });
+
+  return {
+    isPending,
   };
 };
