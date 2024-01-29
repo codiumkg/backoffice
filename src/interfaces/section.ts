@@ -8,3 +8,8 @@ export interface ISection {
   subjectId: number;
   subject: ISubject;
 }
+
+export interface ISectionCreate {
+  title: string;
+  subjectId: number;
+}

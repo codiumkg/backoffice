@@ -1,6 +1,7 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { getTopics } from "@/requests/topics";
-import { useQuery } from "@tanstack/react-query";
+import { ITopic } from "@/interfaces/topic";
+import { createTopic, getTopics } from "@/requests/topics";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useTopicsQuery = () => {
   const { data, isLoading } = useQuery({
@@ -12,5 +13,24 @@ export const useTopicsQuery = () => {
   return {
     data,
     isLoading,
+  };
+};
+
+interface MutationQuery {
+  onSuccess?: (data: ITopic) => void;
+  onError?: () => void;
+}
+
+export const useTopicMutation = ({ onError, onSuccess }: MutationQuery) => {
+  const { data, mutate, isPending } = useMutation({
+    mutationFn: createTopic,
+    onSuccess,
+    onError,
+  });
+
+  return {
+    data,
+    isPending,
+    mutate,
   };
 };

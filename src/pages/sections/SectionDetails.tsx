@@ -6,43 +6,30 @@ import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
 import { IOption } from "@/interfaces/common";
-import { IGroupCreate } from "@/interfaces/group";
-import { useGroupMutation } from "@/queries/groups";
+import { ISectionCreate } from "@/interfaces/section";
+import { useSectionMutation } from "@/queries/sections";
 import { useSubjectsQuery } from "@/queries/subjects";
-import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
 
-export const groupValidationSchema = Yup.object({
-  title: Yup.string()
-    .min(3, "Название должно быть не менее 3 символов")
-    .max(32, "Название должно быть не более 32 символов")
-    .required("Это поле обязательное"),
-  subjectId: Yup.number().nullable().required(),
-});
-
-const initialValues = {
-  title: "",
-  subjectId: 0,
-};
-
-interface GroupForm {
+interface SectionForm {
   title: string;
   subjectId: number;
 }
 
-function GroupDetails() {
-  // const { id } = useParams();
+const initialValues: SectionForm = {
+  title: "",
+  subjectId: -1,
+};
+
+function SectionDetails() {
+  const queryClient = useQueryClient();
+
+  const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
-
-  const { showSuccessNotification, showErrorNotification } = useNotification();
-
-  const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   const {
     data: subjects,
@@ -50,22 +37,6 @@ function GroupDetails() {
     refetch,
   } = useSubjectsQuery({
     params: { search },
-  });
-
-  const { mutate: createGroup, isPending } = useGroupMutation({
-    onSuccess: () => {
-      queryClient.invalidateQueries({
-        refetchType: "all",
-        queryKey: [QUERY_KEYS.GROUPS],
-      });
-
-      navigate(ROUTES.GROUPS);
-
-      showSuccessNotification();
-    },
-    onError: () => {
-      showErrorNotification();
-    },
   });
 
   const [activeValue, setActiveValue] = useState<IOption>({
@@ -82,16 +53,33 @@ function GroupDetails() {
     [subjects]
   );
 
-  const groupForm = useForm<GroupForm>({
+  const { mutate: createSection, isPending } = useSectionMutation({
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        refetchType: "all",
+        queryKey: [QUERY_KEYS.SECTIONS],
+      });
+
+      navigate(ROUTES.SECTIONS);
+
+      showSuccessNotification();
+    },
+    onError: () => {
+      showErrorNotification();
+    },
+  });
+
+  const { showErrorNotification, showSuccessNotification } = useNotification();
+
+  const sectionForm = useForm<SectionForm>({
     defaultValues: initialValues,
-    resolver: yupResolver<GroupForm>(groupValidationSchema),
     mode: "onBlur",
   });
 
-  const isValid = Object.values(groupForm.formState.errors).length === 0;
+  const isValid = Object.values(sectionForm.formState.errors).length === 0;
 
-  const onSubmit: SubmitHandler<GroupForm> = (data: IGroupCreate) => {
-    createGroup(data);
+  const onSubmit: SubmitHandler<SectionForm> = (data: ISectionCreate) => {
+    createSection(data);
   };
 
   useEffect(() => {
@@ -101,27 +89,26 @@ function GroupDetails() {
     });
 
     if (subjects) {
-      groupForm.setValue("subjectId", subjects[0].id);
+      sectionForm.setValue("subjectId", subjects[0].id);
     }
-  }, [subjects, groupForm]);
+  }, [subjects, sectionForm]);
 
   return (
-    <Resource title="Группа">
-      <form onSubmit={groupForm.handleSubmit(onSubmit)}>
+    <Resource title="Раздел">
+      <form onSubmit={sectionForm.handleSubmit(onSubmit)}>
         <CustomInput
           name="title"
           label="Название"
-          placeholder="Введите название..."
-          onChangeCallback={(value) => {
-            groupForm.setValue("title", value);
-          }}
+          placeholder="Введите название"
+          onChangeCallback={(value) => sectionForm.setValue("title", value)}
         />
+
         <RelationInput
           name="subject"
           options={subjectOptions}
           activeValue={activeValue}
           setActiveValue={(value) => {
-            groupForm.setValue("subjectId", +value.value);
+            sectionForm.setValue("subjectId", +value.value);
             setActiveValue(value);
           }}
           label="Предмет"
@@ -144,4 +131,4 @@ function GroupDetails() {
   );
 }
 
-export default GroupDetails;
+export default SectionDetails;

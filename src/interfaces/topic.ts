@@ -8,3 +8,8 @@ export interface ITopic {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ITopicCreate {
+  title: string;
+  sectionId: number;
+}
