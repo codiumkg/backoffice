@@ -2,6 +2,7 @@ import Button from "@/components/shared/Button/Button";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
+import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
@@ -12,7 +13,7 @@ import { useTopicsQuery } from "@/queries/topics";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
@@ -125,6 +126,18 @@ function LectureDetails() {
           type="number"
           errorMessage={lectureForm.formState.errors.number?.message}
           onChangeCallback={(value) => lectureForm.setValue("number", +value)}
+        />
+
+        <Controller
+          name="content"
+          control={lectureForm.control}
+          render={({ field }) => (
+            <TextEditor
+              label="Содержимое"
+              {...field}
+              placeholder="Введите содержимое лекции..."
+            />
+          )}
         />
 
         <RelationInput

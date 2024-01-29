@@ -62,3 +62,17 @@ section {
 .font-bold {
   font-weight: bold;
 }
+
+.ProseMirror {
+  outline: none;
+  min-height: 100%;
+  padding: 0 16px;
+}
+
+.ProseMirror p.is-editor-empty:first-child::before {
+  color: var(--highlight-color);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

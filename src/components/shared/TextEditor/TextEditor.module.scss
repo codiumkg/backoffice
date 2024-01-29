@@ -1,0 +1,38 @@
+.container {
+  min-height: 264px;
+  margin: 8px 0;
+  background: var(--primary-color);
+  border-radius: var(--secondary-radius);
+}
+
+.menu-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 36px;
+  border-top-left-radius: 13px;
+  border-top-right-radius: 13px;
+  border: 1px solid var(--highlight-color);
+}
+
+.menu-option {
+  flex: 1;
+  display: grid;
+  height: 100%;
+  place-content: center;
+  padding: 8px 16px;
+  background: var(--secondary-color);
+  cursor: pointer;
+
+  &:first-child {
+    border-top-left-radius: var(--secondary-radius);
+  }
+
+  &:last-child {
+    border-top-right-radius: var(--secondary-radius);
+  }
+}
+
+.menu-option-active {
+  background: var(--highlight-color);
+}
