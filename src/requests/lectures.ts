@@ -1,8 +1,8 @@
-import { ILecture } from "../interfaces/lecture";
+import { ILecture, ILectureCreate } from "../interfaces/lecture";
 import { API_LECTURES } from "../constants/apiConstants";
 import axios from "axios";
 
-export function getLectures(id?: number): Promise<ILecture[]> {
+export async function getLectures(id?: number): Promise<ILecture[]> {
   if (id) {
     return axios.get(`${API_LECTURES}/${id}`).then(({ data }) => data);
   }
@@ -10,6 +10,6 @@ export function getLectures(id?: number): Promise<ILecture[]> {
   return axios.get(API_LECTURES).then(({ data }) => data);
 }
 
-export function createLecture(data: ILecture) {
-  return axios.post<ILecture>(API_LECTURES, data).then(({ data }) => data);
+export async function createLecture(data: ILectureCreate) {
+  return axios.post(API_LECTURES, data).then(({ data }) => data);
 }

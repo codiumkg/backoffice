@@ -11,3 +11,11 @@ export interface ILecture {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ILectureCreate {
+  title: string;
+  content: string;
+  number: number;
+  image?: string | null;
+  topicId: number;
+}

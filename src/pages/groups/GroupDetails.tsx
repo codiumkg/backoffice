@@ -16,7 +16,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 
-export const groupValidationSchema = Yup.object({
+const groupValidationSchema = Yup.object({
   title: Yup.string()
     .min(3, "Название должно быть не менее 3 символов")
     .max(32, "Название должно быть не более 32 символов")
@@ -112,6 +112,7 @@ function GroupDetails() {
           name="title"
           label="Название"
           placeholder="Введите название..."
+          errorMessage={groupForm.formState.errors.title?.message}
           onChangeCallback={(value) => {
             groupForm.setValue("title", value);
           }}

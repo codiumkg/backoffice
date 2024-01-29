@@ -3,16 +3,23 @@ import { ITopic } from "@/interfaces/topic";
 import { createTopic, getTopics } from "@/requests/topics";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const useTopicsQuery = () => {
-  const { data, isLoading } = useQuery({
-    queryFn: getTopics,
-    queryKey: [QUERY_KEYS.TOPICS],
+interface QueryParams {
+  params?: any;
+  enabled?: boolean;
+}
+
+export const useTopicsQuery = ({ params, enabled }: QueryParams) => {
+  const { data, isLoading, refetch } = useQuery({
+    queryFn: () => getTopics(params?.search || ""),
+    queryKey: [QUERY_KEYS.TOPICS, params?.title],
     refetchOnWindowFocus: false,
+    enabled,
   });
 
   return {
     data,
     isLoading,
+    refetch,
   };
 };
 

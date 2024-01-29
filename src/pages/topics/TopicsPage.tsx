@@ -5,7 +5,7 @@ import { useTopicsQuery } from "@/queries/topics";
 import { useNavigate } from "react-router-dom";
 
 function TopicsPage() {
-  const { data: topics } = useTopicsQuery();
+  const { data: topics } = useTopicsQuery({});
 
   const navigate = useNavigate();
 

@@ -1,6 +1,7 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { getLectures } from "@/requests/lectures";
-import { useQuery } from "@tanstack/react-query";
+import { ILecture } from "@/interfaces/lecture";
+import { createLecture, getLectures } from "@/requests/lectures";
+import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useLecturesQuery = () => {
   const { data, isLoading } = useQuery({
@@ -13,5 +14,24 @@ export const useLecturesQuery = () => {
   return {
     data,
     isLoading,
+  };
+};
+
+interface MutationQuery {
+  onSuccess?: (data: ILecture) => void;
+  onError?: () => void;
+}
+
+export const useLectureMutation = ({ onSuccess, onError }: MutationQuery) => {
+  const { data, mutate, isPending } = useMutation({
+    mutationFn: createLecture,
+    onError,
+    onSuccess,
+  });
+
+  return {
+    data,
+    mutate,
+    isPending,
   };
 };
