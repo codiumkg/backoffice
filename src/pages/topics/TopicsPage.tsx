@@ -5,12 +5,16 @@ import { useTopicsQuery } from "@/queries/topics";
 import { useNavigate } from "react-router-dom";
 
 function TopicsPage() {
-  const { data: topics } = useTopicsQuery({});
+  const { data: topics, isLoading } = useTopicsQuery({});
 
   const navigate = useNavigate();
 
   return (
-    <ResourceList title="Топики" onCreateClick={() => navigate(ROUTES.TOPIC)}>
+    <ResourceList
+      title="Топики"
+      isLoading={isLoading}
+      onCreateClick={() => navigate(ROUTES.TOPIC)}
+    >
       <Table
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Раздел" }]}
       >

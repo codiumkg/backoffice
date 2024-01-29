@@ -7,13 +7,14 @@ import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
 function SubjectsPage() {
-  const { data: subjects } = useSubjectsQuery({});
+  const { data: subjects, isFetching } = useSubjectsQuery({});
 
   const navigate = useNavigate();
 
   return (
     <ResourceList
       title="Предметы"
+      isLoading={isFetching}
       onCreateClick={() => navigate(ROUTES.SUBJECT)}
     >
       <Table

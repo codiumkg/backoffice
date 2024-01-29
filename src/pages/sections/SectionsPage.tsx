@@ -5,13 +5,14 @@ import { useSectionsQuery } from "@/queries/sections";
 import { useNavigate } from "react-router-dom";
 
 function SectionsPage() {
-  const { data: sections } = useSectionsQuery({});
+  const { data: sections, isPending } = useSectionsQuery({});
 
   const navigate = useNavigate();
 
   return (
     <ResourceList
       title="Разделы"
+      isLoading={isPending}
       onCreateClick={() => navigate(ROUTES.SECTION)}
     >
       <Table

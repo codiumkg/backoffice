@@ -3,10 +3,10 @@ import RegRequestsTable from "./components/RegRequestsTable";
 import { useRegRequestsQuery } from "@/queries/reg-requests";
 
 function RegRequestsPage() {
-  const { data } = useRegRequestsQuery();
+  const { data, isLoading } = useRegRequestsQuery();
 
   return (
-    <ResourceList title="Заявки">
+    <ResourceList title="Заявки" isLoading={isLoading}>
       <RegRequestsTable regRequests={data || []} />
     </ResourceList>
   );

@@ -7,12 +7,16 @@ import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
 
 function LecturesPage() {
-  const { data: lectures } = useLecturesQuery();
+  const { data: lectures, isLoading } = useLecturesQuery();
 
   const navigate = useNavigate();
 
   return (
-    <ResourceList title="Лекции" onCreateClick={() => navigate(ROUTES.LECTURE)}>
+    <ResourceList
+      title="Лекции"
+      isLoading={isLoading}
+      onCreateClick={() => navigate(ROUTES.LECTURE)}
+    >
       <Table
         headers={[
           { title: "ID" },

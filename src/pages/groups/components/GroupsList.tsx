@@ -6,13 +6,18 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   groups: IGroup[];
+  isLoading: boolean;
 }
 
-function GroupsList({ groups }: Props) {
+function GroupsList({ groups, isLoading }: Props) {
   const navigate = useNavigate();
 
   return (
-    <ResourceList title="Группы" onCreateClick={() => navigate(ROUTES.GROUP)}>
+    <ResourceList
+      title="Группы"
+      isLoading={isLoading}
+      onCreateClick={() => navigate(ROUTES.GROUP)}
+    >
       <Table
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Предмет" }]}
       >
