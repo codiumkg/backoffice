@@ -26,7 +26,10 @@ function SubjectsPage() {
         ]}
       >
         {subjects?.map((subject) => (
-          <TableRow key={subject.id}>
+          <TableRow
+            key={subject.id}
+            onClick={() => navigate(`${ROUTES.SUBJECT}/${subject.id}`)}
+          >
             <TableColumn>{subject.id}</TableColumn>
             <TableColumn>{subject.title}</TableColumn>
             <TableColumn>

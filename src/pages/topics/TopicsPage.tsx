@@ -19,7 +19,10 @@ function TopicsPage() {
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Раздел" }]}
       >
         {topics?.map((topic) => (
-          <TableRow key={topic.id}>
+          <TableRow
+            key={topic.id}
+            onClick={() => navigate(`${ROUTES.TOPIC}/${topic.id}`)}
+          >
             <TableColumn>{topic.id}</TableColumn>
             <TableColumn>{topic.title}</TableColumn>
             <TableColumn>{topic.section.title}</TableColumn>

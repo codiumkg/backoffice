@@ -7,6 +7,10 @@ export async function getGroups(): Promise<IGroup[]> {
   return axios.get(API_GROUPS).then(({ data }) => data);
 }
 
+export async function getGroupDetails(id: number) {
+  return axios.get(`${API_GROUPS}${id}`).then(({ data }) => data);
+}
+
 export async function createGroup(data: IGroupCreate): Promise<IGroup> {
   return axios.post(API_GROUPS, data).then(({ data }) => data);
 }

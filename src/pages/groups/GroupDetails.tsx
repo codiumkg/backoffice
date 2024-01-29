@@ -7,13 +7,13 @@ import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
 import { IOption } from "@/interfaces/common";
 import { IGroupCreate } from "@/interfaces/group";
-import { useGroupMutation } from "@/queries/groups";
+import { useGroupDetailsQuery, useGroupMutation } from "@/queries/groups";
 import { useSubjectsQuery } from "@/queries/subjects";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 
 const groupValidationSchema = Yup.object({
@@ -35,7 +35,7 @@ interface GroupForm {
 }
 
 function GroupDetails() {
-  // const { id } = useParams();
+  const { id } = useParams();
 
   const [search, setSearch] = useState("");
 
@@ -43,6 +43,8 @@ function GroupDetails() {
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+
+  const { data, isLoading } = useGroupDetailsQuery(+id!);
 
   const {
     data: subjects,

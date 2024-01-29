@@ -22,7 +22,10 @@ function GroupsList({ groups, isLoading }: Props) {
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Предмет" }]}
       >
         {groups.map((group) => (
-          <TableRow key={group.id}>
+          <TableRow
+            key={group.id}
+            onClick={() => navigate(`${ROUTES.GROUP}/${group.id}`)}
+          >
             <TableColumn>{group.id}</TableColumn>
             <TableColumn>{group.title}</TableColumn>
             <TableColumn>{group.subject.title}</TableColumn>

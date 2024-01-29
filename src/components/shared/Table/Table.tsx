@@ -27,11 +27,12 @@ export default function Table({ headers, children }: Props) {
 
 interface TableRowProps {
   children: ReactNode;
+  onClick?: () => void;
 }
 
-export function TableRow({ children }: TableRowProps) {
+export function TableRow({ children, onClick }: TableRowProps) {
   return (
-    <div className={styles.row}>
+    <div className={styles.row} onClick={onClick}>
       <div className={styles.content}>{children}</div>
     </div>
   );

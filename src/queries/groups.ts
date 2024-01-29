@@ -1,6 +1,11 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { IGroup } from "../interfaces/auth";
-import { createGroup, getGroups, removeGroup } from "../requests/groups";
+import {
+  createGroup,
+  getGroupDetails,
+  getGroups,
+  removeGroup,
+} from "../requests/groups";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface MutationQuery {
@@ -28,6 +33,18 @@ export const useGroupsQuery = () => {
     queryKey: [QUERY_KEYS.GROUPS],
     refetchOnWindowFocus: false,
     staleTime: 35 * 1000,
+  });
+
+  return {
+    data,
+    isLoading,
+  };
+};
+
+export const useGroupDetailsQuery = (id: number) => {
+  const { data, isLoading } = useQuery({
+    queryFn: () => getGroupDetails(id),
+    queryKey: [QUERY_KEYS.GROUPS, id],
   });
 
   return {

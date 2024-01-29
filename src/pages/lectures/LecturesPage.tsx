@@ -28,7 +28,10 @@ function LecturesPage() {
         ]}
       >
         {lectures?.map((lecture) => (
-          <TableRow key={lecture.id}>
+          <TableRow
+            key={lecture.id}
+            onClick={() => navigate(`${ROUTES.LECTURE}/${lecture.id}`)}
+          >
             <TableColumn>{lecture.id}</TableColumn>
             <TableColumn>{lecture.title}</TableColumn>
             <TableColumn>{lecture.number}</TableColumn>

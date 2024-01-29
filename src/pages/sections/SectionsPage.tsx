@@ -19,7 +19,10 @@ function SectionsPage() {
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Предмет" }]}
       >
         {sections?.map((section) => (
-          <TableRow key={section.id}>
+          <TableRow
+            key={section.id}
+            onClick={() => navigate(`${ROUTES.SECTION}/${section.id}`)}
+          >
             <TableColumn>{section.id}</TableColumn>
             <TableColumn>{section.title}</TableColumn>
             <TableColumn>{section.subject.title}</TableColumn>
