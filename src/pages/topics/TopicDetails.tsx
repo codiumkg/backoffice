@@ -141,6 +141,7 @@ function TopicDetails() {
     <Resource
       title="Топик"
       isExisting={!!id}
+      isLoading={isLoading}
       isSaveDisabled={!isValid || !topicForm.formState.isDirty}
       isSaveButtonLoading={isPending}
       onDeleteClick={deleteTopic}
