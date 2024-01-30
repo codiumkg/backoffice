@@ -1,4 +1,3 @@
-import Button from "@/components/shared/Button/Button";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
@@ -8,13 +7,17 @@ import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
 import { IOption } from "@/interfaces/common";
 import { ILectureCreate } from "@/interfaces/lecture";
-import { useLectureMutation } from "@/queries/lectures";
+import {
+  useLectureDeletion,
+  useLectureDetailsQuery,
+  useLectureMutation,
+} from "@/queries/lectures";
 import { useTopicsQuery } from "@/queries/topics";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 
 const lectureValidationSchema = Yup.object({
@@ -40,6 +43,8 @@ const initialValues: ILectureCreate = {
 
 function LectureDetails() {
   const queryClient = useQueryClient();
+
+  const { id } = useParams();
 
   const navigate = useNavigate();
 
@@ -69,6 +74,12 @@ function LectureDetails() {
     [topics]
   );
 
+  const {
+    data: existingLecture,
+    isLoading,
+    isSuccess,
+  } = useLectureDetailsQuery(+id!, { enabled: !!id });
+
   const { mutate: createLecture, isPending } = useLectureMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
@@ -85,10 +96,29 @@ function LectureDetails() {
     },
   });
 
+  const { mutate: deleteLecture, isPending: isDeleting } = useLectureDeletion(
+    +id!,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          refetchType: "all",
+          queryKey: [QUERY_KEYS.LECTURES],
+        });
+
+        navigate(ROUTES.LECTURES);
+
+        showSuccessNotification();
+      },
+      onError: () => {
+        showErrorNotification();
+      },
+    }
+  );
+
   const lectureForm = useForm<ILectureCreate>({
     defaultValues: initialValues,
     resolver: yupResolver<ILectureCreate>(lectureValidationSchema),
-    // mode: "onBlur",
+    mode: "onBlur",
   });
 
   const isValid = Object.values(lectureForm.formState.errors).length === 0;
@@ -98,72 +128,90 @@ function LectureDetails() {
   };
 
   useEffect(() => {
-    setActiveValue({
-      label: topics?.[0].title,
-      value: topics?.[0].id.toString(),
-    });
+    if (existingLecture && !!id) {
+      lectureForm.reset({
+        title: existingLecture.title,
+        topicId: existingLecture.topicId,
+        content: existingLecture.content,
+        number: existingLecture.number,
+      });
+
+      setActiveValue({
+        label: existingLecture.topic.title,
+        value: existingLecture.topic.id.toString(),
+      });
+    }
+  }, [id, existingLecture, isSuccess, lectureForm]);
+
+  useEffect(() => {
+    if (!existingLecture || !id) {
+      setActiveValue({
+        label: topics?.[0].title,
+        value: topics?.[0].id.toString(),
+      });
+    }
 
     if (topics) {
       lectureForm.setValue("topicId", topics[0].id);
     }
-  }, [topics, lectureForm]);
+  }, [topics, lectureForm, existingLecture, id]);
 
   return (
-    <Resource title="Лекция">
-      <form onSubmit={lectureForm.handleSubmit(onSubmit)}>
-        <CustomInput
-          name="title"
-          label="Название"
-          placeholder="Введите название"
-          errorMessage={lectureForm.formState.errors.title?.message}
-          onChangeCallback={(value) => lectureForm.setValue("title", value)}
-        />
+    <Resource
+      title="Лекция"
+      isExisting={!!id}
+      isLoading={isLoading}
+      onDeleteClick={deleteLecture}
+      isDeleting={isDeleting}
+      isSaveDisabled={!isValid || !lectureForm.formState.isDirty}
+      isSaveButtonLoading={isPending}
+      onSaveClick={() => onSubmit(lectureForm.getValues())}
+    >
+      <CustomInput
+        {...lectureForm.register("title")}
+        label="Название"
+        placeholder="Введите название"
+        errorMessage={lectureForm.formState.errors.title?.message}
+        onChangeCallback={(value) => lectureForm.setValue("title", value)}
+      />
 
-        <CustomInput
-          name="number"
-          label="Номер лекции"
-          placeholder="Введите номер лекции..."
-          type="number"
-          errorMessage={lectureForm.formState.errors.number?.message}
-          onChangeCallback={(value) => lectureForm.setValue("number", +value)}
-        />
+      <CustomInput
+        {...lectureForm.register("number")}
+        label="Номер лекции"
+        placeholder="Введите номер лекции..."
+        type="number"
+        errorMessage={lectureForm.formState.errors.number?.message}
+        onChangeCallback={(value) => lectureForm.setValue("number", +value)}
+      />
 
-        <Controller
-          name="content"
-          control={lectureForm.control}
-          render={({ field }) => (
-            <TextEditor
-              label="Содержимое"
-              {...field}
-              placeholder="Введите содержимое лекции..."
-            />
-          )}
-        />
+      <Controller
+        name="content"
+        control={lectureForm.control}
+        render={({ field }) => (
+          <TextEditor
+            label="Содержимое"
+            {...field}
+            placeholder="Введите содержимое лекции..."
+          />
+        )}
+      />
 
-        <RelationInput
-          name="topic"
-          options={topicOptions}
-          activeValue={activeValue}
-          setActiveValue={(value) => {
-            lectureForm.setValue("topicId", +value.value);
-            setActiveValue(value);
-          }}
-          label="Топик"
-          placeholder="Выберите топик..."
-          isLoading={isTopicsLoading}
-          onSearch={(value) => {
-            setSearch(value);
-            refetch();
-          }}
-        />
-
-        <Button
-          type="submit"
-          text="Создать"
-          disabled={!isValid}
-          isLoading={isPending}
-        />
-      </form>
+      <RelationInput
+        name="topic"
+        options={topicOptions}
+        activeValue={activeValue}
+        setActiveValue={(value) => {
+          lectureForm.setValue("topicId", +value.value);
+          setActiveValue(value);
+        }}
+        label="Топик"
+        placeholder="Выберите топик..."
+        isLoading={isTopicsLoading}
+        onSearch={(value) => {
+          setSearch(value);
+          refetch();
+        }}
+      />
     </Resource>
   );
 }

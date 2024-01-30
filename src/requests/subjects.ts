@@ -12,8 +12,19 @@ export async function getSubjects(search?: string): Promise<ISubject[]> {
     .then(({ data }) => data);
 }
 
+export async function getSubjectDetails(id: number): Promise<ISubject> {
+  return axios.get(`${API_SUBJECTS}${id}`).then(({ data }) => data);
+}
+
 export function createSubject(data: ISubjectCreate): Promise<ISubject> {
   return axios.post(API_SUBJECTS, data).then(({ data }) => data);
+}
+
+export function updateSubject(
+  id: number,
+  data: Partial<ISubjectCreate>
+): Promise<ISubject> {
+  return axios.patch(`${API_SUBJECTS}${id}`, data).then(({ data }) => data);
 }
 
 export async function removeSubject(id: number) {

@@ -1,6 +1,12 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { ITopic } from "@/interfaces/topic";
-import { createTopic, getTopics, removeTopic } from "@/requests/topics";
+import { ITopic, ITopicCreate } from "@/interfaces/topic";
+import {
+  createTopic,
+  getTopicDetails,
+  getTopics,
+  removeTopic,
+  updateTopic,
+} from "@/requests/topics";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface QueryParams {
@@ -23,14 +29,30 @@ export const useTopicsQuery = ({ params, enabled }: QueryParams) => {
   };
 };
 
+export const useTopicDetailsQuery = (id: number, { enabled }: QueryParams) => {
+  const { data, isLoading, isSuccess } = useQuery<ITopic>({
+    queryFn: () => getTopicDetails(id),
+    queryKey: [QUERY_KEYS.TOPICS, id],
+    enabled,
+  });
+
+  return {
+    data,
+    isLoading,
+    isSuccess,
+  };
+};
+
 interface MutationQuery {
   onSuccess?: (data: ITopic) => void;
   onError?: () => void;
+  id?: number;
 }
 
-export const useTopicMutation = ({ onError, onSuccess }: MutationQuery) => {
+export const useTopicMutation = ({ onError, onSuccess, id }: MutationQuery) => {
   const { data, mutate, isPending } = useMutation({
-    mutationFn: createTopic,
+    mutationFn: (data: ITopicCreate) =>
+      id ? updateTopic(id, data) : createTopic(data),
     onSuccess,
     onError,
   });
@@ -46,13 +68,14 @@ export const useTopicDeletion = (
   id: number,
   { onError, onSuccess }: MutationQuery
 ) => {
-  const { isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => removeTopic(id),
     onError,
     onSuccess,
   });
 
   return {
+    mutate,
     isPending,
   };
 };

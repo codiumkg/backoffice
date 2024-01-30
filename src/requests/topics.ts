@@ -12,8 +12,19 @@ export async function getTopics(search?: string): Promise<ITopic[]> {
     .then(({ data }) => data);
 }
 
+export async function getTopicDetails(id: number) {
+  return axios.get(`${API_TOPICS}${id}`).then(({ data }) => data);
+}
+
 export async function createTopic(data: ITopicCreate): Promise<ITopic> {
   return axios.post(API_TOPICS, data).then(({ data }) => data);
+}
+
+export async function updateTopic(
+  id: number,
+  data: Partial<ITopicCreate>
+): Promise<ITopic> {
+  return axios.patch(`${API_TOPICS}${id}`, data).then(({ data }) => data);
 }
 
 export async function removeTopic(id: number) {

@@ -8,8 +8,8 @@
   min-width: 64px;
   min-height: 46px;
   width: 100%;
-  padding: 8px 12px;
-  border-radius: var(--secondary-radius);
+  padding: 8px 16px;
+  border-radius: var(--primary-radius);
   cursor: pointer;
 }
 
@@ -21,4 +21,5 @@
   font-size: 16px;
   margin-right: 6px;
   margin-top: 4px;
+  color: var(--text-color);
 }

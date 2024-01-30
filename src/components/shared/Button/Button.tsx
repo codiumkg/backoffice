@@ -6,6 +6,7 @@ interface Props {
   text?: string;
   disabled?: boolean;
   isLoading?: boolean;
+  isTextButton?: boolean;
   height?: string;
   type?: "button" | "submit";
   color?: string;
@@ -21,6 +22,7 @@ export default function Button({
   color = "var(--accent-color)",
   isLoading,
   icon,
+  isTextButton,
   onClick,
 }: Props) {
   const handleClick = () => {
@@ -32,7 +34,11 @@ export default function Button({
   return (
     <button
       className={cn(styles.primary, disabled ? styles.disabled : "")}
-      style={{ minHeight: height, background: color }}
+      style={{
+        minHeight: height,
+        background: !isTextButton ? (!disabled ? color : "") : "transparent",
+        color: isTextButton ? color : "",
+      }}
       onClick={handleClick}
       type={type}
       disabled={disabled}

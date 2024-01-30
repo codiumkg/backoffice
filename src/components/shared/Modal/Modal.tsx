@@ -7,8 +7,11 @@ interface Props {
   title: string;
   subtitle: string;
   show: boolean;
-  children: ReactNode;
+  children?: ReactNode;
+  isLoading?: boolean;
+  primaryButtonText?: string;
   onPrimaryClick: () => void;
+  onCancelClick?: () => void;
   onClose: () => void;
 }
 
@@ -17,7 +20,10 @@ function Modal({
   subtitle,
   show,
   children,
+  primaryButtonText = "Сохранить",
+  isLoading,
   onPrimaryClick,
+  onCancelClick,
   onClose,
 }: Props) {
   return show ? (
@@ -34,8 +40,19 @@ function Modal({
           <Typography variant="body2">{subtitle}</Typography>
         </div>
         <div>{children}</div>
-        <div>
-          <Button text="Сохранить" onClick={onPrimaryClick} />
+        <div className={styles.buttons}>
+          <Button
+            text={primaryButtonText || "Сохранить"}
+            isLoading={isLoading}
+            onClick={onPrimaryClick}
+          />
+          {onCancelClick && (
+            <Button
+              text="Отмена"
+              onClick={onCancelClick}
+              color="var(--text-color)"
+            />
+          )}
         </div>
       </div>
     </div>

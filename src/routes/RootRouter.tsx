@@ -25,15 +25,20 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
       <Route path="office" element={<DashboardLayout />}>
+        <Route path="group" element={<GroupDetails />} />
         <Route path="group/:id" element={<GroupDetails />} />
         <Route path="groups" element={<GroupsPage />} />
         <Route path="sections" element={<SectionsPage />} />
+        <Route path="section" element={<SectionDetails />} />
         <Route path="section/:id" element={<SectionDetails />} />
         <Route path="topics" element={<TopicsPage />} />
+        <Route path="topic" element={<TopicDetails />} />
         <Route path="topic/:id" element={<TopicDetails />} />
         <Route path="lectures" element={<LecturesPage />} />
+        <Route path="lecture" element={<LectureDetails />} />
         <Route path="lecture/:id" element={<LectureDetails />} />
         <Route path="subjects" element={<SubjectsPage />} />
+        <Route path="subject" element={<SubjectDetails />} />
         <Route path="subject/:id" element={<SubjectDetails />} />
         <Route path="reg-requests" element={<RegRequestsPage />} />
       </Route>

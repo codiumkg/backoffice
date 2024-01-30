@@ -1,6 +1,11 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ILecture } from "@/interfaces/lecture";
-import { createLecture, getLectures, removeLecture } from "@/requests/lectures";
+import {
+  createLecture,
+  getLectureDetails,
+  getLectures,
+  removeLecture,
+} from "@/requests/lectures";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useLecturesQuery = () => {
@@ -14,6 +19,27 @@ export const useLecturesQuery = () => {
   return {
     data,
     isLoading,
+  };
+};
+
+interface QueryParams {
+  enabled?: boolean;
+}
+
+export const useLectureDetailsQuery = (
+  id: number,
+  { enabled }: QueryParams
+) => {
+  const { data, isLoading, isSuccess } = useQuery<ILecture>({
+    queryFn: () => getLectureDetails(id),
+    queryKey: [QUERY_KEYS.LECTURES, id],
+    enabled,
+  });
+
+  return {
+    data,
+    isLoading,
+    isSuccess,
   };
 };
 
@@ -40,13 +66,14 @@ export const useLectureDeletion = (
   id: number,
   { onSuccess, onError }: MutationQuery
 ) => {
-  const { isPending } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: () => removeLecture(id),
     onError,
     onSuccess,
   });
 
   return {
+    mutate,
     isPending,
   };
 };

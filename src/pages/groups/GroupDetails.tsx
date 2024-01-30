@@ -1,4 +1,3 @@
-import Button from "@/components/shared/Button/Button";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
@@ -7,7 +6,11 @@ import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
 import { IOption } from "@/interfaces/common";
 import { IGroupCreate } from "@/interfaces/group";
-import { useGroupDetailsQuery, useGroupMutation } from "@/queries/groups";
+import {
+  useGroupDeletion,
+  useGroupDetailsQuery,
+  useGroupMutation,
+} from "@/queries/groups";
 import { useSubjectsQuery } from "@/queries/subjects";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
@@ -44,7 +47,11 @@ function GroupDetails() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
 
-  const { data, isLoading } = useGroupDetailsQuery(+id!);
+  const {
+    data: existingGroup,
+    isLoading,
+    isSuccess,
+  } = useGroupDetailsQuery(+id!, { enabled: !!id });
 
   const {
     data: subjects,
@@ -54,7 +61,7 @@ function GroupDetails() {
     params: { search },
   });
 
-  const { mutate: createGroup, isPending } = useGroupMutation({
+  const { mutate, isPending } = useGroupMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
         refetchType: "all",
@@ -68,7 +75,27 @@ function GroupDetails() {
     onError: () => {
       showErrorNotification();
     },
+    id: +id!,
   });
+
+  const { mutate: deleteGroup, isPending: isDeleting } = useGroupDeletion(
+    +id!,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          refetchType: "all",
+          queryKey: [QUERY_KEYS.GROUPS],
+        });
+
+        navigate(ROUTES.GROUPS);
+
+        showSuccessNotification();
+      },
+      onError: () => {
+        showErrorNotification();
+      },
+    }
+  );
 
   const [activeValue, setActiveValue] = useState<IOption>({
     label: subjects?.[0].title,
@@ -93,56 +120,71 @@ function GroupDetails() {
   const isValid = Object.values(groupForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<GroupForm> = (data: IGroupCreate) => {
-    createGroup(data);
+    mutate(data);
   };
 
   useEffect(() => {
-    setActiveValue({
-      label: subjects?.[0].title,
-      value: subjects?.[0].id.toString(),
-    });
-
-    if (subjects) {
-      groupForm.setValue("subjectId", subjects[0].id);
+    if (existingGroup && id) {
+      groupForm.reset({
+        title: existingGroup.title,
+        subjectId: existingGroup.subject.id,
+      });
+      setActiveValue({
+        label: existingGroup.subject.title,
+        value: existingGroup.subject.id.toString(),
+      });
     }
-  }, [subjects, groupForm]);
+  }, [isSuccess, existingGroup, groupForm, id]);
+
+  useEffect(() => {
+    if (!existingGroup || !id) {
+      setActiveValue({
+        label: subjects?.[0].title,
+        value: subjects?.[0].id.toString(),
+      });
+
+      if (subjects) {
+        groupForm.setValue("subjectId", subjects[0].id);
+      }
+    }
+  }, [subjects, groupForm, id, existingGroup]);
 
   return (
-    <Resource title="Группа">
-      <form onSubmit={groupForm.handleSubmit(onSubmit)}>
-        <CustomInput
-          name="title"
-          label="Название"
-          placeholder="Введите название..."
-          errorMessage={groupForm.formState.errors.title?.message}
-          onChangeCallback={(value) => {
-            groupForm.setValue("title", value);
-          }}
-        />
-        <RelationInput
-          name="subject"
-          options={subjectOptions}
-          activeValue={activeValue}
-          setActiveValue={(value) => {
-            groupForm.setValue("subjectId", +value.value);
-            setActiveValue(value);
-          }}
-          label="Предмет"
-          placeholder="Выберите предмет..."
-          isLoading={isFetching}
-          onSearch={(value) => {
-            setSearch(value);
-            refetch();
-          }}
-        />
-
-        <Button
-          type="submit"
-          text="Создать"
-          disabled={!isValid}
-          isLoading={isPending}
-        />
-      </form>
+    <Resource
+      title={existingGroup?.title || "Группа"}
+      isExisting={!!id}
+      isLoading={isLoading}
+      isSaveDisabled={!isValid || !groupForm.formState.isDirty}
+      isSaveButtonLoading={isPending}
+      isDeleting={isDeleting}
+      onDeleteClick={deleteGroup}
+      onSaveClick={() => onSubmit(groupForm.getValues())}
+    >
+      <CustomInput
+        {...groupForm.register("title")}
+        label="Название"
+        placeholder="Введите название..."
+        errorMessage={groupForm.formState.errors.title?.message}
+        onChangeCallback={(value) => {
+          groupForm.setValue("title", value);
+        }}
+      />
+      <RelationInput
+        name="subject"
+        options={subjectOptions}
+        activeValue={activeValue}
+        setActiveValue={(value) => {
+          groupForm.setValue("subjectId", +value.value);
+          setActiveValue(value);
+        }}
+        label="Предмет"
+        placeholder="Выберите предмет..."
+        isLoading={isFetching}
+        onSearch={(value) => {
+          setSearch(value);
+          refetch();
+        }}
+      />
     </Resource>
   );
 }

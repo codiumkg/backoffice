@@ -16,9 +16,20 @@
   align-items: center;
 }
 
+.buttons {
+  display: flex;
+  gap: 16px;
+}
+
 .content {
   margin-top: 20px;
   padding: 16px;
   background: var(--secondary-color);
   border-radius: var(--primary-radius);
+}
+
+.spinner-wrapper {
+  width: 100%;
+  display: grid;
+  place-content: center;
 }
