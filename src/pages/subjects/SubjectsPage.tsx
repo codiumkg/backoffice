@@ -16,6 +16,7 @@ function SubjectsPage() {
       title="Предметы"
       isLoading={isFetching}
       onCreateClick={() => navigate(ROUTES.SUBJECT)}
+      itemsLength={subjects?.length}
     >
       <Table
         headers={[

@@ -17,6 +17,7 @@ function GroupsList({ groups, isLoading }: Props) {
       title="Группы"
       isLoading={isLoading}
       onCreateClick={() => navigate(ROUTES.GROUP)}
+      itemsLength={groups.length}
     >
       <Table
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Предмет" }]}

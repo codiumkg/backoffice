@@ -6,7 +6,11 @@ function RegRequestsPage() {
   const { data, isLoading } = useRegRequestsQuery();
 
   return (
-    <ResourceList title="Заявки" isLoading={isLoading}>
+    <ResourceList
+      title="Заявки"
+      isLoading={isLoading}
+      itemsLength={data?.length}
+    >
       <RegRequestsTable regRequests={data || []} />
     </ResourceList>
   );

@@ -8,18 +8,21 @@ import Button from "../Button/Button";
 
 import styles from "./ResourceList.module.scss";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
+import NoDataPlaceholder from "../NoDataPlaceholder/NoDataPlaceholder";
 
 interface Props {
   title: string;
   onCreateClick?: () => void;
   children?: ReactNode;
   isLoading: boolean;
+  itemsLength?: number;
 }
 
 export default function ResourceList({
   title,
   children,
   isLoading,
+  itemsLength,
   onCreateClick,
 }: Props) {
   return (
@@ -43,6 +46,8 @@ export default function ResourceList({
       </div>
 
       <div className={styles.content}>{children}</div>
+
+      {!itemsLength && <NoDataPlaceholder />}
 
       {isLoading && (
         <div className={styles["loading-wrapper"]}>

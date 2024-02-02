@@ -16,6 +16,7 @@ function LecturesPage() {
       title="Лекции"
       isLoading={isLoading}
       onCreateClick={() => navigate(ROUTES.LECTURE)}
+      itemsLength={lectures?.length}
     >
       <Table
         headers={[

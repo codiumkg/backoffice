@@ -14,6 +14,7 @@ function SectionsPage() {
       title="Разделы"
       isLoading={isPending}
       onCreateClick={() => navigate(ROUTES.SECTION)}
+      itemsLength={sections?.length}
     >
       <Table
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Предмет" }]}

@@ -14,6 +14,7 @@ function TopicsPage() {
       title="Топики"
       isLoading={isLoading}
       onCreateClick={() => navigate(ROUTES.TOPIC)}
+      itemsLength={topics?.length}
     >
       <Table
         headers={[{ title: "ID" }, { title: "Название" }, { title: "Раздел" }]}
