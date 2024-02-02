@@ -3,6 +3,12 @@ import { IResource } from "@/interfaces/resource";
 
 export const RESOURCES: IResource[] = [
   {
+    id: "users",
+    title: "Пользователи",
+    href: "/users",
+    roles: [Role.ADMIN],
+  },
+  {
     id: "requests",
     title: "Заявки",
     href: "/reg-requests",

@@ -65,7 +65,14 @@ export function TableRow({
       <div className={styles.row} onClick={onClick}>
         <div className={styles.content}>{children}</div>
 
-        <ThreeDotButton onClick={() => setShowContextMenu(true)} />
+        {onDelete && (
+          <ThreeDotButton
+            onClick={(e) => {
+              e.stopPropagation();
+              setShowContextMenu(true);
+            }}
+          />
+        )}
       </div>
 
       <div ref={menuRef}>

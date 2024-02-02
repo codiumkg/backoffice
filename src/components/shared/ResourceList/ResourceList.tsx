@@ -47,7 +47,7 @@ export default function ResourceList({
 
       <div className={styles.content}>{children}</div>
 
-      {!itemsLength && <NoDataPlaceholder />}
+      {!itemsLength && !isLoading && <NoDataPlaceholder />}
 
       {isLoading && (
         <div className={styles["loading-wrapper"]}>

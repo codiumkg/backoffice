@@ -2,6 +2,8 @@ export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   OFFICE: "/office",
+  USER: "/office/user",
+  USERS: "/office/users",
   REG_REQUESTS: "/office/reg-requests",
   GROUPS: "/office/groups",
   GROUP: "/office/group",

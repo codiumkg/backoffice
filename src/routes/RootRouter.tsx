@@ -12,6 +12,8 @@ import SubjectDetails from "@/pages/subjects/SubjectDetails";
 import SubjectsPage from "@/pages/subjects/SubjectsPage";
 import TopicDetails from "@/pages/topics/TopicDetails";
 import TopicsPage from "@/pages/topics/TopicsPage";
+import UserDetails from "@/pages/users/UserDetails";
+import UsersPage from "@/pages/users/UsersPage";
 import {
   Route,
   RouterProvider,
@@ -25,6 +27,9 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="login" element={<Login />} />
       <Route path="office" element={<DashboardLayout />}>
+        <Route path="users" element={<UsersPage />} />
+        <Route path="user" element={<UserDetails />} />
+        <Route path="user/:id" element={<UserDetails />} />
         <Route path="group" element={<GroupDetails />} />
         <Route path="group/:id" element={<GroupDetails />} />
         <Route path="groups" element={<GroupsPage />} />
