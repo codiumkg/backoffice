@@ -88,12 +88,28 @@ function UserDetails() {
   const isValid = Object.values(userForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<ICreateUser> = (data: ICreateUser) => {
+    if (userForm.getValues("email")?.length === 0) {
+      delete data["email"];
+    }
+
+    if (userForm.getValues("phone")?.length === 0) {
+      delete data["phone"];
+    }
+
     mutate(data);
   };
 
   useEffect(() => {
     if (existingUser && id) {
-      userForm.reset(existingUser);
+      userForm.reset({
+        username: existingUser.username,
+        password: existingUser.password,
+        email: existingUser.email,
+        phone: existingUser.phone,
+        age: existingUser.profile?.age,
+        firstName: existingUser.profile?.firstName,
+        lastName: existingUser.profile?.lastName,
+      });
     }
   }, [existingUser, userForm, id]);
 
