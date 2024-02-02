@@ -1,0 +1,18 @@
+.wrapper {
+  background: var(--secondary-color);
+  border-radius: var(--secondary-radius);
+  box-shadow: 2px 3px 12px rgba(0, 0, 0, 0.4);
+  position: absolute;
+  z-index: 20;
+
+  right: 0;
+}
+
+.menuItem {
+  cursor: pointer;
+  padding: 16px;
+}
+
+.deleteItem {
+  color: var(--danger-color);
+}

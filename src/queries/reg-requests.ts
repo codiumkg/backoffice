@@ -20,17 +20,18 @@ interface MutationQuery {
   onError?: () => void;
 }
 
-export const useRegRequestDeletion = (
-  id: number,
-  { onError, onSuccess }: MutationQuery
-) => {
-  const { isPending } = useMutation({
-    mutationFn: () => removeRegRequest(id),
+export const useRegRequestDeletion = ({
+  onError,
+  onSuccess,
+}: MutationQuery) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: (id: number) => removeRegRequest(id),
     onError,
     onSuccess,
   });
 
   return {
+    mutate,
     isPending,
   };
 };
