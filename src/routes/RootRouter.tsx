@@ -10,6 +10,8 @@ import SectionDetails from "@/pages/sections/SectionDetails";
 import SectionsPage from "@/pages/sections/SectionsPage";
 import SubjectDetails from "@/pages/subjects/SubjectDetails";
 import SubjectsPage from "@/pages/subjects/SubjectsPage";
+import TaskDetails from "@/pages/tasks/TaskDetails";
+import TasksPage from "@/pages/tasks/TasksPage";
 import TopicDetails from "@/pages/topics/TopicDetails";
 import TopicsPage from "@/pages/topics/TopicsPage";
 import UserDetails from "@/pages/users/UserDetails";
@@ -46,6 +48,9 @@ const router = createBrowserRouter(
         <Route path="subject" element={<SubjectDetails />} />
         <Route path="subject/:id" element={<SubjectDetails />} />
         <Route path="reg-requests" element={<RegRequestsPage />} />
+        <Route path="tasks" element={<TasksPage />} />
+        <Route path="task" element={<TaskDetails />} />
+        <Route path="task/:id" element={<TaskDetails />} />
       </Route>
     </Route>
   )
