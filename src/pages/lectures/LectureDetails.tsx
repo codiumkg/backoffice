@@ -124,7 +124,7 @@ function LectureDetails() {
   const isValid = Object.values(lectureForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<ILectureCreate> = (data: ILectureCreate) => {
-    createLecture(data);
+    createLecture({ ...data, number: +data.number });
   };
 
   useEffect(() => {
@@ -181,7 +181,9 @@ function LectureDetails() {
         placeholder="Введите номер лекции..."
         type="number"
         errorMessage={lectureForm.formState.errors.number?.message}
-        onChangeCallback={(value) => lectureForm.setValue("number", +value)}
+        onChangeCallback={(value) =>
+          lectureForm.setValue("number", Number(value))
+        }
       />
 
       <Controller

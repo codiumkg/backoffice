@@ -35,7 +35,15 @@ function UsersPage() {
       onCreateClick={() => navigate(ROUTES.USER)}
       itemsLength={users?.length}
     >
-      <Table headers={[{ title: "ID" }, { title: "Логин" }, { title: "Роль" }]}>
+      <Table
+        headers={[
+          { title: "ID" },
+          { title: "Логин" },
+          { title: "Имя" },
+          { title: "Фамилия" },
+          { title: "Роль" },
+        ]}
+      >
         {users?.map((user) => (
           <TableRow
             key={user.id}
@@ -45,6 +53,8 @@ function UsersPage() {
           >
             <TableColumn>{user.id}</TableColumn>
             <TableColumn>{user.username}</TableColumn>
+            <TableColumn>{user.profile?.firstName}</TableColumn>
+            <TableColumn>{user.profile?.lastName}</TableColumn>
             <TableColumn>{ROLES_DISPLAY[user.role]}</TableColumn>
           </TableRow>
         ))}
