@@ -50,6 +50,7 @@ const router = createBrowserRouter(
         <Route path="reg-requests" element={<RegRequestsPage />} />
         <Route path="tasks" element={<TasksPage />} />
         <Route path="task" element={<TaskDetails />} />
+        <Route path="task/:id" element={<TaskDetails />} />
       </Route>
     </Route>
   )
