@@ -9,4 +9,4 @@ export const API_SUBJECTS = BASE_URL.concat("/subjects/");
 export const API_SECTIONS = BASE_URL.concat("/sections/");
 export const API_TOPICS = BASE_URL.concat("/topics/");
 export const API_LECTURES = BASE_URL.concat("/lectures/");
-export const API_QUIZZES = BASE_URL.concat("/quizzes/");
+export const API_TASKS = BASE_URL.concat("/tasks/");

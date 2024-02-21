@@ -1,10 +1,11 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { ISection } from "@/interfaces/section";
+import { ISection, ISectionCreate } from "@/interfaces/section";
 import {
   createSection,
   getSectionDetails,
   getSections,
   removeSection,
+  updateSection,
 } from "@/requests/sections";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
@@ -52,7 +53,8 @@ interface MutationQuery {
 
 export const useSectionMutation = ({ onSuccess, onError }: MutationQuery) => {
   const { data, mutate, isPending } = useMutation({
-    mutationFn: createSection,
+    mutationFn: (data: ISectionCreate, id?: number) =>
+      id ? updateSection(id, data) : createSection(data),
     onSuccess,
     onError,
   });
