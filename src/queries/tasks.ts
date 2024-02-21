@@ -26,7 +26,7 @@ interface QueryParams {
 }
 
 export const useTaskDetails = (id: number, { enabled }: QueryParams) => {
-  const { data, isPending } = useQuery({
+  const { data, isLoading } = useQuery({
     queryFn: () => getTaskDetails(id),
     queryKey: [QUERY_KEYS.TASKS, id],
     enabled,
@@ -34,7 +34,7 @@ export const useTaskDetails = (id: number, { enabled }: QueryParams) => {
 
   return {
     data,
-    isPending,
+    isLoading,
   };
 };
 

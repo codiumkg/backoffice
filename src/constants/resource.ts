@@ -47,7 +47,7 @@ export const RESOURCES: IResource[] = [
   },
   {
     id: "tasks",
-    title: "Задания",
+    title: "Задачи",
     href: "/tasks",
     roles: [Role.MANAGER],
   },

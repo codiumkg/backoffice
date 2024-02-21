@@ -18,5 +18,4 @@ export interface ITaskCreate {
   image?: string;
   tip?: string;
   topicId: number;
-  topic: ITopic;
 }

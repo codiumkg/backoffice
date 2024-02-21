@@ -16,5 +16,6 @@ export const ROUTES = {
   TOPICS: "/office/topics",
   TOPIC: "/office/topic",
   TASKS: "/office/tasks",
+  TASK: "/office/task",
   TASK_RESULTS: "/office/task-results",
 };
