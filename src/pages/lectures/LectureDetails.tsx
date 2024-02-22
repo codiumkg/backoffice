@@ -23,7 +23,7 @@ import * as Yup from "yup";
 const lectureValidationSchema = Yup.object({
   title: Yup.string()
     .min(3, "Название должно быть не менее 3 символов")
-    .max(32, "Название должно быть не более 32 символов")
+    .max(90, "Название должно быть не более 90 символов")
     .required("Это поле обязательное"),
   content: Yup.string()
     .min(3, "Это поле должно быть не менее 50 символов")
