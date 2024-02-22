@@ -80,7 +80,7 @@ function LectureDetails() {
     isSuccess,
   } = useLectureDetailsQuery(+id!, { enabled: !!id });
 
-  const { mutate: createLecture, isPending } = useLectureMutation({
+  const { mutate, isPending } = useLectureMutation({
     onSuccess: () => {
       queryClient.invalidateQueries({
         refetchType: "all",
@@ -94,6 +94,7 @@ function LectureDetails() {
     onError: () => {
       showErrorNotification();
     },
+    id: +id!,
   });
 
   const { mutate: deleteLecture, isPending: isDeleting } = useLectureDeletion(
@@ -124,7 +125,7 @@ function LectureDetails() {
   const isValid = Object.values(lectureForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<ILectureCreate> = (data: ILectureCreate) => {
-    createLecture({ ...data, number: +data.number });
+    mutate({ ...data, number: +data.number });
   };
 
   useEffect(() => {

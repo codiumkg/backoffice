@@ -83,6 +83,7 @@ function UserDetails() {
     onError: () => {
       showErrorNotification();
     },
+    id: +id!,
   });
 
   const isValid = Object.values(userForm.formState.errors).length === 0;

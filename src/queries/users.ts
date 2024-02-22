@@ -1,21 +1,24 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { IUser } from "@/interfaces/user";
+import { ICreateUser, IUser } from "@/interfaces/user";
 import {
   createUser,
   deleteUser,
   getUserDetails,
   getUsers,
+  updateUser,
 } from "@/requests/users";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface MutationQuery {
   onSuccess?: (data: IUser) => void;
   onError?: () => void;
+  id?: number;
 }
 
-export const useUserMutation = ({ onSuccess, onError }: MutationQuery) => {
+export const useUserMutation = ({ onSuccess, onError, id }: MutationQuery) => {
   const { data, mutate, isPending } = useMutation({
-    mutationFn: createUser,
+    mutationFn: (data: ICreateUser) =>
+      id ? updateUser(id, data) : createUser(data),
     onSuccess,
     onError,
   });

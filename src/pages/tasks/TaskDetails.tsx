@@ -74,6 +74,7 @@ function TaskDetails() {
     onError: () => {
       showErrorNotification();
     },
+    id: +id!,
   });
 
   const { mutate: deleteTask, isPending: isDeleting } = useTaskDeletion({

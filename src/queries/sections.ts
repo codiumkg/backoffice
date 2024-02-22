@@ -49,11 +49,16 @@ export const useSectionDetailsQuery = (
 interface MutationQuery {
   onSuccess?: (data: ISection) => void;
   onError?: () => void;
+  id?: number;
 }
 
-export const useSectionMutation = ({ onSuccess, onError }: MutationQuery) => {
+export const useSectionMutation = ({
+  onSuccess,
+  onError,
+  id,
+}: MutationQuery) => {
   const { data, mutate, isPending } = useMutation({
-    mutationFn: (data: ISectionCreate, id?: number) =>
+    mutationFn: (data: ISectionCreate) =>
       id ? updateSection(id, data) : createSection(data),
     onSuccess,
     onError,

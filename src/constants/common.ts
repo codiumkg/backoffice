@@ -13,3 +13,8 @@ export const ROLES_OPTIONS = Object.values(Role).map((role) => ({
   label: ROLES_DISPLAY[role],
   value: role,
 }));
+
+export enum TopicContentType {
+  TASK,
+  LECTURE,
+}

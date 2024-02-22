@@ -10,11 +10,14 @@ export async function getLectureDetails(id: number): Promise<ILecture> {
   return axios.get(`${API_LECTURES}${id}`).then(({ data }) => data);
 }
 
-export async function createLecture(data: ILectureCreate) {
+export async function createLecture(data: ILectureCreate): Promise<ILecture> {
   return axios.post(API_LECTURES, data).then(({ data }) => data);
 }
 
-export async function updateLecture(id: number, data: Partial<ILectureCreate>) {
+export async function updateLecture(
+  id: number,
+  data: Partial<ILectureCreate>
+): Promise<ILecture> {
   return axios.patch(`${API_LECTURES}${id}`, data).then(({ data }) => data);
 }
 

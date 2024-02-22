@@ -41,12 +41,13 @@ export const useTaskDetails = (id: number, { enabled }: QueryParams) => {
 interface MutationQuery {
   onSuccess?: (data: ITask) => void;
   onError?: () => void;
+  id?: number;
 }
 
 export const useTaskMutation = (params?: MutationQuery) => {
   const { data, mutate, isPending } = useMutation({
-    mutationFn: (data: ITaskCreate, id?: number) =>
-      id ? updateTask(id, data) : createTask(data),
+    mutationFn: (data: ITaskCreate) =>
+      params?.id ? updateTask(params.id, data) : createTask(data),
     onSuccess: params?.onSuccess,
     onError: params?.onError,
   });

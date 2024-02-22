@@ -14,6 +14,13 @@ export async function createUser(data: ICreateUser): Promise<IUser> {
   return axios.post(API_USERS, data).then(({ data }) => data);
 }
 
+export async function updateUser(
+  id: number,
+  data: Partial<ICreateUser>
+): Promise<IUser> {
+  return axios.patch(`${API_USERS}${id}`, data).then(({ data }) => data);
+}
+
 export async function deleteUser(id: number): Promise<IUser> {
   return axios.delete(`${API_USERS}${id}`).then(({ data }) => data);
 }

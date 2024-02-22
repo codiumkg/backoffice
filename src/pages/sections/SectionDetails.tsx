@@ -97,6 +97,7 @@ function SectionDetails() {
     onError: () => {
       showErrorNotification();
     },
+    id: +id!,
   });
 
   const { showErrorNotification, showSuccessNotification } = useNotification();
