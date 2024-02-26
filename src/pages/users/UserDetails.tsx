@@ -8,13 +8,14 @@ import { useNotification } from "@/hooks/useNotification";
 import { Role } from "@/interfaces/auth";
 import { IOption } from "@/interfaces/common";
 import { ICreateUser } from "@/interfaces/user";
+import { useGroupsQuery } from "@/queries/groups";
 import {
   useUserDeletion,
   useUserDetailsQuery,
   useUserMutation,
 } from "@/queries/users";
 import { useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -41,10 +42,26 @@ function UserDetails() {
     mode: "onBlur",
   });
 
+  const { data: groups, isLoading: isGroupsLoading } = useGroupsQuery();
+
   const [activeRole, setActiveRole] = useState<IOption>({
     label: ROLES_DISPLAY[userForm.getValues("role")],
     value: userForm.getValues("role"),
   });
+
+  const [activeGroup, setActiveGroup] = useState<IOption>({
+    label: groups?.[0].title,
+    value: groups?.[0].id.toString(),
+  });
+
+  const groupOptions = useMemo(
+    () =>
+      groups?.map((group) => ({
+        label: group.title,
+        value: group.id.toString(),
+      })),
+    [groups]
+  );
 
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -110,9 +127,28 @@ function UserDetails() {
         age: existingUser.profile?.age,
         firstName: existingUser.profile?.firstName,
         lastName: existingUser.profile?.lastName,
+        groupId: existingUser.groupId,
+      });
+
+      setActiveGroup({
+        label: existingUser.group?.title,
+        value: existingUser.groupId?.toString(),
       });
     }
   }, [existingUser, userForm, id]);
+
+  useEffect(() => {
+    if (!existingUser || !id) {
+      setActiveGroup({
+        label: groups?.[0].title,
+        value: groups?.[0].id.toString(),
+      });
+    }
+
+    if (groups) {
+      userForm.setValue("groupId", groups[0].id);
+    }
+  }, [groups, userForm, existingUser, id]);
 
   return (
     <Resource
@@ -148,6 +184,19 @@ function UserDetails() {
         label="Пароль"
         placeholder="Введите пароль..."
         errorMessage={userForm.formState.errors.password?.message}
+      />
+      <RelationInput
+        name="group"
+        options={groupOptions || []}
+        activeValue={activeGroup}
+        setActiveValue={(value) => {
+          userForm.setValue("groupId", +value.value);
+          setActiveGroup(value);
+        }}
+        label="Группа"
+        placeholder="Выберите группу..."
+        isLoading={isGroupsLoading}
+        onSearch={() => {}}
       />
       <RelationInput
         name="role"

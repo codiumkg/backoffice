@@ -1,4 +1,4 @@
-import { Role } from "./auth";
+import { IGroup, Role } from "./auth";
 
 export interface IUser {
   id: number;
@@ -7,6 +7,8 @@ export interface IUser {
   email?: string;
   phone?: string;
   role: Role;
+  group?: IGroup;
+  groupId?: number;
   profile?: IProfile;
 }
 
@@ -31,4 +33,5 @@ export interface ICreateUser {
   bio?: string;
   image?: string;
   age?: number;
+  groupId?: number;
 }
