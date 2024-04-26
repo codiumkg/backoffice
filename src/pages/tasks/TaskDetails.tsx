@@ -135,7 +135,13 @@ function TaskDetails() {
 
   useEffect(() => {
     if (existingTask && id) {
-      taskForm.reset(existingTask);
+      taskForm.reset({
+        text: existingTask.text,
+        topicId: existingTask.topicId,
+        answers: existingTask.answers,
+        tip: existingTask.tip,
+        image: existingTask.image,
+      });
       setActiveValue({
         label: existingTask.topic.title,
         value: existingTask.topic.id.toString(),
