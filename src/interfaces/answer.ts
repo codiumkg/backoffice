@@ -9,3 +9,8 @@ export interface IAnswer {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ICreateAnswer {
+  text: string;
+  isCorrectAnswer: boolean;
+}

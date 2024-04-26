@@ -1,4 +1,4 @@
-import { IAnswer } from "./answer";
+import { IAnswer, ICreateAnswer } from "./answer";
 import { ITopic } from "./topic";
 
 export interface ITask {
@@ -18,4 +18,5 @@ export interface ITaskCreate {
   image?: string;
   tip?: string;
   topicId: number;
+  answers: ICreateAnswer[];
 }

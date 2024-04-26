@@ -1,3 +1,5 @@
+import Button from "@/components/shared/Button/Button";
+import Checkbox from "@/components/shared/Checkbox/Checkbox";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
@@ -5,6 +7,7 @@ import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
+import { ICreateAnswer } from "@/interfaces/answer";
 import { IOption } from "@/interfaces/common";
 import { ITaskCreate } from "@/interfaces/task";
 import {
@@ -15,13 +18,21 @@ import {
 import { useTopicsQuery } from "@/queries/topics";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+
+import styles from "./TaskDetails.module.scss";
 
 const initialValues: ITaskCreate = {
   text: "",
   tip: "",
   topicId: -1,
+  answers: [],
 };
 
 function TaskDetails() {
@@ -32,6 +43,11 @@ function TaskDetails() {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
+
+  const [answer, setAnswer] = useState<ICreateAnswer>({
+    text: "",
+    isCorrectAnswer: false,
+  });
 
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
@@ -85,7 +101,6 @@ function TaskDetails() {
       });
 
       navigate(ROUTES.TASKS);
-
       showSuccessNotification();
     },
     onError: () => {
@@ -98,10 +113,19 @@ function TaskDetails() {
     mode: "onBlur",
   });
 
+  const [answers, setAnswers] = useState<ICreateAnswer[]>(
+    taskForm.watch("answers")
+  );
+
   const isValid = Object.values(taskForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<ITaskCreate> = (data: ITaskCreate) => {
     mutate(data);
+  };
+
+  const handleAddAnswer = () => {
+    setAnswers([...answers, answer]);
+    setAnswer({ text: "", isCorrectAnswer: false });
   };
 
   useEffect(() => {
@@ -111,6 +135,8 @@ function TaskDetails() {
         label: existingTask.topic.title,
         value: existingTask.topic.id.toString(),
       });
+
+      setAnswers(taskForm.watch("answers"));
     }
   }, [existingTask, taskForm, id]);
 
@@ -126,6 +152,12 @@ function TaskDetails() {
       taskForm.setValue("topicId", topics[0].id);
     }
   }, [topics, taskForm, existingTask, id]);
+
+  useEffect(() => {
+    taskForm.setValue("answers", answers);
+  }, [answers, taskForm]);
+
+  console.log(taskForm.watch("answers"));
 
   return (
     <Resource
@@ -174,6 +206,72 @@ function TaskDetails() {
           refetch();
         }}
       />
+
+      <h3>Варианты ответов</h3>
+
+      <div className={styles["answers-wrapper"]}>
+        {answers.map((answer, index) => (
+          <div className={styles["answer"]} key={index}>
+            <div className={styles["answer-inputs"]}>
+              <CustomInput
+                label={`Ответ ${index + 1}`}
+                placeholder="Введите вариант ответа..."
+                name="answers"
+                value={answer.text}
+                onChangeCallback={(value) => {
+                  setAnswers((prevAnswers) =>
+                    prevAnswers.map((answer, prevAnswerIndex) =>
+                      prevAnswerIndex === index
+                        ? { ...answer, text: value }
+                        : answer
+                    )
+                  );
+                }}
+              />
+
+              <Checkbox
+                label="Правильный ответ"
+                value={answer.isCorrectAnswer}
+                onClick={() => {
+                  setAnswers((prevAnswers) =>
+                    prevAnswers.map((answer, prevAnswerIndex) =>
+                      prevAnswerIndex === index
+                        ? {
+                            ...answer,
+                            isCorrectAnswer: !answer.isCorrectAnswer,
+                          }
+                        : answer
+                    )
+                  );
+                }}
+              />
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className={styles["input-container"]}>
+        <CustomInput
+          label="Ответ"
+          placeholder="Введите вариант ответа..."
+          name="answers"
+          value={answer.text}
+          onChangeCallback={(value) => setAnswer({ ...answer, text: value })}
+        />
+        <Checkbox
+          label="Правильный ответ"
+          value={answer.isCorrectAnswer}
+          onClick={() =>
+            setAnswer({
+              ...answer,
+              isCorrectAnswer: !answer.isCorrectAnswer,
+            })
+          }
+        />
+      </div>
+      <div className={styles["button-container"]}>
+        <Button text="Добавить вариант ответа" onClick={handleAddAnswer} />
+      </div>
     </Resource>
   );
 }
