@@ -18,12 +18,7 @@ import {
 import { useTopicsQuery } from "@/queries/topics";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import {
-  Controller,
-  SubmitHandler,
-  useFieldArray,
-  useForm,
-} from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
 import styles from "./TaskDetails.module.scss";
@@ -49,7 +44,8 @@ function TaskDetails() {
     isCorrectAnswer: false,
   });
 
-  const { showSuccessNotification, showErrorNotification } = useNotification();
+  const { showSuccessNotification, showErrorNotification, showNotification } =
+    useNotification();
 
   const { data: existingTask, isLoading: isTaskLoading } = useTaskDetails(
     +id!,
@@ -123,8 +119,17 @@ function TaskDetails() {
     mutate(data);
   };
 
+  const handleNewAnswerToggle = () => {
+    if (answers.some((answer) => answer.isCorrectAnswer)) {
+      showNotification("Допустим только один правильный вариант ответа");
+      return;
+    }
+
+    setAnswer({ ...answer, isCorrectAnswer: !answer.isCorrectAnswer });
+  };
+
   const handleAddAnswer = () => {
-    setAnswers([...answers, answer]);
+    setAnswers([...answers, { ...answer, text: answer.text.trim() }]);
     setAnswer({ text: "", isCorrectAnswer: false });
   };
 
@@ -136,7 +141,7 @@ function TaskDetails() {
         value: existingTask.topic.id.toString(),
       });
 
-      setAnswers(taskForm.watch("answers"));
+      setAnswers(taskForm.getValues("answers"));
     }
   }, [existingTask, taskForm, id]);
 
@@ -154,10 +159,8 @@ function TaskDetails() {
   }, [topics, taskForm, existingTask, id]);
 
   useEffect(() => {
-    taskForm.setValue("answers", answers);
+    taskForm.setValue("answers", answers, { shouldDirty: true });
   }, [answers, taskForm]);
-
-  console.log(taskForm.watch("answers"));
 
   return (
     <Resource
@@ -240,7 +243,7 @@ function TaskDetails() {
                             ...answer,
                             isCorrectAnswer: !answer.isCorrectAnswer,
                           }
-                        : answer
+                        : { ...answer, isCorrectAnswer: false }
                     )
                   );
                 }}
@@ -261,16 +264,15 @@ function TaskDetails() {
         <Checkbox
           label="Правильный ответ"
           value={answer.isCorrectAnswer}
-          onClick={() =>
-            setAnswer({
-              ...answer,
-              isCorrectAnswer: !answer.isCorrectAnswer,
-            })
-          }
+          onClick={handleNewAnswerToggle}
         />
       </div>
       <div className={styles["button-container"]}>
-        <Button text="Добавить вариант ответа" onClick={handleAddAnswer} />
+        <Button
+          text="Добавить вариант ответа"
+          onClick={handleAddAnswer}
+          disabled={answer.text.trim().length === 0}
+        />
       </div>
     </Resource>
   );

@@ -18,9 +18,20 @@ function showErrorNotification(text: string = "Ошибка") {
   });
 }
 
+function showNotification(text: string) {
+  toast(text, {
+    icon: "⚠️",
+    style: {
+      background: "var(--secondary-color)",
+      color: "var(--text-color)",
+    },
+  });
+}
+
 export function useNotification() {
   return {
     showSuccessNotification,
     showErrorNotification,
+    showNotification,
   };
 }
