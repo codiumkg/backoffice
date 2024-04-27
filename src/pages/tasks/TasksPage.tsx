@@ -2,6 +2,7 @@ import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
 import { ROUTES } from "@/constants/routes";
 import { useTasksQuery } from "@/queries/tasks";
+import { cleanHtml } from "@/utils/utils";
 import { useNavigate } from "react-router-dom";
 
 function TasksPage() {
@@ -25,7 +26,7 @@ function TasksPage() {
             onClick={() => navigate(`${ROUTES.TASK}/${task.id}`)}
           >
             <TableColumn>{task.id}</TableColumn>
-            <TableColumn>{task.text}</TableColumn>
+            <TableColumn>{cleanHtml(task.text)}</TableColumn>
             <TableColumn>{task.topic?.title}</TableColumn>
           </TableRow>
         ))}
