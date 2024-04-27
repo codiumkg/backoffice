@@ -39,17 +39,22 @@ export const responseInterceptor = ({
     (response) => response,
     (error) => {
       if (error.response.status === 403) {
+        showNotification?.("Нет доступа к ресурсу");
+
         throw new ApiError("Нет доступа к ресурсу", 403);
-      } else if (error.response.status === 401) {
+      } else if (
+        error.response.status === 401 &&
+        !error.request.responseURL.includes("login")
+      ) {
         localStorage.removeItem(StorageKeys.TOKEN);
 
         navigate?.(ROUTES.LOGIN);
         showNotification?.("Пожалуйста авторизуйтесь");
 
         throw new ApiError("Пожалуйста авторизуйтесь", 401);
-      } else {
-        return Promise.reject(error.response || error.message);
       }
+
+      return Promise.reject(error.response || error.message);
     }
   );
 

@@ -14,7 +14,7 @@ function Home() {
     } else {
       navigate(ROUTES.LOGIN, { replace: true });
     }
-  }, []);
+  }, [checkIsLoggedIn, navigate]);
   return <></>;
 }
 
