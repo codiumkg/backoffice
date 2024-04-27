@@ -10,7 +10,11 @@ export class ApiError extends Error {
   }
 }
 
-axios.interceptors.request.use((config) => {
+export const request = axios.create({
+  baseURL: import.meta.env.VITE_BASE_URL || "",
+});
+
+request.interceptors.request.use((config) => {
   const token = localStorage.getItem(StorageKeys.TOKEN);
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -19,7 +23,7 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
-axios.interceptors.response.use(
+request.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 403) {

@@ -1,27 +1,27 @@
-import axios from "axios";
+import { request } from "./request";
 import { API_GROUPS } from "../constants/apiConstants";
 import { IGroup } from "../interfaces/auth";
 import { IGroupCreate } from "../interfaces/group";
 
 export async function getGroups(): Promise<IGroup[]> {
-  return axios.get(API_GROUPS).then(({ data }) => data);
+  return request.get(API_GROUPS).then(({ data }) => data);
 }
 
 export async function getGroupDetails(id: number) {
-  return axios.get(`${API_GROUPS}${id}`).then(({ data }) => data);
+  return request.get(`${API_GROUPS}${id}`).then(({ data }) => data);
 }
 
 export async function createGroup(data: IGroupCreate): Promise<IGroup> {
-  return axios.post(API_GROUPS, data).then(({ data }) => data);
+  return request.post(API_GROUPS, data).then(({ data }) => data);
 }
 
 export async function updateGroup(
   id: number,
   data: Partial<IGroupCreate>
 ): Promise<IGroup> {
-  return axios.patch(`${API_GROUPS}${id}`, data).then(({ data }) => data);
+  return request.patch(`${API_GROUPS}${id}`, data).then(({ data }) => data);
 }
 
 export async function removeGroup(id: number) {
-  return axios.delete(`${API_GROUPS}${id}`).then(({ data }) => data);
+  return request.delete(`${API_GROUPS}${id}`).then(({ data }) => data);
 }

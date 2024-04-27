@@ -1,7 +1,7 @@
-import axios from "axios";
 import { API_LOGIN } from "../../constants/apiConstants";
 import { ILogin, ILoginResponse } from "../../interfaces/auth";
+import { request } from "../request";
 
 export default function loginRequest(data: ILogin): Promise<ILoginResponse> {
-  return axios.post(API_LOGIN, data).then(({ data }) => data);
+  return request.post(API_LOGIN, data).then(({ data }) => data);
 }
