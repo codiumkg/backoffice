@@ -1,3 +1,5 @@
+import { DndContext } from "@dnd-kit/core";
+import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
@@ -8,6 +10,7 @@ import { IOption } from "@/interfaces/common";
 import { ITopicCreate } from "@/interfaces/topic";
 import { useSectionsQuery } from "@/queries/sections";
 import {
+  useTopicContent,
   useTopicDeletion,
   useTopicDetailsQuery,
   useTopicMutation,
@@ -16,6 +19,9 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import ContentCard from "./components/ContentCard";
+import Typography from "@/components/shared/Typography/Typography";
+import { ITopicContent } from "@/interfaces/topicContent";
 
 interface TopicForm {
   title: string;
@@ -49,6 +55,13 @@ function TopicDetails() {
     isPending: isSectionsLoading,
     refetch,
   } = useSectionsQuery({ params: { search } });
+
+  const { data: topicContent, isLoading: isTopicContentLoading } =
+    useTopicContent(+id!, { enabled: !!id });
+
+  const [topicContentDisplay, setTopicContentDisplay] = useState<
+    ITopicContent[]
+  >(topicContent || []);
 
   const [activeValue, setActiveValue] = useState<IOption>({
     label: sections?.[0].title,
@@ -112,6 +125,10 @@ function TopicDetails() {
   };
 
   useEffect(() => {
+    if (topicContent) setTopicContentDisplay(topicContent);
+  }, [topicContent]);
+
+  useEffect(() => {
     if (existingTopic && id) {
       topicForm.reset({
         title: existingTopic.title,
@@ -141,7 +158,7 @@ function TopicDetails() {
     <Resource
       title="Топик"
       isExisting={!!id}
-      isLoading={isLoading}
+      isLoading={isLoading || isTopicContentLoading}
       isSaveDisabled={!isValid || !topicForm.formState.isDirty}
       isSaveButtonLoading={isPending}
       onDeleteClick={deleteTopic}
@@ -171,6 +188,46 @@ function TopicDetails() {
           refetch();
         }}
       />
+
+      <Typography variant="body3" weight="300">
+        Содержимое топика (лекции и задачи)
+      </Typography>
+
+      <DndContext
+        onDragEnd={(e) => {
+          const { active, over } = e;
+
+          if (active.id !== over?.id) {
+            setTopicContentDisplay((content) => {
+              const oldIndex = content.findIndex(
+                (content) => content.id === active.id
+              );
+              const newIndex = content.findIndex(
+                (content) => content.id === over?.id
+              );
+
+              return arrayMove(content, oldIndex, newIndex);
+            });
+          }
+        }}
+      >
+        <SortableContext items={topicContentDisplay}>
+          {!isTopicContentLoading && (
+            <div
+              style={{
+                marginTop: "16px",
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                gap: "16px",
+              }}
+            >
+              {topicContentDisplay?.map((content) => (
+                <ContentCard topicContent={content} key={content.id} />
+              ))}
+            </div>
+          )}
+        </SortableContext>
+      </DndContext>
     </Resource>
   );
 }

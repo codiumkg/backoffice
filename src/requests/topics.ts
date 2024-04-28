@@ -1,6 +1,7 @@
 import { ITopic, ITopicCreate } from "../interfaces/topic";
 import { API_TOPICS } from "../constants/apiConstants";
 import { request } from "./request";
+import { ITopicContent } from "@/interfaces/topicContent";
 
 export async function getTopics(search?: string): Promise<ITopic[]> {
   return request
@@ -29,4 +30,10 @@ export async function updateTopic(
 
 export async function removeTopic(id: number) {
   return request.delete(`${API_TOPICS}${id}`).then(({ data }) => data);
+}
+
+export async function getTopicContent(id: number): Promise<ITopicContent[]> {
+  return request
+    .get(`${API_TOPICS}${id}/get-content/`)
+    .then(({ data }) => data);
 }

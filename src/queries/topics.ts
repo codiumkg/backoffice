@@ -2,6 +2,7 @@ import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ITopic, ITopicCreate } from "@/interfaces/topic";
 import {
   createTopic,
+  getTopicContent,
   getTopicDetails,
   getTopics,
   removeTopic,
@@ -77,5 +78,18 @@ export const useTopicDeletion = (
   return {
     mutate,
     isPending,
+  };
+};
+
+export const useTopicContent = (id: number, { enabled }: QueryParams) => {
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERY_KEYS.TOPIC_CONTENT, id],
+    queryFn: () => getTopicContent(id),
+    enabled,
+  });
+
+  return {
+    data,
+    isLoading,
   };
 };
