@@ -124,6 +124,15 @@ function TopicDetails() {
     mutate(data);
   };
 
+  const updateTopicContentOrderNumbers = () => {
+    setTopicContentDisplay((topicContent) => {
+      return topicContent.map((content, index) => ({
+        ...content,
+        orderNumber: ++index,
+      }));
+    });
+  };
+
   useEffect(() => {
     if (topicContent) setTopicContentDisplay(topicContent);
   }, [topicContent]);
@@ -208,6 +217,8 @@ function TopicDetails() {
 
               return arrayMove(content, oldIndex, newIndex);
             });
+
+            updateTopicContentOrderNumbers();
           }
         }}
       >
