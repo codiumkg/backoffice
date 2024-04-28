@@ -12,6 +12,10 @@ export async function getTopicContentDetails(
   return request.get(`${API_TOPIC_CONTENT}${id}`).then(({ data }) => data);
 }
 
+export async function createTopicContent(data: ITopicContentCreate) {
+  return request.post(API_TOPIC_CONTENT, data).then(({ data }) => data);
+}
+
 export async function updateTopicContent(
   id: number,
   data: Partial<ITopicContentCreate>

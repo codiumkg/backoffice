@@ -17,7 +17,7 @@ export interface ITopicContent {
 
 export interface ITopicContentCreate {
   type: TopicContentType;
-  orderNumber: number;
+  orderNumber?: number;
   taskId?: number;
   lectureId?: number;
   topicId: number;

@@ -22,6 +22,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ContentCard from "./components/ContentCard";
 import Typography from "@/components/shared/Typography/Typography";
 import { ITopicContent } from "@/interfaces/topicContent";
+import AddContentCard from "./components/AddContentCard";
 
 interface TopicForm {
   title: string;
@@ -232,9 +233,10 @@ function TopicDetails() {
                 gap: "16px",
               }}
             >
-              {topicContentDisplay?.map((content) => (
+              {topicContentDisplay.map((content) => (
                 <ContentCard topicContent={content} key={content.id} />
               ))}
+              <AddContentCard />
             </div>
           )}
         </SortableContext>

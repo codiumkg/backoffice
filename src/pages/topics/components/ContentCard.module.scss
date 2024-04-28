@@ -3,8 +3,13 @@
     align-items: center;
     gap: 16px;
     padding: 24px;
-    border-radius: var(--secondary-radius);
+    border-radius: var(--primary-radius);
     background-color: var(--primary-color);
     border: 1px solid var(--highlight-color);
     cursor: grab;
+}
+
+.add {
+    justify-content: center;
+    cursor: pointer;
 }
