@@ -1,11 +1,12 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { ITopic, ITopicCreate } from "@/interfaces/topic";
+import { IReorderTopicContent, ITopic, ITopicCreate } from "@/interfaces/topic";
 import {
   createTopic,
   getTopicContent,
   getTopicDetails,
   getTopics,
   removeTopic,
+  reorderTopicContent,
   updateTopic,
 } from "@/requests/topics";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -91,5 +92,22 @@ export const useTopicContent = (id: number, { enabled }: QueryParams) => {
   return {
     data,
     isLoading,
+  };
+};
+
+export const useTopicContentReorder = ({
+  onError,
+  onSuccess,
+  id,
+}: MutationQuery) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: IReorderTopicContent) => reorderTopicContent(id!, data),
+    onSuccess,
+    onError,
+  });
+
+  return {
+    mutate,
+    isPending,
   };
 };

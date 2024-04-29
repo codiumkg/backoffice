@@ -13,3 +13,7 @@ export interface ITopicCreate {
   title: string;
   sectionId: number;
 }
+
+export interface IReorderTopicContent {
+  topicContentIds: number[];
+}

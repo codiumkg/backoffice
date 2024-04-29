@@ -1,4 +1,8 @@
-import { ITopic, ITopicCreate } from "../interfaces/topic";
+import {
+  IReorderTopicContent,
+  ITopic,
+  ITopicCreate,
+} from "../interfaces/topic";
 import { API_TOPICS } from "../constants/apiConstants";
 import { request } from "./request";
 import { ITopicContent } from "@/interfaces/topicContent";
@@ -35,5 +39,14 @@ export async function removeTopic(id: number) {
 export async function getTopicContent(id: number): Promise<ITopicContent[]> {
   return request
     .get(`${API_TOPICS}${id}/get-content/`)
+    .then(({ data }) => data);
+}
+
+export async function reorderTopicContent(
+  id: number,
+  data: IReorderTopicContent
+) {
+  return request
+    .post(`${API_TOPICS}${id}/update_content_order/`, data)
     .then(({ data }) => data);
 }

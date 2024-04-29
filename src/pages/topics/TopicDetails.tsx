@@ -11,6 +11,7 @@ import { ITopicCreate } from "@/interfaces/topic";
 import { useSectionsQuery } from "@/queries/sections";
 import {
   useTopicContent,
+  useTopicContentReorder,
   useTopicDeletion,
   useTopicDetailsQuery,
   useTopicMutation,
@@ -27,11 +28,13 @@ import AddContentCard from "./components/AddContentCard";
 interface TopicForm {
   title: string;
   sectionId: number;
+  topicContentIds: number[];
 }
 
 const initialValues: TopicForm = {
   title: "",
   sectionId: -1,
+  topicContentIds: [],
 };
 
 function TopicDetails() {
@@ -68,6 +71,11 @@ function TopicDetails() {
     label: sections?.[0].title,
     value: sections?.[0].id.toString(),
   });
+
+  const topicContentIds = useMemo(
+    () => topicContentDisplay.map((content) => content.id),
+    [topicContentDisplay]
+  );
 
   const sectionOptions = useMemo(
     () =>
@@ -114,6 +122,9 @@ function TopicDetails() {
     }
   );
 
+  const { mutate: reorderTopicContent, isPending: isReordering } =
+    useTopicContentReorder({ id: +id! });
+
   const topicForm = useForm<TopicForm>({
     defaultValues: initialValues,
     mode: "onBlur",
@@ -122,10 +133,14 @@ function TopicDetails() {
   const isValid = Object.values(topicForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<TopicForm> = (data: ITopicCreate) => {
-    mutate(data);
+    mutate({ sectionId: data.sectionId, title: data.title });
+    reorderTopicContent({ topicContentIds });
   };
 
   const updateTopicContentOrderNumbers = () => {
+    topicForm.setValue("topicContentIds", topicContentIds, {
+      shouldDirty: true,
+    });
     setTopicContentDisplay((topicContent) => {
       return topicContent.map((content, index) => ({
         ...content,
@@ -135,8 +150,12 @@ function TopicDetails() {
   };
 
   useEffect(() => {
-    if (topicContent) setTopicContentDisplay(topicContent);
-  }, [topicContent]);
+    if (topicContent) {
+      setTopicContentDisplay(topicContent);
+    }
+  }, [topicContent, topicForm]);
+
+  useEffect(() => {}, [topicContentDisplay, topicForm, topicContentIds]);
 
   useEffect(() => {
     if (existingTopic && id) {
@@ -170,7 +189,7 @@ function TopicDetails() {
       isExisting={!!id}
       isLoading={isLoading || isTopicContentLoading}
       isSaveDisabled={!isValid || !topicForm.formState.isDirty}
-      isSaveButtonLoading={isPending}
+      isSaveButtonLoading={isPending || isReordering}
       onDeleteClick={deleteTopic}
       isDeleting={isDeleting}
       onSaveClick={() => onSubmit(topicForm.getValues())}
