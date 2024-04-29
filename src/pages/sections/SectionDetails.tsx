@@ -163,7 +163,9 @@ function SectionDetails() {
         options={subjectOptions}
         activeValue={activeValue}
         setActiveValue={(value) => {
-          sectionForm.setValue("subjectId", +value.value);
+          sectionForm.setValue("subjectId", +value.value, {
+            shouldDirty: true,
+          });
           setActiveValue(value);
         }}
         label="Предмет"

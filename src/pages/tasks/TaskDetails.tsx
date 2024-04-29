@@ -204,7 +204,7 @@ function TaskDetails() {
         options={topicOptions}
         activeValue={activeValue}
         setActiveValue={(value) => {
-          taskForm.setValue("topicId", +value.value);
+          taskForm.setValue("topicId", +value.value, { shouldDirty: true });
           setActiveValue(value);
         }}
         label="Топик"

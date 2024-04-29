@@ -204,7 +204,7 @@ function LectureDetails() {
         options={topicOptions}
         activeValue={activeValue}
         setActiveValue={(value) => {
-          lectureForm.setValue("topicId", +value.value);
+          lectureForm.setValue("topicId", +value.value, { shouldDirty: true });
           setActiveValue(value);
         }}
         label="Топик"

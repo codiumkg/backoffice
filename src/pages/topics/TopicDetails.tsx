@@ -206,7 +206,7 @@ function TopicDetails() {
         options={sectionOptions}
         activeValue={activeValue}
         setActiveValue={(value) => {
-          topicForm.setValue("sectionId", +value.value);
+          topicForm.setValue("sectionId", +value.value, { shouldDirty: true });
           setActiveValue(value);
         }}
         label="Раздел"
