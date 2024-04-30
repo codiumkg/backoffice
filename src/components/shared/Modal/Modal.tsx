@@ -41,10 +41,18 @@ function Modal({
         </div>
         <div>{children}</div>
         <div className={styles.buttons}>
-          <Button isLoading={isLoading} onClick={onPrimaryClick}>
+          <Button
+            isLoading={isLoading}
+            onClick={onPrimaryClick}
+            color="primary"
+          >
             {primaryButtonText || "Сохранить"}
           </Button>
-          {onCancelClick && <Button onClick={onCancelClick}>Отмена</Button>}
+          {onCancelClick && (
+            <Button onClick={onCancelClick} color="secondary">
+              Отмена
+            </Button>
+          )}
         </div>
       </div>
     </div>

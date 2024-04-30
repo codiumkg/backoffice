@@ -106,6 +106,7 @@ export default function Login() {
 
           <Button
             type="submit"
+            color="primary"
             isLoading={isLoading}
             disabled={!isValid || !isDirty || isLoading}
           >

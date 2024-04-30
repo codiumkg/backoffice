@@ -41,12 +41,18 @@ export default function Resource({
 
         <div className={styles.buttons}>
           {isExisting && (
-            <Button onClick={handleDeleteClick} isLoading={isDeleting}>
+            <Button
+              onClick={handleDeleteClick}
+              color="danger"
+              variant="light"
+              isLoading={isDeleting}
+            >
               Удалить
             </Button>
           )}
 
           <Button
+            color="primary"
             onClick={onSaveClick}
             disabled={isSaveDisabled}
             isLoading={isSaveButtonLoading}

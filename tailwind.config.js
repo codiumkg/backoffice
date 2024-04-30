@@ -12,12 +12,14 @@ export default {
   },
   darkMode: "class",
   plugins: [nextui({
+    addCommonColors: true,
+    defaultTheme: "dark",
     themes: {
       dark: {
         colors: {
           primary: {
-            DEFAULT: "#ff0000",
-            foreground: "#ff0000"
+            DEFAULT: "#FFC38D",
+            foreground: "#1a1817"
           }
         }
       }

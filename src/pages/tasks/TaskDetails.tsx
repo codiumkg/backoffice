@@ -275,6 +275,7 @@ function TaskDetails() {
       </div>
       <div className={styles["button-container"]}>
         <Button
+          color="primary"
           onClick={handleAddAnswer}
           disabled={answer.text.trim().length === 0}
         >

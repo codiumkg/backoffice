@@ -1,8 +1,6 @@
 import { ReactNode } from "react";
 
-import { IoMdListBox } from "react-icons/io";
-import { CiCirclePlus } from "react-icons/ci";
-
+import { Icons } from "../Icons";
 import Typography from "../Typography/Typography";
 import { Button } from "@nextui-org/react";
 
@@ -29,13 +27,17 @@ export default function ResourceList({
     <div className={styles.wrapper}>
       <div className={styles.header}>
         <div className="flex center">
-          <IoMdListBox className={styles.icon} />
+          <Icons.LIST_BOX className="text-3xl mr-2" />
           <Typography>{title}</Typography>
         </div>
 
         {onCreateClick && (
           <div className={styles.buttons}>
-            <Button onClick={onCreateClick} startContent={<CiCirclePlus />}>
+            <Button
+              onClick={onCreateClick}
+              color="primary"
+              startContent={<Icons.PLUS className="text-lg" />}
+            >
               Добавить
             </Button>
           </div>
