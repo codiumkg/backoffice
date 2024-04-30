@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
+import { NextUIProvider } from "@nextui-org/react";
 import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import RootRouter from "./routes/RootRouter";
@@ -27,9 +28,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 export default function Main() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RootRouter>
-        <App />
-      </RootRouter>
+      <NextUIProvider>
+        <RootRouter>
+          <App />
+        </RootRouter>
+      </NextUIProvider>
 
       {/* <ReactQueryDevtools /> */}
     </QueryClientProvider>

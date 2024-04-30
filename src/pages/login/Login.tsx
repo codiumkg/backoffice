@@ -2,7 +2,7 @@ import * as Yup from "yup";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import Button from "@/components/shared/Button/Button";
+import { Button } from "@nextui-org/react";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import Typography from "@/components/shared/Typography/Typography";
 import { useNotification } from "@/hooks/useNotification";
@@ -105,11 +105,12 @@ export default function Login() {
           />
 
           <Button
-            text="Войти"
             type="submit"
             isLoading={isLoading}
             disabled={!isValid || !isDirty || isLoading}
-          />
+          >
+            Войти
+          </Button>
         </form>
       </div>
     </div>

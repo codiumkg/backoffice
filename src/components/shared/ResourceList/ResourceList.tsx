@@ -4,7 +4,7 @@ import { IoMdListBox } from "react-icons/io";
 import { CiCirclePlus } from "react-icons/ci";
 
 import Typography from "../Typography/Typography";
-import Button from "../Button/Button";
+import { Button } from "@nextui-org/react";
 
 import styles from "./ResourceList.module.scss";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
@@ -35,12 +35,9 @@ export default function ResourceList({
 
         {onCreateClick && (
           <div className={styles.buttons}>
-            <Button
-              text="Добавить"
-              height="36px"
-              icon={<CiCirclePlus />}
-              onClick={onCreateClick}
-            />
+            <Button onClick={onCreateClick} startContent={<CiCirclePlus />}>
+              Добавить
+            </Button>
           </div>
         )}
       </div>

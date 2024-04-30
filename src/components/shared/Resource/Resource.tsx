@@ -2,7 +2,7 @@ import styles from "./Resource.module.scss";
 import Typography from "../Typography/Typography";
 import { ReactNode, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
-import Button from "../Button/Button";
+import { Button } from "@nextui-org/react";
 import Modal from "../Modal/Modal";
 
 interface Props {
@@ -41,23 +41,18 @@ export default function Resource({
 
         <div className={styles.buttons}>
           {isExisting && (
-            <Button
-              text="Удалить"
-              onClick={handleDeleteClick}
-              height="40px"
-              color="var(--danger-color)"
-              isLoading={isDeleting}
-              isTextButton
-            />
+            <Button onClick={handleDeleteClick} isLoading={isDeleting}>
+              Удалить
+            </Button>
           )}
 
           <Button
             onClick={onSaveClick}
-            text="Сохранить"
-            height="40px"
             disabled={isSaveDisabled}
             isLoading={isSaveButtonLoading}
-          />
+          >
+            Сохранить
+          </Button>
         </div>
       </div>
 

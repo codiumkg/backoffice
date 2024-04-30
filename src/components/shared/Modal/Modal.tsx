@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import Typography from "../Typography/Typography";
 import styles from "./Modal.module.scss";
-import Button from "../Button/Button";
+import { Button } from "@nextui-org/react";
 
 interface Props {
   title: string;
@@ -41,18 +41,10 @@ function Modal({
         </div>
         <div>{children}</div>
         <div className={styles.buttons}>
-          <Button
-            text={primaryButtonText || "Сохранить"}
-            isLoading={isLoading}
-            onClick={onPrimaryClick}
-          />
-          {onCancelClick && (
-            <Button
-              text="Отмена"
-              onClick={onCancelClick}
-              color="var(--text-color)"
-            />
-          )}
+          <Button isLoading={isLoading} onClick={onPrimaryClick}>
+            {primaryButtonText || "Сохранить"}
+          </Button>
+          {onCancelClick && <Button onClick={onCancelClick}>Отмена</Button>}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import Button from "@/components/shared/Button/Button";
+import { Button } from "@nextui-org/react";
 import Checkbox from "@/components/shared/Checkbox/Checkbox";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import RelationInput from "@/components/shared/RelationInput/RelationInput";
@@ -275,10 +275,11 @@ function TaskDetails() {
       </div>
       <div className={styles["button-container"]}>
         <Button
-          text="Добавить вариант ответа"
           onClick={handleAddAnswer}
           disabled={answer.text.trim().length === 0}
-        />
+        >
+          Добавить вариант ответа
+        </Button>
       </div>
     </Resource>
   );
