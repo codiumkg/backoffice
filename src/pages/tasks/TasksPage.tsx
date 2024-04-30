@@ -1,9 +1,16 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
-import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
 import { ROUTES } from "@/constants/routes";
 import { useTasksQuery } from "@/queries/tasks";
-import { cleanHtml } from "@/utils/utils";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableRow,
+  TableBody,
+  TableCell,
+} from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
+import { columns, renderCell } from "./columns";
 
 function TasksPage() {
   const { data: tasks, isPending } = useTasksQuery();
@@ -13,23 +20,31 @@ function TasksPage() {
   return (
     <ResourceList
       title="Задачи"
-      isLoading={isPending}
       onCreateClick={() => navigate(ROUTES.TASK)}
       itemsLength={tasks?.length}
     >
-      <Table
-        headers={[{ title: "ID" }, { title: "Содержимое" }, { title: "Топик" }]}
-      >
-        {tasks?.map((task) => (
-          <TableRow
-            key={task.id}
-            onClick={() => navigate(`${ROUTES.TASK}/${task.id}`)}
-          >
-            <TableColumn>{task.id}</TableColumn>
-            <TableColumn>{cleanHtml(task.text)}</TableColumn>
-            <TableColumn>{task.topic?.title}</TableColumn>
-          </TableRow>
-        ))}
+      <Table aria-label="Задачи">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.label}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody
+          items={tasks || []}
+          emptyContent="Нет задач."
+          isLoading={isPending}
+        >
+          {(task) => (
+            <TableRow
+              key={task.id}
+              onClick={() => navigate(`${ROUTES.TASK}/${task.id}`)}
+            >
+              {(columnKey) => (
+                <TableCell>{renderCell(task, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
       </Table>
     </ResourceList>
   );

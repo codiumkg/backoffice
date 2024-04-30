@@ -1,10 +1,16 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
-import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
-import { DATE_FORMAT } from "@/constants/common";
 import { ROUTES } from "@/constants/routes";
 import { useSubjectsQuery } from "@/queries/subjects";
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableRow,
+  TableBody,
+  TableCell,
+} from "@nextui-org/react";
+import { columns, renderCell } from "./columns";
 
 function SubjectsPage() {
   const { data: subjects, isFetching } = useSubjectsQuery({});
@@ -14,33 +20,31 @@ function SubjectsPage() {
   return (
     <ResourceList
       title="Предметы"
-      isLoading={isFetching}
       onCreateClick={() => navigate(ROUTES.SUBJECT)}
       itemsLength={subjects?.length}
     >
-      <Table
-        headers={[
-          { title: "ID" },
-          { title: "Название" },
-          { title: "Создан" },
-          { title: "Обновлен" },
-        ]}
-      >
-        {subjects?.map((subject) => (
-          <TableRow
-            key={subject.id}
-            onClick={() => navigate(`${ROUTES.SUBJECT}/${subject.id}`)}
-          >
-            <TableColumn>{subject.id}</TableColumn>
-            <TableColumn>{subject.title}</TableColumn>
-            <TableColumn>
-              {dayjs(subject.createdAt).format(DATE_FORMAT)}
-            </TableColumn>
-            <TableColumn>
-              {dayjs(subject.updatedAt).format(DATE_FORMAT)}
-            </TableColumn>
-          </TableRow>
-        ))}
+      <Table aria-label="Предметы">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.label}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody
+          items={subjects || []}
+          emptyContent="Нет предметов."
+          isLoading={isFetching}
+        >
+          {(subject) => (
+            <TableRow
+              key={subject.id}
+              onClick={() => navigate(`${ROUTES.SUBJECT}/${subject.id}`)}
+            >
+              {(columnKey) => (
+                <TableCell>{renderCell(subject, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
       </Table>
     </ResourceList>
   );

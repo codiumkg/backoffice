@@ -1,10 +1,16 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
-import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
-import { DATE_FORMAT } from "@/constants/common";
 import { ROUTES } from "@/constants/routes";
 import { useLecturesQuery } from "@/queries/lectures";
-import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableRow,
+  TableBody,
+  TableCell,
+} from "@nextui-org/react";
+import { columns, renderCell } from "./columns";
 
 function LecturesPage() {
   const { data: lectures, isLoading } = useLecturesQuery();
@@ -14,37 +20,31 @@ function LecturesPage() {
   return (
     <ResourceList
       title="Лекции"
-      isLoading={isLoading}
       onCreateClick={() => navigate(ROUTES.LECTURE)}
       itemsLength={lectures?.length}
     >
-      <Table
-        headers={[
-          { title: "ID" },
-          { title: "Название" },
-          { title: "Номер" },
-          { title: "Топик" },
-          { title: "Создан" },
-          { title: "Обновлен" },
-        ]}
-      >
-        {lectures?.map((lecture) => (
-          <TableRow
-            key={lecture.id}
-            onClick={() => navigate(`${ROUTES.LECTURE}/${lecture.id}`)}
-          >
-            <TableColumn>{lecture.id}</TableColumn>
-            <TableColumn>{lecture.title}</TableColumn>
-            <TableColumn>{lecture.number}</TableColumn>
-            <TableColumn>{lecture.topic.title}</TableColumn>
-            <TableColumn>
-              {dayjs(lecture.createdAt).format(DATE_FORMAT)}
-            </TableColumn>
-            <TableColumn>
-              {dayjs(lecture.updatedAt).format(DATE_FORMAT)}
-            </TableColumn>
-          </TableRow>
-        ))}
+      <Table aria-label="Заявки">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.label}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody
+          items={lectures || []}
+          emptyContent="Нет заявок."
+          isLoading={isLoading}
+        >
+          {(lecture) => (
+            <TableRow
+              key={lecture.id}
+              onClick={() => navigate(`${ROUTES.LECTURE}/${lecture.id}`)}
+            >
+              {(columnKey) => (
+                <TableCell>{renderCell(lecture, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
       </Table>
     </ResourceList>
   );

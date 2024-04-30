@@ -1,30 +1,41 @@
 import { ITableHeader } from "@/interfaces/table";
-import { ReactNode, useEffect, useRef, useState } from "react";
-import cn from "classnames";
+import {
+  JSXElementConstructor,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import ContextMenu from "../ContextMenu/ContextMenu";
 import ThreeDotButton from "../ThreeDotButton/ThreeDotButton";
-
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBodyProps,
+} from "@nextui-org/react";
 import styles from "./Table.module.scss";
 import Modal from "../Modal/Modal";
 
 interface Props {
   headers: ITableHeader[];
-  children: ReactNode;
+  tableBody: ReactElement<
+    TableBodyProps<object>,
+    string | JSXElementConstructor<any>
+  >;
 }
 
-export default function Table({ headers, children }: Props) {
+export default function CustomTable({ headers, tableBody }: Props) {
   return (
-    <div className={cn(styles.wrapper, "flex-col")}>
-      <div className={cn(styles.header, "flex")}>
-        {headers.map(({ title }) => (
-          <div key={title} className={styles.column}>
-            {title}
-          </div>
-        ))}
-      </div>
-
-      <div>{children}</div>
-    </div>
+    <Table>
+      <TableHeader columns={headers}>
+        {(header) => (
+          <TableColumn key={header.title}>{header.title}</TableColumn>
+        )}
+      </TableHeader>
+      {tableBody}
+    </Table>
   );
 }
 
@@ -35,7 +46,7 @@ interface TableRowProps {
   isDeleting?: boolean;
 }
 
-export function TableRow({
+export function CustomTableRow({
   children,
   isDeleting,
   onClick,
@@ -110,7 +121,7 @@ interface TableColumnProps {
   children: ReactNode;
 }
 
-export function TableColumn({ flex = 1, children }: TableColumnProps) {
+export function CustomTableColumn({ flex = 1, children }: TableColumnProps) {
   return (
     <div className={styles.column} style={{ flex }}>
       {children}

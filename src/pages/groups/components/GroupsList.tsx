@@ -1,8 +1,16 @@
 import { IGroup } from "@/interfaces/group";
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
-import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
 import { ROUTES } from "@/constants/routes";
 import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableRow,
+  TableBody,
+  TableCell,
+} from "@nextui-org/react";
+import { columns, renderCell } from "./columns";
 
 interface Props {
   groups: IGroup[];
@@ -15,23 +23,32 @@ function GroupsList({ groups, isLoading }: Props) {
   return (
     <ResourceList
       title="Группы"
-      isLoading={isLoading}
       onCreateClick={() => navigate(ROUTES.GROUP)}
       itemsLength={groups.length}
     >
-      <Table
-        headers={[{ title: "ID" }, { title: "Название" }, { title: "Предмет" }]}
-      >
-        {groups.map((group) => (
-          <TableRow
-            key={group.id}
-            onClick={() => navigate(`${ROUTES.GROUP}/${group.id}`)}
-          >
-            <TableColumn>{group.id}</TableColumn>
-            <TableColumn>{group.title}</TableColumn>
-            <TableColumn>{group.subject.title}</TableColumn>
-          </TableRow>
-        ))}
+      <Table aria-label="Группы">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.label}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody
+          items={groups}
+          emptyContent="Нет групп."
+          isLoading={isLoading}
+        >
+          {(group) => (
+            <TableRow
+              key={group.id}
+              onClick={() => navigate(`${ROUTES.GROUP}/${group.id}`)}
+            >
+              {(columnKey) => (
+                // @ts-expect-error render relation fields
+                <TableCell>{renderCell(group, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
       </Table>
     </ResourceList>
   );

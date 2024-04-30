@@ -1,12 +1,19 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
-import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
-import { ROLES_DISPLAY } from "@/constants/common";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
 import { useUserDeletion, useUsersQuery } from "@/queries/users";
 import { useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableRow,
+  TableBody,
+  TableCell,
+} from "@nextui-org/react";
+import { columns, renderCell } from "./columns";
 
 function UsersPage() {
   const navigate = useNavigate();
@@ -31,33 +38,31 @@ function UsersPage() {
   return (
     <ResourceList
       title="Пользователи"
-      isLoading={isLoading}
       onCreateClick={() => navigate(ROUTES.USER)}
       itemsLength={users?.length}
     >
-      <Table
-        headers={[
-          { title: "ID" },
-          { title: "Логин" },
-          { title: "Имя" },
-          { title: "Фамилия" },
-          { title: "Роль" },
-        ]}
-      >
-        {users?.map((user) => (
-          <TableRow
-            key={user.id}
-            onClick={() => navigate(`${ROUTES.USER}/${user.id}`)}
-            onDelete={() => deleteUser(user.id)}
-            isDeleting={isPending}
-          >
-            <TableColumn>{user.id}</TableColumn>
-            <TableColumn>{user.username}</TableColumn>
-            <TableColumn>{user.profile?.firstName}</TableColumn>
-            <TableColumn>{user.profile?.lastName}</TableColumn>
-            <TableColumn>{ROLES_DISPLAY[user.role]}</TableColumn>
-          </TableRow>
-        ))}
+      <Table aria-label="Заявки">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.label}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody
+          items={users || []}
+          emptyContent="Нет заявок."
+          isLoading={isLoading}
+        >
+          {(user) => (
+            <TableRow
+              key={user.id}
+              onClick={() => navigate(`${ROUTES.USER}/${user.id}`)}
+            >
+              {(columnKey) => (
+                <TableCell>{renderCell(user, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
       </Table>
     </ResourceList>
   );

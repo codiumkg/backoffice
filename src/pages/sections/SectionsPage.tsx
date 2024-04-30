@@ -1,8 +1,16 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
-import Table, { TableColumn, TableRow } from "@/components/shared/Table/Table";
 import { ROUTES } from "@/constants/routes";
 import { useSectionsQuery } from "@/queries/sections";
 import { useNavigate } from "react-router-dom";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableRow,
+  TableBody,
+  TableCell,
+} from "@nextui-org/react";
+import { columns, renderCell } from "./columns";
 
 function SectionsPage() {
   const { data: sections, isPending } = useSectionsQuery({});
@@ -12,23 +20,31 @@ function SectionsPage() {
   return (
     <ResourceList
       title="Разделы"
-      isLoading={isPending}
       onCreateClick={() => navigate(ROUTES.SECTION)}
       itemsLength={sections?.length}
     >
-      <Table
-        headers={[{ title: "ID" }, { title: "Название" }, { title: "Предмет" }]}
-      >
-        {sections?.map((section) => (
-          <TableRow
-            key={section.id}
-            onClick={() => navigate(`${ROUTES.SECTION}/${section.id}`)}
-          >
-            <TableColumn>{section.id}</TableColumn>
-            <TableColumn>{section.title}</TableColumn>
-            <TableColumn>{section.subject.title}</TableColumn>
-          </TableRow>
-        ))}
+      <Table aria-label="Предметы">
+        <TableHeader columns={columns}>
+          {(column) => (
+            <TableColumn key={column.key}>{column.label}</TableColumn>
+          )}
+        </TableHeader>
+        <TableBody
+          items={sections || []}
+          emptyContent="Нет разделов."
+          isLoading={isPending}
+        >
+          {(section) => (
+            <TableRow
+              key={section.id}
+              onClick={() => navigate(`${ROUTES.SECTION}/${section.id}`)}
+            >
+              {(columnKey) => (
+                <TableCell>{renderCell(section, columnKey)}</TableCell>
+              )}
+            </TableRow>
+          )}
+        </TableBody>
       </Table>
     </ResourceList>
   );
