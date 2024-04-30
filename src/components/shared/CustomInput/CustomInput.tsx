@@ -4,8 +4,7 @@ import {
   InputHTMLAttributes,
   forwardRef,
 } from "react";
-import styles from "./CustomInput.module.scss";
-import Typography from "../Typography/Typography";
+import { Input } from "@nextui-org/react";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -18,45 +17,21 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 }
 
 const CustomInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
-  function Input(
-    {
-      value,
-      name,
-      placeholder,
-      label,
-      type,
-      errorMessage,
-      onChange,
-      onBlur,
-      onChangeCallback,
-    },
+  function InputCustom(
+    { value, placeholder, label, type, errorMessage, onChange },
     ref?
   ) {
     return (
-      <div>
-        <div className={styles.container}>
-          {!!label && <label htmlFor={name}>{label}</label>}
-          <input
-            ref={ref}
-            name={name}
-            onChange={(e) => {
-              onChange?.(e);
-              onChangeCallback?.(e.target.value);
-            }}
-            onBlur={onBlur}
-            value={value}
-            placeholder={placeholder}
-            type={type}
-            autoComplete="off"
-          />
-        </div>
-
-        <div className={styles.error}>
-          <Typography variant="body3" color="var(--danger-color)">
-            {errorMessage}
-          </Typography>
-        </div>
-      </div>
+      <Input
+        onChange={onChange}
+        ref={ref}
+        value={value}
+        placeholder={placeholder}
+        label={label}
+        type={type}
+        isInvalid={!!errorMessage}
+        errorMessage={errorMessage}
+      />
     );
   }
 );

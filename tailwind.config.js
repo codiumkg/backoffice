@@ -20,7 +20,8 @@ export default {
           DEFAULT: "var(--secondary-color)",
           foreground: "var(--text-color)"
         },
-        danger: "var(--danger-color)"
+        danger: "var(--danger-color)",
+        focus: "var(--primary-color)"
       }
     },
   },

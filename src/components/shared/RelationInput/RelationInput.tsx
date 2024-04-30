@@ -24,37 +24,20 @@ function RelationInput({
   activeValue,
   setActiveValue,
 }: Props) {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
   const search = useDebouncedCallback((value: string) => {
     onSearch?.(value);
   }, 500);
 
-  const handleSelect = (value: { label: string; value: string }) => {
-    setActiveValue(value);
-  };
-
   return (
     <div>
       <CustomSelect
-        name={name}
         options={options}
         label={label}
         placeholder={placeholder}
         activeValue={activeValue}
-        onClick={() => setIsMenuOpen(true)}
         onSearch={search}
         withSearch
       />
-
-      {isMenuOpen && (
-        <Dropdown
-          items={options}
-          onClose={() => setIsMenuOpen(false)}
-          onSelect={handleSelect}
-          isLoading={isLoading}
-        />
-      )}
     </div>
   );
 }

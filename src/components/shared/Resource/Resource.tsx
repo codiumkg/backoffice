@@ -63,7 +63,7 @@ export default function Resource({
       </div>
 
       <div className={styles.content}>
-        {!isLoading && <div>{children}</div>}
+        {!isLoading && <div className="flex flex-col gap-6">{children}</div>}
         {isLoading && (
           <div className={styles["spinner-wrapper"]}>
             <LoadingSpinner light size="l" />

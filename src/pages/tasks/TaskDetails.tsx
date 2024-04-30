@@ -1,7 +1,6 @@
 import { Button } from "@nextui-org/react";
 import Checkbox from "@/components/shared/Checkbox/Checkbox";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
-import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
 import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import { QUERY_KEYS } from "@/constants/queryKeys";
@@ -22,6 +21,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
 import styles from "./TaskDetails.module.scss";
+import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
 
 const initialValues: ITaskCreate = {
   text: "",
@@ -191,29 +191,33 @@ function TaskDetails() {
         )}
       />
 
-      <CustomInput
-        {...taskForm.register("tip")}
-        label="Подсказка"
-        placeholder="Введите подсказку..."
-        errorMessage={taskForm.formState.errors.tip?.message}
-        onChangeCallback={(value) => taskForm.setValue("tip", value)}
+      <Controller
+        name="tip"
+        control={taskForm.control}
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Подсказка"
+            placeholder="Введите подсказку..."
+            errorMessage={taskForm.formState.errors.tip?.message}
+          />
+        )}
       />
 
-      <RelationInput
-        name="topic"
+      <CustomSelect
+        label="Топик"
+        placeholder="Выберите топик"
         options={topicOptions}
         activeValue={activeValue}
-        setActiveValue={(value) => {
-          taskForm.setValue("topicId", +value.value, { shouldDirty: true });
-          setActiveValue(value);
-        }}
-        label="Топик"
-        placeholder="Выберите топик..."
         isLoading={isTopicsLoading}
-        onSearch={(value) => {
-          setSearch(value);
-          refetch();
-        }}
+        onChange={(e) =>
+          setActiveValue({
+            label: topicOptions.find(
+              (option) => option.value === e.target.value
+            )?.label,
+            value: e.target.value,
+          })
+        }
       />
 
       <h3>Варианты ответов</h3>
@@ -227,11 +231,11 @@ function TaskDetails() {
                 placeholder="Введите вариант ответа..."
                 name="answers"
                 value={answer.text}
-                onChangeCallback={(value) => {
+                onChange={(e) => {
                   setAnswers((prevAnswers) =>
                     prevAnswers.map((answer, prevAnswerIndex) =>
                       prevAnswerIndex === index
-                        ? { ...answer, text: value }
+                        ? { ...answer, text: e.target.value }
                         : answer
                     )
                   );
@@ -265,7 +269,7 @@ function TaskDetails() {
           placeholder="Введите вариант ответа..."
           name="answers"
           value={answer.text}
-          onChangeCallback={(value) => setAnswer({ ...answer, text: value })}
+          onChange={(e) => setAnswer({ ...answer, text: e.target.value })}
         />
         <Checkbox
           label="Правильный ответ"

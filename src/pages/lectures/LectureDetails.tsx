@@ -168,23 +168,32 @@ function LectureDetails() {
       isSaveButtonLoading={isPending}
       onSaveClick={() => onSubmit(lectureForm.getValues())}
     >
-      <CustomInput
-        {...lectureForm.register("title")}
-        label="Название"
-        placeholder="Введите название"
-        errorMessage={lectureForm.formState.errors.title?.message}
-        onChangeCallback={(value) => lectureForm.setValue("title", value)}
+      <Controller
+        name="title"
+        control={lectureForm.control}
+        render={({ field }) => (
+          <CustomInput
+            label="Название"
+            placeholder="Введите название..."
+            errorMessage={lectureForm.formState.errors.title?.message}
+            {...field}
+          />
+        )}
       />
 
-      <CustomInput
-        {...lectureForm.register("number")}
-        label="Номер лекции"
-        placeholder="Введите номер лекции..."
-        type="number"
-        errorMessage={lectureForm.formState.errors.number?.message}
-        onChangeCallback={(value) =>
-          lectureForm.setValue("number", Number(value))
-        }
+      <Controller
+        name="title"
+        control={lectureForm.control}
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Номер лекции"
+            placeholder="Введите номер лекции..."
+            type="number"
+            value={lectureForm.watch("number").toString()}
+            errorMessage={lectureForm.formState.errors.number?.message}
+          />
+        )}
       />
 
       <Controller
