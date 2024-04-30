@@ -6,8 +6,10 @@ import CodeBlock from "@tiptap/extension-code-block-lowlight";
 import YouTube from "@tiptap/extension-youtube";
 import Image from "@tiptap/extension-image";
 import Heading from "@tiptap/extension-heading";
-import { createLowlight } from "lowlight";
+import { common, createLowlight } from "lowlight";
 import { FC, forwardRef, useEffect, useState } from "react";
+import python from "highlight.js/lib/languages/python";
+import "highlight.js/scss/atom-one-dark.scss";
 
 import Typography from "../Typography/Typography";
 import EditorMenu from "./EditorMenu";
@@ -16,7 +18,8 @@ import styles from "./TextEditor.module.scss";
 import Modal from "../Modal/Modal";
 import CustomInput from "../CustomInput/CustomInput";
 
-const lowlight = createLowlight();
+const lowlight = createLowlight(common);
+lowlight.register("python", python);
 
 interface Props {
   value: string;
@@ -42,9 +45,14 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
       Placeholder.configure({ placeholder }),
       StarterKit.configure({
         bulletList: { HTMLAttributes: { class: "rich-text-bullet-list" } },
+        codeBlock: false,
+        heading: false,
       }),
       Underline,
-      CodeBlock.configure({ lowlight, defaultLanguage: "python" }),
+      CodeBlock.configure({
+        lowlight,
+        defaultLanguage: "python",
+      }),
       YouTube.configure({
         allowFullscreen: true,
         interfaceLanguage: "ru",
