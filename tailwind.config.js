@@ -12,9 +12,15 @@ export default {
       colors: {
         "text-color": "var(--text-color)",
         "text-color-dark": "var(--text-color-dark)",
-        "primary": "var(--primary-color)",
-        "secondary": "var(--secondary-color)",
-        "danger": "var(--danger-color)"
+        primary: {
+          foreground: "var(--text-color-dark)",
+          DEFAULT: "var(--primary-color)"
+        },
+        secondary: {
+          DEFAULT: "var(--secondary-color)",
+          foreground: "var(--text-color)"
+        },
+        danger: "var(--danger-color)"
       }
     },
   },
@@ -23,19 +29,7 @@ export default {
     addCommonColors: true,
     defaultTheme: "dark",
     themes: {
-      dark: {
-        colors: {
-          primary: {
-            DEFAULT: "#ffc38d",
-            foreground: "#1a1817"
-          },
-          secondary: {
-            DEFAULT: "#403f3d",
-            foreground: "#f0dbd3"
-          },
-          danger: "#ef673d"
-        }
-      }
+      dark: {}
     }
   })],
 }
