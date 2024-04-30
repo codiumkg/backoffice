@@ -44,7 +44,7 @@ function TopicDetails() {
 
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
@@ -57,8 +57,8 @@ function TopicDetails() {
   const {
     data: sections,
     isPending: isSectionsLoading,
-    refetch,
-  } = useSectionsQuery({ params: { search } });
+    // refetch,
+  } = useSectionsQuery({});
 
   const { data: topicContent, isLoading: isTopicContentLoading } =
     useTopicContent(+id!, { enabled: !!id });

@@ -34,14 +34,14 @@ function SectionDetails() {
 
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   const {
     data: subjects,
     isFetching,
-    refetch,
+    // refetch,
   } = useSubjectsQuery({
-    params: { search },
+    // params: { search },
   });
 
   const [activeValue, setActiveValue] = useState<IOption>({

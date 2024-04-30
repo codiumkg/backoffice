@@ -37,7 +37,7 @@ function TaskDetails() {
 
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   const [answer, setAnswer] = useState<ICreateAnswer>({
     text: "",
@@ -55,8 +55,8 @@ function TaskDetails() {
   const {
     data: topics,
     isLoading: isTopicsLoading,
-    refetch,
-  } = useTopicsQuery({ params: { search } });
+    // refetch,
+  } = useTopicsQuery({});
 
   const [activeValue, setActiveValue] = useState<IOption>({
     label: topics?.[0].title,

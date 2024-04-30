@@ -48,16 +48,16 @@ function LectureDetails() {
 
   const navigate = useNavigate();
 
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   const { showErrorNotification, showSuccessNotification } = useNotification();
 
   const {
     data: topics,
     isLoading: isTopicsLoading,
-    refetch,
+    // refetch,
   } = useTopicsQuery({
-    params: { search },
+    // params: { search },
   });
 
   const [activeValue, setActiveValue] = useState<IOption>({

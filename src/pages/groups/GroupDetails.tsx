@@ -40,7 +40,7 @@ interface GroupForm {
 function GroupDetails() {
   const { id } = useParams();
 
-  const [search, setSearch] = useState("");
+  // const [search, setSearch] = useState("");
 
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
@@ -56,9 +56,9 @@ function GroupDetails() {
   const {
     data: subjects,
     isFetching,
-    refetch,
+    // refetch,
   } = useSubjectsQuery({
-    params: { search },
+    // params: { search },
   });
 
   const { mutate, isPending } = useGroupMutation({

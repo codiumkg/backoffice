@@ -32,7 +32,12 @@ export default {
     addCommonColors: true,
     defaultTheme: "dark",
     themes: {
-      dark: {}
+      dark: {
+        colors: {
+          background: "#1a1817",
+          foregound: "#23211f"
+        }
+      }
     }
   })],
 }
