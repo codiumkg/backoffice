@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm, SubmitHandler, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Button } from "@nextui-org/react";
@@ -90,18 +90,31 @@ export default function Login() {
       </div>
       <div className={styles.card}>
         <form onSubmit={loginForm.handleSubmit(onSubmit)}>
-          <CustomInput
-            label="Логин"
-            placeholder="Введите логин..."
-            errorMessage={loginForm.formState.errors.username?.message}
-            {...loginForm.register("username")}
+          <Controller
+            name="username"
+            control={loginForm.control}
+            render={({ field }) => (
+              <CustomInput
+                label="Логин"
+                placeholder="Введите логин..."
+                errorMessage={loginForm.formState.errors.username?.message}
+                {...field}
+              />
+            )}
           />
-          <CustomInput
-            label="Пароль"
-            placeholder="Введите пароль..."
-            type="password"
-            errorMessage={loginForm.formState.errors.password?.message}
-            {...loginForm.register("password")}
+
+          <Controller
+            name="password"
+            control={loginForm.control}
+            render={({ field }) => (
+              <CustomInput
+                label="Пароль"
+                placeholder="Введите пароль..."
+                type="password"
+                errorMessage={loginForm.formState.errors.password?.message}
+                {...field}
+              />
+            )}
           />
 
           <Button

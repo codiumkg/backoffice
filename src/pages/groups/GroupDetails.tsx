@@ -1,5 +1,5 @@
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
-import RelationInput from "@/components/shared/RelationInput/RelationInput";
+import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
 import Resource from "@/components/shared/Resource/Resource";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
@@ -15,7 +15,7 @@ import { useSubjectsQuery } from "@/queries/subjects";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import * as Yup from "yup";
 
@@ -160,30 +160,39 @@ function GroupDetails() {
       onDeleteClick={deleteGroup}
       onSaveClick={() => onSubmit(groupForm.getValues())}
     >
-      <CustomInput
-        {...groupForm.register("title")}
-        label="Название"
-        placeholder="Введите название..."
-        errorMessage={groupForm.formState.errors.title?.message}
-        onChangeCallback={(value) => {
-          groupForm.setValue("title", value);
-        }}
+      <Controller
+        control={groupForm.control}
+        name="title"
+        render={({ field }) => (
+          <CustomInput
+            label="Название"
+            placeholder="Введите название..."
+            errorMessage={groupForm.formState.errors.title?.message}
+            onChangeCallback={(value) => {
+              groupForm.setValue("title", value);
+            }}
+            {...field}
+          />
+        )}
       />
-      <RelationInput
-        name="subject"
+
+      <CustomSelect
         options={subjectOptions}
         activeValue={activeValue}
-        setActiveValue={(value) => {
-          groupForm.setValue("subjectId", +value.value);
-          setActiveValue(value);
+        onChange={(e) => {
+          setActiveValue({
+            label: subjectOptions.find(
+              (option) => option.value === e.target.value
+            )?.label,
+            value: e.target.value,
+          });
+          groupForm.setValue("subjectId", +e.target.value, {
+            shouldDirty: true,
+          });
         }}
         label="Предмет"
         placeholder="Выберите предмет..."
         isLoading={isFetching}
-        onSearch={(value) => {
-          setSearch(value);
-          refetch();
-        }}
       />
     </Resource>
   );

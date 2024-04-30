@@ -1,5 +1,5 @@
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
-import RelationInput from "@/components/shared/RelationInput/RelationInput";
+import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
 import Resource from "@/components/shared/Resource/Resource";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
@@ -158,23 +158,23 @@ function SectionDetails() {
         onChangeCallback={(value) => sectionForm.setValue("title", value)}
       />
 
-      <RelationInput
-        name="subject"
+      <CustomSelect
         options={subjectOptions}
         activeValue={activeValue}
-        setActiveValue={(value) => {
-          sectionForm.setValue("subjectId", +value.value, {
+        onChange={(e) => {
+          setActiveValue({
+            label: subjectOptions.find(
+              (option) => option.value === e.target.value
+            )?.label,
+            value: e.target.value,
+          });
+          sectionForm.setValue("subjectId", +e.target.value, {
             shouldDirty: true,
           });
-          setActiveValue(value);
         }}
         label="Предмет"
         placeholder="Выберите предмет..."
         isLoading={isFetching}
-        onSearch={(value) => {
-          setSearch(value);
-          refetch();
-        }}
       />
     </Resource>
   );

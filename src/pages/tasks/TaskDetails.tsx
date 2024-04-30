@@ -210,14 +210,16 @@ function TaskDetails() {
         options={topicOptions}
         activeValue={activeValue}
         isLoading={isTopicsLoading}
-        onChange={(e) =>
+        onChange={(e) => {
           setActiveValue({
             label: topicOptions.find(
               (option) => option.value === e.target.value
             )?.label,
             value: e.target.value,
-          })
-        }
+          });
+
+          taskForm.setValue("topicId", +e.target.value, { shouldDirty: true });
+        }}
       />
 
       <h3>Варианты ответов</h3>

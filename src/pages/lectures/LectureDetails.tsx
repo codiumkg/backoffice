@@ -1,5 +1,5 @@
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
-import RelationInput from "@/components/shared/RelationInput/RelationInput";
+import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
 import Resource from "@/components/shared/Resource/Resource";
 import TextEditor from "@/components/shared/TextEditor/TextEditor";
 import { QUERY_KEYS } from "@/constants/queryKeys";
@@ -208,21 +208,23 @@ function LectureDetails() {
         )}
       />
 
-      <RelationInput
-        name="topic"
+      <CustomSelect
         options={topicOptions}
         activeValue={activeValue}
-        setActiveValue={(value) => {
-          lectureForm.setValue("topicId", +value.value, { shouldDirty: true });
-          setActiveValue(value);
+        onChange={(e) => {
+          setActiveValue({
+            label: topicOptions.find(
+              (option) => option.value === e.target.value
+            )?.label,
+            value: e.target.value,
+          });
+          lectureForm.setValue("topicId", +e.target.value, {
+            shouldDirty: true,
+          });
         }}
         label="Топик"
         placeholder="Выберите топик..."
         isLoading={isTopicsLoading}
-        onSearch={(value) => {
-          setSearch(value);
-          refetch();
-        }}
       />
     </Resource>
   );

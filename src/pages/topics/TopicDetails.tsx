@@ -1,7 +1,6 @@
 import { DndContext } from "@dnd-kit/core";
 import { SortableContext, arrayMove } from "@dnd-kit/sortable";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
-import RelationInput from "@/components/shared/RelationInput/RelationInput";
 import Resource from "@/components/shared/Resource/Resource";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
@@ -24,6 +23,7 @@ import ContentCard from "./components/ContentCard";
 import Typography from "@/components/shared/Typography/Typography";
 import { ITopicContent } from "@/interfaces/topicContent";
 import AddContentCard from "./components/AddContentCard";
+import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
 
 interface TopicForm {
   title: string;
@@ -201,21 +201,23 @@ function TopicDetails() {
         onChangeCallback={(value) => topicForm.setValue("title", value)}
       />
 
-      <RelationInput
-        name="section"
+      <CustomSelect
         options={sectionOptions}
         activeValue={activeValue}
-        setActiveValue={(value) => {
-          topicForm.setValue("sectionId", +value.value, { shouldDirty: true });
-          setActiveValue(value);
+        onChange={(e) => {
+          setActiveValue({
+            label: sectionOptions.find(
+              (option) => option.value === e.target.value
+            )?.label,
+            value: e.target.value,
+          });
+          topicForm.setValue("sectionId", +e.target.value, {
+            shouldDirty: true,
+          });
         }}
         label="Раздел"
         placeholder="Выберите раздел..."
         isLoading={isSectionsLoading}
-        onSearch={(value) => {
-          setSearch(value);
-          refetch();
-        }}
       />
 
       <Typography variant="body3" weight="300">

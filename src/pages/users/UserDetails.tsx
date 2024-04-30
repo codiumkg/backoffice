@@ -1,5 +1,5 @@
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
-import RelationInput from "@/components/shared/RelationInput/RelationInput";
+import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
 import Resource from "@/components/shared/Resource/Resource";
 import { ROLES_DISPLAY, ROLES_OPTIONS } from "@/constants/common";
 import { QUERY_KEYS } from "@/constants/queryKeys";
@@ -16,7 +16,7 @@ import {
 } from "@/queries/users";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
 const initialValues: ICreateUser = {
@@ -161,74 +161,131 @@ function UserDetails() {
       isSaveButtonLoading={isPending}
       onSaveClick={() => onSubmit(userForm.getValues())}
     >
-      <CustomInput
-        {...userForm.register("firstName")}
-        label="Имя"
-        placeholder="Введите имя..."
-        errorMessage={userForm.formState.errors.firstName?.message}
+      <Controller
+        name="firstName"
+        control={userForm.control}
+        render={({ field }) => (
+          <CustomInput
+            label="Имя"
+            placeholder="Введите имя..."
+            errorMessage={userForm.formState.errors.firstName?.message}
+            {...field}
+          />
+        )}
       />
-      <CustomInput
-        {...userForm.register("lastName")}
-        label="Фамилия"
-        placeholder="Введите фамилию..."
-        errorMessage={userForm.formState.errors.lastName?.message}
+
+      <Controller
+        name="lastName"
+        control={userForm.control}
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Фамилия"
+            placeholder="Введите фамилию..."
+            errorMessage={userForm.formState.errors.lastName?.message}
+          />
+        )}
       />
-      <CustomInput
-        {...userForm.register("username")}
-        label="Логин"
-        placeholder="Введите логин..."
-        errorMessage={userForm.formState.errors.username?.message}
+
+      <Controller
+        name="username"
+        control={userForm.control}
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Логин"
+            placeholder="Введите логин..."
+            errorMessage={userForm.formState.errors.username?.message}
+          />
+        )}
       />
-      <CustomInput
-        {...userForm.register("password")}
-        label="Пароль"
-        placeholder="Введите пароль..."
-        errorMessage={userForm.formState.errors.password?.message}
+
+      <Controller
+        name="password"
+        control={userForm.control}
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Пароль"
+            placeholder="Введите пароль..."
+            errorMessage={userForm.formState.errors.password?.message}
+          />
+        )}
       />
-      <RelationInput
-        name="group"
+
+      <CustomSelect
         options={groupOptions || []}
         activeValue={activeGroup}
-        setActiveValue={(value) => {
-          userForm.setValue("groupId", +value.value);
-          setActiveGroup(value);
+        onChange={(e) => {
+          setActiveGroup({
+            label: groupOptions?.find(
+              (option) => option.value === e.target.value
+            )?.label,
+            value: e.target.value,
+          });
+          userForm.setValue("groupId", +e.target.value, { shouldDirty: true });
         }}
         label="Группа"
         placeholder="Выберите группу..."
         isLoading={isGroupsLoading}
-        onSearch={() => {}}
       />
-      <RelationInput
-        name="role"
+
+      <CustomSelect
         options={ROLES_OPTIONS}
         activeValue={activeRole}
-        setActiveValue={(value) => {
-          userForm.setValue("role", value.value as Role);
-          setActiveRole(value);
+        onChange={(e) => {
+          setActiveRole({
+            label: ROLES_OPTIONS.find((role) => role.value === e.target.value)
+              ?.label,
+            value: e.target.value,
+          });
+          userForm.setValue("role", e.target.value as Role, {
+            shouldDirty: true,
+          });
         }}
         label="Роль"
         placeholder="Выберите роль..."
-        onSearch={() => {}}
-      />
-      <CustomInput
-        {...userForm.register("age")}
-        label="Возраст"
-        placeholder="Введите возраст..."
-        type="number"
-        errorMessage={userForm.formState.errors.age?.message}
       />
 
-      <CustomInput
-        {...userForm.register("phone")}
-        label="Номер телефона"
-        placeholder="Введите номер телефона..."
-        errorMessage={userForm.formState.errors.phone?.message}
+      <Controller
+        name="age"
+        control={userForm.control}
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Возраст"
+            value={field.value?.toString()}
+            placeholder="Введите возраст..."
+            type="number"
+            errorMessage={userForm.formState.errors.age?.message}
+          />
+        )}
       />
-      <CustomInput
-        {...userForm.register("email")}
-        label="Электронная почта"
-        placeholder="Введите адрес электронной почты..."
-        errorMessage={userForm.formState.errors.email?.message}
+
+      <Controller
+        name="phone"
+        control={userForm.control}
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Номер телефона"
+            placeholder="Введите номер телефона..."
+            errorMessage={userForm.formState.errors.phone?.message}
+          />
+        )}
+      />
+
+      <Controller
+        name="email"
+        control={userForm.control}
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Электронная почта"
+            placeholder="Введите адрес электронной почты..."
+            errorMessage={userForm.formState.errors.email?.message}
+          />
+        )}
       />
     </Resource>
   );
