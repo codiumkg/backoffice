@@ -7,11 +7,11 @@
 }
 
 .card {
-  background: var(--secondary-color);
+  background: var(--bg-secondary-color);
   width: clamp(280px, 50vw, 420px);
   padding: 20px;
   border-radius: var(--primary-radius);
-  border: 1px solid var(--highlight-color);
+  border: 1px solid var(--secondary-color);
 }
 
 .heading {
@@ -20,6 +20,6 @@
 }
 
 .highlight {
-  color: var(--accent-color);
+  color: var(--bg-primary-color);
   font-weight: bold;
 }

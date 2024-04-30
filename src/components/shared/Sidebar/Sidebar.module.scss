@@ -8,7 +8,7 @@
 }
 
 .container {
-  background: var(--primary-color);
+  background: var(--bg-primary-color);
   height: 100%;
   border-radius: var(--primary-radius);
   display: flex;
@@ -20,7 +20,7 @@
   width: 100%;
   padding: 16px;
   border-radius: var(--secondary-radius);
-  background: var(--secondary-color);
+  background: var(--bg-secondary-color);
 }
 
 .content {

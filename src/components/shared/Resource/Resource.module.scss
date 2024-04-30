@@ -9,7 +9,7 @@
   width: 100%;
   height: 56px;
   padding: 16px;
-  background: var(--secondary-color);
+  background: var(--bg-secondary-color);
   border-radius: var(--secondary-radius);
   display: flex;
   justify-content: space-between;
@@ -24,7 +24,7 @@
 .content {
   margin-top: 20px;
   padding: 16px;
-  background: var(--secondary-color);
+  background: var(--bg-secondary-color);
   border-radius: var(--primary-radius);
 }
 

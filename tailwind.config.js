@@ -8,7 +8,15 @@ export default {
     "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        "text-color": "var(--text-color)",
+        "text-color-dark": "var(--text-color-dark)",
+        "primary": "var(--primary-color)",
+        "secondary": "var(--secondary-color)",
+        "danger": "var(--danger-color)"
+      }
+    },
   },
   darkMode: "class",
   plugins: [nextui({
@@ -18,9 +26,14 @@ export default {
       dark: {
         colors: {
           primary: {
-            DEFAULT: "#FFC38D",
+            DEFAULT: "#ffc38d",
             foreground: "#1a1817"
-          }
+          },
+          secondary: {
+            DEFAULT: "#403f3d",
+            foreground: "#f0dbd3"
+          },
+          danger: "#ef673d"
         }
       }
     }

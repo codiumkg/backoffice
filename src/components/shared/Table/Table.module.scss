@@ -10,7 +10,7 @@
   padding: 16px;
   border-radius: var(--primary-radius);
   align-items: center;
-  background: var(--secondary-color);
+  background: var(--bg-secondary-color);
 }
 
 .column {
@@ -34,7 +34,7 @@
   align-items: center;
 
   &:hover {
-    background: var(--highlight-color);
+    background: var(--secondary-color);
     transition: background 0.4s ease-out;
   }
 }
