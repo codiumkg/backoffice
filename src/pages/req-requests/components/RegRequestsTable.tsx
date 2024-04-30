@@ -8,10 +8,10 @@ import {
   TableBody,
   TableCell,
 } from "@nextui-org/react";
-import { useRegRequestDeletion } from "@/queries/reg-requests";
-import { useNotification } from "@/hooks/useNotification";
-import { useQueryClient } from "@tanstack/react-query";
-import { QUERY_KEYS } from "@/constants/queryKeys";
+// import { useRegRequestDeletion } from "@/queries/reg-requests";
+// import { useNotification } from "@/hooks/useNotification";
+// import { useQueryClient } from "@tanstack/react-query";
+// import { QUERY_KEYS } from "@/constants/queryKeys";
 import { columns, renderCell } from "./columns";
 
 interface Props {
@@ -20,21 +20,21 @@ interface Props {
 }
 
 export default function RegRequestsTable({ regRequests, isLoading }: Props) {
-  const queryClient = useQueryClient();
+  // const queryClient = useQueryClient();
 
-  const { showErrorNotification, showSuccessNotification } = useNotification();
+  // const { showErrorNotification, showSuccessNotification } = useNotification();
 
-  const { mutate: deleteRequest, isPending: isDeleting } =
-    useRegRequestDeletion({
-      onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.REG_REQUESTS] });
-        showSuccessNotification("Удалено!");
-      },
+  // const { mutate: deleteRequest, isPending: isDeleting } =
+  //   useRegRequestDeletion({
+  //     onSuccess: () => {
+  //       queryClient.invalidateQueries({ queryKey: [QUERY_KEYS.REG_REQUESTS] });
+  //       showSuccessNotification("Удалено!");
+  //     },
 
-      onError: () => {
-        showErrorNotification();
-      },
-    });
+  //     onError: () => {
+  //       showErrorNotification();
+  //     },
+  //   });
 
   return (
     <Table aria-label="Заявки">
