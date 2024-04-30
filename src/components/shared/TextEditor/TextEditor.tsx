@@ -40,7 +40,9 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
   const editor = useEditor({
     extensions: [
       Placeholder.configure({ placeholder }),
-      StarterKit,
+      StarterKit.configure({
+        bulletList: { HTMLAttributes: { class: "rich-text-bullet-list" } },
+      }),
       Underline,
       CodeBlock.configure({ lowlight, defaultLanguage: "python" }),
       YouTube.configure({

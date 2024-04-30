@@ -204,6 +204,7 @@ function LectureDetails() {
             label="Содержимое"
             {...field}
             placeholder="Введите содержимое лекции..."
+            value={field.value}
           />
         )}
       />

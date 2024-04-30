@@ -29,9 +29,14 @@ function CustomSelect({
       isLoading={isLoading}
       errorMessage={errorMessage}
       selectedKeys={[activeValue.value || ""]}
+      classNames={{ base: ["bg-bgPrimary"], listboxWrapper: ["bg-bgPrimary"] }}
     >
       {options.map((option) => (
-        <SelectItem key={option.value} value={option.value}>
+        <SelectItem
+          key={option.value}
+          value={option.value}
+          classNames={{ wrapper: ["bg-bgPrimary"] }}
+        >
           {option.label}
         </SelectItem>
       ))}

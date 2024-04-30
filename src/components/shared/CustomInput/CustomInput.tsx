@@ -23,6 +23,7 @@ const CustomInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
   ) {
     return (
       <Input
+        classNames={{ inputWrapper: ["bg-bgPrimary"] }}
         onChange={onChange}
         ref={ref}
         value={value}

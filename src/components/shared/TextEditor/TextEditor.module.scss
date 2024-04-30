@@ -13,6 +13,7 @@
   border-top-left-radius: 13px;
   border-top-right-radius: 13px;
   border: 1px solid var(--secondary-color);
+  margin-bottom: 16px;
 }
 
 .menu-option {
@@ -35,4 +36,16 @@
 
 .menu-option-active {
   background: var(--highlight-color);
+}
+
+ul {
+  list-style: disc;
+}
+
+ol {
+  list-style: decimal;
+}
+
+li {
+  margin-left: 32px;
 }

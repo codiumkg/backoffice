@@ -12,6 +12,8 @@ export default {
       colors: {
         "text-color": "var(--text-color)",
         "text-color-dark": "var(--text-color-dark)",
+        bgPrimary: "var(--bg-primary-color)",
+        bgSecondary: "var(--bg-secondary-color)",
         primary: {
           foreground: "var(--text-color-dark)",
           DEFAULT: "var(--primary-color)"
