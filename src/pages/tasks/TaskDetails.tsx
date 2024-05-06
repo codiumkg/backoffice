@@ -1,5 +1,5 @@
-import { Button } from "@nextui-org/react";
-import Checkbox from "@/components/shared/Checkbox/Checkbox";
+import { Button, Checkbox } from "@nextui-org/react";
+import CustomCheckbox from "@/components/shared/Checkbox/Checkbox";
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import Resource from "@/components/shared/Resource/Resource";
 import TextEditor from "@/components/shared/TextEditor/TextEditor";
@@ -28,6 +28,7 @@ const initialValues: ITaskCreate = {
   tip: "",
   topicId: -1,
   answers: [],
+  isUserAnswer: false,
 };
 
 function TaskDetails() {
@@ -116,7 +117,7 @@ function TaskDetails() {
   const isValid = Object.values(taskForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<ITaskCreate> = (data: ITaskCreate) => {
-    mutate(data);
+    mutate({ ...data, answers: data.isUserAnswer ? [] : data.answers });
   };
 
   const handleNewAnswerToggle = () => {
@@ -222,72 +223,85 @@ function TaskDetails() {
         }}
       />
 
-      <h3>Варианты ответов</h3>
+      <Checkbox
+        isSelected={taskForm.watch("isUserAnswer")}
+        onValueChange={(value) =>
+          taskForm.setValue("isUserAnswer", value, { shouldDirty: true })
+        }
+      >
+        Задача с открытым вопросом (ответ от студента)
+      </Checkbox>
 
-      <div className={styles["answers-wrapper"]}>
-        {answers.map((answer, index) => (
-          <div className={styles["answer"]} key={index}>
-            <div className={styles["answer-inputs"]}>
-              <CustomInput
-                label={`Ответ ${index + 1}`}
-                placeholder="Введите вариант ответа..."
-                name="answers"
-                value={answer.text}
-                onChange={(e) => {
-                  setAnswers((prevAnswers) =>
-                    prevAnswers.map((answer, prevAnswerIndex) =>
-                      prevAnswerIndex === index
-                        ? { ...answer, text: e.target.value }
-                        : answer
-                    )
-                  );
-                }}
-              />
+      {!taskForm.watch("isUserAnswer") && (
+        <>
+          <h3>Варианты ответов</h3>
 
-              <Checkbox
-                label="Правильный ответ"
-                value={answer.isCorrectAnswer}
-                onClick={() => {
-                  setAnswers((prevAnswers) =>
-                    prevAnswers.map((answer, prevAnswerIndex) =>
-                      prevAnswerIndex === index
-                        ? {
-                            ...answer,
-                            isCorrectAnswer: !answer.isCorrectAnswer,
-                          }
-                        : { ...answer, isCorrectAnswer: false }
-                    )
-                  );
-                }}
-              />
-            </div>
+          <div className={styles["answers-wrapper"]}>
+            {answers.map((answer, index) => (
+              <div className={styles["answer"]} key={index}>
+                <div className={styles["answer-inputs"]}>
+                  <CustomInput
+                    label={`Ответ ${index + 1}`}
+                    placeholder="Введите вариант ответа..."
+                    name="answers"
+                    value={answer.text}
+                    onChange={(e) => {
+                      setAnswers((prevAnswers) =>
+                        prevAnswers.map((answer, prevAnswerIndex) =>
+                          prevAnswerIndex === index
+                            ? { ...answer, text: e.target.value }
+                            : answer
+                        )
+                      );
+                    }}
+                  />
+
+                  <CustomCheckbox
+                    label="Правильный ответ"
+                    value={answer.isCorrectAnswer}
+                    onClick={() => {
+                      setAnswers((prevAnswers) =>
+                        prevAnswers.map((answer, prevAnswerIndex) =>
+                          prevAnswerIndex === index
+                            ? {
+                                ...answer,
+                                isCorrectAnswer: !answer.isCorrectAnswer,
+                              }
+                            : { ...answer, isCorrectAnswer: false }
+                        )
+                      );
+                    }}
+                  />
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
 
-      <div className={styles["input-container"]}>
-        <CustomInput
-          label="Ответ"
-          placeholder="Введите вариант ответа..."
-          name="answers"
-          value={answer.text}
-          onChange={(e) => setAnswer({ ...answer, text: e.target.value })}
-        />
-        <Checkbox
-          label="Правильный ответ"
-          value={answer.isCorrectAnswer}
-          onClick={handleNewAnswerToggle}
-        />
-      </div>
-      <div className={styles["button-container"]}>
-        <Button
-          color="primary"
-          onClick={handleAddAnswer}
-          disabled={answer.text.trim().length === 0}
-        >
-          Добавить вариант ответа
-        </Button>
-      </div>
+          <div className={styles["input-container"]}>
+            <CustomInput
+              label="Ответ"
+              placeholder="Введите вариант ответа..."
+              name="answers"
+              value={answer.text}
+              onChange={(e) => setAnswer({ ...answer, text: e.target.value })}
+            />
+            <CustomCheckbox
+              label="Правильный ответ"
+              value={answer.isCorrectAnswer}
+              onClick={handleNewAnswerToggle}
+            />
+          </div>
+          <div className={styles["button-container"]}>
+            <Button
+              color="primary"
+              onClick={handleAddAnswer}
+              disabled={answer.text.trim().length === 0}
+            >
+              Добавить вариант ответа
+            </Button>
+          </div>
+        </>
+      )}
     </Resource>
   );
 }

@@ -9,6 +9,7 @@ export interface ITask {
   topicId: number;
   topic: ITopic;
   answers: IAnswer[];
+  isUserAnswer: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -19,4 +20,5 @@ export interface ITaskCreate {
   tip?: string;
   topicId: number;
   answers: ICreateAnswer[];
+  isUserAnswer: boolean;
 }
