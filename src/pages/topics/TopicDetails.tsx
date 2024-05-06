@@ -17,7 +17,7 @@ import {
 } from "@/queries/topics";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 import ContentCard from "./components/ContentCard";
 import Typography from "@/components/shared/Typography/Typography";
@@ -134,7 +134,10 @@ function TopicDetails() {
 
   const onSubmit: SubmitHandler<TopicForm> = (data: ITopicCreate) => {
     mutate({ sectionId: data.sectionId, title: data.title });
-    reorderTopicContent({ topicContentIds });
+
+    if (topicContentIds.length) {
+      reorderTopicContent({ topicContentIds });
+    }
   };
 
   const updateTopicContentOrderNumbers = () => {
@@ -194,11 +197,17 @@ function TopicDetails() {
       isDeleting={isDeleting}
       onSaveClick={() => onSubmit(topicForm.getValues())}
     >
-      <CustomInput
-        {...topicForm.register("title")}
-        label="Название"
-        placeholder="Введите название"
-        onChangeCallback={(value) => topicForm.setValue("title", value)}
+      <Controller
+        control={topicForm.control}
+        name="title"
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Название"
+            placeholder="Введите название"
+            onChangeCallback={(value) => topicForm.setValue("title", value)}
+          />
+        )}
       />
 
       <CustomSelect

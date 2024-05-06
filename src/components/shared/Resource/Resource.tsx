@@ -53,8 +53,8 @@ export default function Resource({
 
           <Button
             color="primary"
-            onClick={onSaveClick}
-            disabled={isSaveDisabled}
+            onPress={onSaveClick}
+            isDisabled={isSaveDisabled}
             isLoading={isSaveButtonLoading}
           >
             Сохранить

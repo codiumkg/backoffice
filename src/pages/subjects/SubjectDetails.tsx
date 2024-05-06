@@ -11,7 +11,7 @@ import {
 } from "@/queries/subjects";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
 const initialValues = {
@@ -106,11 +106,17 @@ function SubjectDetails() {
       onSaveClick={() => onSubmit(subjectForm.getValues())}
       isSaveDisabled={!isValid || !subjectForm.formState.isDirty}
     >
-      <CustomInput
-        {...subjectForm.register("title")}
-        label="Название"
-        placeholder="Введите название"
-        onChangeCallback={(value) => subjectForm.setValue("title", value)}
+      <Controller
+        control={subjectForm.control}
+        name="title"
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Название"
+            placeholder="Введите название"
+            onChangeCallback={(value) => subjectForm.setValue("title", value)}
+          />
+        )}
       />
     </Resource>
   );

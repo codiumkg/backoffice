@@ -182,7 +182,7 @@ function LectureDetails() {
       />
 
       <Controller
-        name="title"
+        name="number"
         control={lectureForm.control}
         render={({ field }) => (
           <CustomInput

@@ -38,7 +38,7 @@ export default function ResourceList({
         )}
       </div>
 
-      <div className={styles.content}>{children}</div>
+      <div className="w-full">{children}</div>
     </div>
   );
 }

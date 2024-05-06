@@ -50,8 +50,8 @@ function UserDetails() {
   });
 
   const [activeGroup, setActiveGroup] = useState<IOption>({
-    label: groups?.[0].title,
-    value: groups?.[0].id.toString(),
+    label: groups?.[0]?.title,
+    value: groups?.[0]?.id.toString(),
   });
 
   const groupOptions = useMemo(
@@ -140,13 +140,13 @@ function UserDetails() {
   useEffect(() => {
     if (!existingUser || !id) {
       setActiveGroup({
-        label: groups?.[0].title,
-        value: groups?.[0].id.toString(),
+        label: groups?.[0]?.title,
+        value: groups?.[0]?.id.toString(),
       });
     }
 
     if (groups) {
-      userForm.setValue("groupId", groups[0].id);
+      userForm.setValue("groupId", groups[0]?.id);
     }
   }, [groups, userForm, existingUser, id]);
 
@@ -213,22 +213,26 @@ function UserDetails() {
         )}
       />
 
-      <CustomSelect
-        options={groupOptions || []}
-        activeValue={activeGroup}
-        onChange={(e) => {
-          setActiveGroup({
-            label: groupOptions?.find(
-              (option) => option.value === e.target.value
-            )?.label,
-            value: e.target.value,
-          });
-          userForm.setValue("groupId", +e.target.value, { shouldDirty: true });
-        }}
-        label="Группа"
-        placeholder="Выберите группу..."
-        isLoading={isGroupsLoading}
-      />
+      {existingUser?.role !== Role.ADMIN && (
+        <CustomSelect
+          options={groupOptions || []}
+          activeValue={activeGroup}
+          onChange={(e) => {
+            setActiveGroup({
+              label: groupOptions?.find(
+                (option) => option.value === e.target.value
+              )?.label,
+              value: e.target.value,
+            });
+            userForm.setValue("groupId", +e.target.value, {
+              shouldDirty: true,
+            });
+          }}
+          label="Группа"
+          placeholder="Выберите группу..."
+          isLoading={isGroupsLoading}
+        />
+      )}
 
       <CustomSelect
         options={ROLES_OPTIONS}

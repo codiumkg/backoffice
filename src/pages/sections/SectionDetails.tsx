@@ -14,7 +14,7 @@ import {
 import { useSubjectsQuery } from "@/queries/subjects";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
 interface SectionForm {
@@ -151,11 +151,17 @@ function SectionDetails() {
       onDeleteClick={deleteSection}
       onSaveClick={() => onSubmit(sectionForm.getValues())}
     >
-      <CustomInput
-        {...sectionForm.register("title")}
-        label="Название"
-        placeholder="Введите название"
-        onChangeCallback={(value) => sectionForm.setValue("title", value)}
+      <Controller
+        control={sectionForm.control}
+        name="title"
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Название"
+            placeholder="Введите название"
+            onChangeCallback={(value) => sectionForm.setValue("title", value)}
+          />
+        )}
       />
 
       <CustomSelect

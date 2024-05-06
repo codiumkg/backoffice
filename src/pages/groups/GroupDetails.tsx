@@ -98,8 +98,8 @@ function GroupDetails() {
   );
 
   const [activeValue, setActiveValue] = useState<IOption>({
-    label: subjects?.[0].title,
-    value: subjects?.[0].id.toString(),
+    label: subjects?.[0]?.title,
+    value: subjects?.[0]?.id.toString(),
   });
 
   const subjectOptions = useMemo(
@@ -139,12 +139,12 @@ function GroupDetails() {
   useEffect(() => {
     if (!existingGroup || !id) {
       setActiveValue({
-        label: subjects?.[0].title,
-        value: subjects?.[0].id.toString(),
+        label: subjects?.[0]?.title,
+        value: subjects?.[0]?.id.toString(),
       });
 
       if (subjects) {
-        groupForm.setValue("subjectId", subjects[0].id);
+        groupForm.setValue("subjectId", subjects[0]?.id);
       }
     }
   }, [subjects, groupForm, id, existingGroup]);

@@ -85,11 +85,14 @@ export default function Login() {
     <div className={styles.wrapper}>
       <div className={styles.heading}>
         <Typography variant="h2">
-          Вход в <span className={styles.highlight}>Codium Office</span>
+          Вход в <span className="text-primary font-bold">Codium Office</span>
         </Typography>
       </div>
       <div className={styles.card}>
-        <form onSubmit={loginForm.handleSubmit(onSubmit)}>
+        <form
+          onSubmit={loginForm.handleSubmit(onSubmit)}
+          className="flex flex-col gap-4"
+        >
           <Controller
             name="username"
             control={loginForm.control}
