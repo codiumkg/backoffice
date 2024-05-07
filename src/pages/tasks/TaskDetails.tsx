@@ -28,6 +28,7 @@ const initialValues: ITaskCreate = {
   tip: "",
   topicId: -1,
   answers: [],
+  correctAnswerExplanation: "",
   isUserAnswer: false,
 };
 
@@ -231,6 +232,20 @@ function TaskDetails() {
       >
         Задача с открытым вопросом (ответ от студента)
       </Checkbox>
+
+      {!taskForm.watch("isUserAnswer") && (
+        <Controller
+          control={taskForm.control}
+          name="correctAnswerExplanation"
+          render={({ field }) => (
+            <CustomInput
+              {...field}
+              label="Объяснение правильного ответа"
+              placeholder="Введите объяснение правильного ответа..."
+            />
+          )}
+        />
+      )}
 
       {!taskForm.watch("isUserAnswer") && (
         <>
