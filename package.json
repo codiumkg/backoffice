@@ -26,6 +26,7 @@
     "@tiptap/starter-kit": "^2.2.0",
     "@types/lowlight": "^0.0.7",
     "@types/react-router-dom": "^5.3.3",
+    "@types/sanitize-html": "^2.11.0",
     "axios": "^1.6.5",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.10",
