@@ -12,6 +12,7 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Spinner,
 } from "@nextui-org/react";
 import { columns, renderCell } from "./columns";
 
@@ -41,29 +42,36 @@ function UsersPage() {
       onCreateClick={() => navigate(ROUTES.USER)}
       itemsLength={users?.length}
     >
-      <Table aria-label="Заявки">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          items={users || []}
-          emptyContent="Нет заявок."
-          isLoading={isLoading}
-        >
-          {(user) => (
-            <TableRow
-              key={user.id}
-              onClick={() => navigate(`${ROUTES.USER}/${user.id}`)}
-            >
-              {(columnKey) => (
-                <TableCell>{renderCell(user, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      {isLoading && (
+        <div className="p-40">
+          <Spinner />
+        </div>
+      )}
+      {!isLoading && (
+        <Table aria-label="Заявки">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            items={users || []}
+            emptyContent="Нет заявок."
+            isLoading={isLoading}
+          >
+            {(user) => (
+              <TableRow
+                key={user.id}
+                onClick={() => navigate(`${ROUTES.USER}/${user.id}`)}
+              >
+                {(columnKey) => (
+                  <TableCell>{renderCell(user, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
     </ResourceList>
   );
 }

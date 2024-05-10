@@ -9,11 +9,12 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Spinner,
 } from "@nextui-org/react";
 import { columns, renderCell } from "./columns";
 
 function SubjectsPage() {
-  const { data: subjects, isFetching } = useSubjectsQuery({});
+  const { data: subjects, isLoading } = useSubjectsQuery({});
 
   const navigate = useNavigate();
 
@@ -23,29 +24,36 @@ function SubjectsPage() {
       onCreateClick={() => navigate(ROUTES.SUBJECT)}
       itemsLength={subjects?.length}
     >
-      <Table aria-label="Предметы">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          items={subjects || []}
-          emptyContent="Нет предметов."
-          isLoading={isFetching}
-        >
-          {(subject) => (
-            <TableRow
-              key={subject.id}
-              onClick={() => navigate(`${ROUTES.SUBJECT}/${subject.id}`)}
-            >
-              {(columnKey) => (
-                <TableCell>{renderCell(subject, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      {isLoading && (
+        <div className="p-40">
+          <Spinner />
+        </div>
+      )}
+      {!isLoading && (
+        <Table aria-label="Предметы">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            items={subjects || []}
+            emptyContent="Нет предметов."
+            isLoading={isLoading}
+          >
+            {(subject) => (
+              <TableRow
+                key={subject.id}
+                onClick={() => navigate(`${ROUTES.SUBJECT}/${subject.id}`)}
+              >
+                {(columnKey) => (
+                  <TableCell>{renderCell(subject, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
     </ResourceList>
   );
 }

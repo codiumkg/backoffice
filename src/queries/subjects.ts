@@ -15,7 +15,7 @@ interface QueryParams {
 }
 
 export const useSubjectsQuery = ({ params, enabled }: QueryParams) => {
-  const { data, isFetching, isSuccess, isError, refetch } = useQuery<
+  const { data, isLoading, isFetching, isSuccess, isError, refetch } = useQuery<
     ISubject[]
   >({
     queryKey: [QUERY_KEYS.SUBJECTS, params?.search],
@@ -26,6 +26,7 @@ export const useSubjectsQuery = ({ params, enabled }: QueryParams) => {
 
   return {
     data,
+    isLoading,
     isFetching,
     isSuccess,
     isError,

@@ -9,6 +9,7 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Spinner,
 } from "@nextui-org/react";
 import { columns, renderCell } from "./columns";
 
@@ -26,30 +27,37 @@ function GroupsList({ groups, isLoading }: Props) {
       onCreateClick={() => navigate(ROUTES.GROUP)}
       itemsLength={groups.length}
     >
-      <Table aria-label="Группы">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          items={groups}
-          emptyContent="Нет групп."
-          isLoading={isLoading}
-        >
-          {(group) => (
-            <TableRow
-              key={group.id}
-              onClick={() => navigate(`${ROUTES.GROUP}/${group.id}`)}
-            >
-              {(columnKey) => (
-                // @ts-expect-error render relation fields
-                <TableCell>{renderCell(group, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      {isLoading && (
+        <div className="p-40">
+          <Spinner />
+        </div>
+      )}
+      {!isLoading && (
+        <Table aria-label="Группы">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            items={groups}
+            emptyContent="Нет групп."
+            isLoading={isLoading}
+          >
+            {(group) => (
+              <TableRow
+                key={group.id}
+                onClick={() => navigate(`${ROUTES.GROUP}/${group.id}`)}
+              >
+                {(columnKey) => (
+                  // @ts-expect-error render relation fields
+                  <TableCell>{renderCell(group, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
     </ResourceList>
   );
 }

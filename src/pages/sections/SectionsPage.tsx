@@ -9,6 +9,7 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Spinner,
 } from "@nextui-org/react";
 import { columns, renderCell } from "./columns";
 
@@ -23,29 +24,36 @@ function SectionsPage() {
       onCreateClick={() => navigate(ROUTES.SECTION)}
       itemsLength={sections?.length}
     >
-      <Table aria-label="Предметы">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          items={sections || []}
-          emptyContent="Нет разделов."
-          isLoading={isPending}
-        >
-          {(section) => (
-            <TableRow
-              key={section.id}
-              onClick={() => navigate(`${ROUTES.SECTION}/${section.id}`)}
-            >
-              {(columnKey) => (
-                <TableCell>{renderCell(section, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      {isPending && (
+        <div className="p-40">
+          <Spinner />
+        </div>
+      )}
+      {!isPending && (
+        <Table aria-label="Предметы">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            items={sections || []}
+            emptyContent="Нет разделов."
+            isLoading={isPending}
+          >
+            {(section) => (
+              <TableRow
+                key={section.id}
+                onClick={() => navigate(`${ROUTES.SECTION}/${section.id}`)}
+              >
+                {(columnKey) => (
+                  <TableCell>{renderCell(section, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
     </ResourceList>
   );
 }

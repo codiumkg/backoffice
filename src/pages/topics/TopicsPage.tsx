@@ -9,6 +9,7 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Spinner,
 } from "@nextui-org/react";
 import { columns, renderCell } from "./columns";
 
@@ -23,29 +24,36 @@ function TopicsPage() {
       onCreateClick={() => navigate(ROUTES.TOPIC)}
       itemsLength={topics?.length}
     >
-      <Table aria-label="Топики">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody
-          items={topics || []}
-          emptyContent="Нет заявок."
-          isLoading={isLoading}
-        >
-          {(topic) => (
-            <TableRow
-              key={topic.id}
-              onClick={() => navigate(`${ROUTES.TOPIC}/${topic.id}`)}
-            >
-              {(columnKey) => (
-                <TableCell>{renderCell(topic, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+      {isLoading && (
+        <div className="p-40">
+          <Spinner />
+        </div>
+      )}
+      {!isLoading && (
+        <Table aria-label="Топики">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
+            )}
+          </TableHeader>
+          <TableBody
+            items={topics || []}
+            emptyContent="Нет заявок."
+            isLoading={isLoading}
+          >
+            {(topic) => (
+              <TableRow
+                key={topic.id}
+                onClick={() => navigate(`${ROUTES.TOPIC}/${topic.id}`)}
+              >
+                {(columnKey) => (
+                  <TableCell>{renderCell(topic, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
     </ResourceList>
   );
 }

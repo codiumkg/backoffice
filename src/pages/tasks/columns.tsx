@@ -15,7 +15,7 @@ export const renderCell = (task: ITask, columnKey: React.Key) => {
     case "topic":
       return task.topic.title;
     case "text":
-      return cleanHtml(cellValue as string);
+      return cleanHtml(task.text);
     default:
       return cellValue as string;
   }

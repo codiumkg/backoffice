@@ -7,6 +7,7 @@ import {
   TableRow,
   TableBody,
   TableCell,
+  Spinner,
 } from "@nextui-org/react";
 // import { useRegRequestDeletion } from "@/queries/reg-requests";
 // import { useNotification } from "@/hooks/useNotification";
@@ -37,23 +38,34 @@ export default function RegRequestsTable({ regRequests, isLoading }: Props) {
   //   });
 
   return (
-    <Table aria-label="Заявки">
-      <TableHeader columns={columns}>
-        {(column) => <TableColumn key={column.key}>{column.label}</TableColumn>}
-      </TableHeader>
-      <TableBody
-        items={regRequests}
-        emptyContent="Нет заявок."
-        isLoading={isLoading}
-      >
-        {(regRequest) => (
-          <TableRow key={regRequest.id}>
-            {(columnKey) => (
-              <TableCell>{renderCell(regRequest, columnKey)}</TableCell>
+    <>
+      {isLoading && (
+        <div className="p-40">
+          <Spinner />
+        </div>
+      )}
+      {!isLoading && (
+        <Table aria-label="Заявки">
+          <TableHeader columns={columns}>
+            {(column) => (
+              <TableColumn key={column.key}>{column.label}</TableColumn>
             )}
-          </TableRow>
-        )}
-      </TableBody>
-    </Table>
+          </TableHeader>
+          <TableBody
+            items={regRequests}
+            emptyContent="Нет заявок."
+            isLoading={isLoading}
+          >
+            {(regRequest) => (
+              <TableRow key={regRequest.id}>
+                {(columnKey) => (
+                  <TableCell>{renderCell(regRequest, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      )}
+    </>
   );
 }
