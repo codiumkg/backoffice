@@ -41,7 +41,8 @@ export default {
           content3: "#23211f",
           content4: "#23211f",
           default: {
-            // DEFAULT: "#232119",
+            DEFAULT: "#232119",
+            100: "#1a1817",
           },
           background: {
             DEFAULT: "#1a1817",
