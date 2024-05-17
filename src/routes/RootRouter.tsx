@@ -17,6 +17,7 @@ import TopicDetails from "@/pages/topics/TopicDetails";
 import TopicsPage from "@/pages/topics/TopicsPage";
 import UserDetails from "@/pages/users/UserDetails";
 import UsersPage from "@/pages/users/UsersPage";
+import OfficeIndex from "@/pages/OfficeIndex";
 
 function RootRouter({ children }) {
   return (
@@ -26,6 +27,7 @@ function RootRouter({ children }) {
           <Route index element={<Home />} />
           <Route path="login" element={<Login />} />
           <Route path="office" element={<DashboardLayout />}>
+            <Route index element={<OfficeIndex />} />
             <Route path="users" element={<UsersPage />} />
             <Route path="user" element={<UserDetails />} />
             <Route path="user/:id" element={<UserDetails />} />

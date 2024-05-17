@@ -3,19 +3,18 @@ import useAuth from "@/hooks/useAuth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Home() {
+export default function OfficeIndex() {
   const navigate = useNavigate();
 
   const { checkIsLoggedIn } = useAuth();
 
   useEffect(() => {
     if (checkIsLoggedIn()) {
-      navigate(ROUTES.REG_REQUESTS, { replace: true });
+      navigate(ROUTES.REG_REQUESTS);
     } else {
-      navigate(ROUTES.LOGIN, { replace: true });
+      navigate(ROUTES.LOGIN);
     }
   }, [checkIsLoggedIn, navigate]);
-  return <></>;
-}
 
-export default Home;
+  return null;
+}

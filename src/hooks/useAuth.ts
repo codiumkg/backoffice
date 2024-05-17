@@ -1,11 +1,12 @@
 import { StorageKeys } from "@/constants/storageKeys";
+import { useCallback } from "react";
 
 export default function useAuth() {
-  const checkIsLoggedIn = () => {
+  const checkIsLoggedIn = useCallback(() => {
     const token = getTokenFromStorage();
 
     return !!token;
-  };
+  }, []);
 
   const getTokenFromStorage = () => {
     const token = localStorage.getItem(StorageKeys.TOKEN);
