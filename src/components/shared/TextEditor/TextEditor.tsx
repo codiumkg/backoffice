@@ -112,12 +112,13 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
         subtitle="Вставьте ссылку на Youtube видео"
         show={showYoutubeModal}
         onPrimaryClick={handleYoutubeClick}
+        onCancelClick={() => setShowYoutubeModal(false)}
         onClose={() => setShowYoutubeModal(false)}
       >
         <CustomInput
           name="video"
           autoFocus
-          onChangeCallback={(value) => setYoutubeLink(value)}
+          onChange={(e) => setYoutubeLink(e.target.value)}
         />
       </Modal>
 
@@ -126,12 +127,13 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
         subtitle="Вставьте ссылку на картинку"
         show={showImageModal}
         onPrimaryClick={handleImageClick}
+        onCancelClick={() => setShowImageModal(false)}
         onClose={() => setShowImageModal(false)}
       >
         <CustomInput
           name="image"
           autoFocus
-          onChangeCallback={(value) => setImageLink(value)}
+          onChange={(e) => setImageLink(e.target.value)}
         />
       </Modal>
     </>
