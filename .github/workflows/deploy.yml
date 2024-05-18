@@ -30,4 +30,4 @@ jobs:
             git pull
             yarn install
             yarn build
-            pm2 reload backoffice
+            pm2 restart backoffice
