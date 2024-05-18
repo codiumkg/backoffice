@@ -17,6 +17,7 @@ import EditorMenu from "./EditorMenu";
 import styles from "./TextEditor.module.scss";
 import Modal from "../Modal/Modal";
 import CustomInput from "../CustomInput/CustomInput";
+import { useNotification } from "@/hooks/useNotification";
 
 const lowlight = createLowlight(common);
 lowlight.register("python", python);
@@ -39,6 +40,8 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
 
   const [youtubeLink, setYoutubeLink] = useState("");
   const [imageLink, setImageLink] = useState("");
+
+  const { showNotification } = useNotification();
 
   const editor = useEditor({
     extensions: [
@@ -73,6 +76,11 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
   });
 
   const handleImageClick = () => {
+    if (!imageLink) {
+      showNotification("Вы не вставили ссылку");
+      return;
+    }
+
     editor?.commands.setImage({ src: imageLink });
 
     setImageLink("");
@@ -80,6 +88,11 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
   };
 
   const handleYoutubeClick = () => {
+    if (!youtubeLink) {
+      showNotification("Вы не вставили ссылку");
+      return;
+    }
+
     editor?.commands.setYoutubeVideo({
       src: youtubeLink,
     });
