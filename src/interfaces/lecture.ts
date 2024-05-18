@@ -4,7 +4,6 @@ export interface ILecture {
   id: number;
   title: string;
   content: string;
-  number: number;
   image: string | null;
   topicId: number;
   topic: ITopic;
@@ -15,7 +14,6 @@ export interface ILecture {
 export interface ILectureCreate {
   title: string;
   content: string;
-  number: number;
   image?: string | null;
   topicId: number;
 }

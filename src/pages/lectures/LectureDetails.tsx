@@ -36,7 +36,6 @@ const lectureValidationSchema = Yup.object({
 const initialValues: ILectureCreate = {
   title: "",
   content: "",
-  number: 0,
   image: null,
   topicId: -1,
 };
@@ -125,7 +124,7 @@ function LectureDetails() {
   const isValid = Object.values(lectureForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<ILectureCreate> = (data: ILectureCreate) => {
-    mutate({ ...data, number: +data.number });
+    mutate(data);
   };
 
   useEffect(() => {
@@ -134,7 +133,6 @@ function LectureDetails() {
         title: existingLecture.title,
         topicId: existingLecture.topicId,
         content: existingLecture.content,
-        number: existingLecture.number,
       });
 
       setActiveValue({
@@ -177,21 +175,6 @@ function LectureDetails() {
             placeholder="Введите название..."
             errorMessage={lectureForm.formState.errors.title?.message}
             {...field}
-          />
-        )}
-      />
-
-      <Controller
-        name="number"
-        control={lectureForm.control}
-        render={({ field }) => (
-          <CustomInput
-            {...field}
-            label="Номер лекции"
-            placeholder="Введите номер лекции..."
-            type="number"
-            value={lectureForm.watch("number").toString()}
-            errorMessage={lectureForm.formState.errors.number?.message}
           />
         )}
       />

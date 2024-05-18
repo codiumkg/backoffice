@@ -109,7 +109,7 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
   }, [value, editor]);
 
   return (
-    <>
+    <div>
       {label && <Typography variant="body3">{label}</Typography>}
       <div className={styles.container}>
         <EditorMenu
@@ -149,7 +149,7 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
           onChange={(e) => setImageLink(e.target.value)}
         />
       </Modal>
-    </>
+    </div>
   );
 });
 
