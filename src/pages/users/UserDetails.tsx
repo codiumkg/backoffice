@@ -166,6 +166,11 @@ function UserDetails() {
         label: existingUser.group?.title,
         value: existingUser.groupId?.toString(),
       });
+
+      setActiveRole({
+        label: ROLES_DISPLAY[existingUser.role],
+        value: existingUser.role,
+      });
     }
   }, [existingUser, userForm, id]);
 
@@ -232,6 +237,23 @@ function UserDetails() {
         )}
       />
 
+      <CustomSelect
+        options={ROLES_OPTIONS}
+        activeValue={activeRole}
+        onChange={(e) => {
+          setActiveRole({
+            label: ROLES_OPTIONS.find((role) => role.value === e.target.value)
+              ?.label,
+            value: e.target.value,
+          });
+          userForm.setValue("role", e.target.value as Role, {
+            shouldDirty: true,
+          });
+        }}
+        label="Роль"
+        placeholder="Выберите роль..."
+      />
+
       {existingUser?.role === Role.STUDENT ||
         (userForm.watch("role") === Role.STUDENT && (
           <CustomSelect
@@ -253,23 +275,6 @@ function UserDetails() {
             isLoading={isGroupsLoading}
           />
         ))}
-
-      <CustomSelect
-        options={ROLES_OPTIONS}
-        activeValue={activeRole}
-        onChange={(e) => {
-          setActiveRole({
-            label: ROLES_OPTIONS.find((role) => role.value === e.target.value)
-              ?.label,
-            value: e.target.value,
-          });
-          userForm.setValue("role", e.target.value as Role, {
-            shouldDirty: true,
-          });
-        }}
-        label="Роль"
-        placeholder="Выберите роль..."
-      />
 
       <Controller
         name="age"
