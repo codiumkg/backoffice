@@ -14,6 +14,12 @@ export async function createUser(data: ICreateUser): Promise<IUser> {
   return request.post(API_USERS, data).then(({ data }) => data);
 }
 
+export async function resetPassword(userId: number) {
+  return request
+    .post(`${API_USERS}${userId}/reset-password`)
+    .then(({ data }) => data);
+}
+
 export async function updateUser(
   id: number,
   data: Partial<ICreateUser>

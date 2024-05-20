@@ -5,6 +5,7 @@ import {
   deleteUser,
   getUserDetails,
   getUsers,
+  resetPassword,
   updateUser,
 } from "@/requests/users";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -69,5 +70,18 @@ export const useUserDetailsQuery = (id: number, { enabled }: QueryParams) => {
   return {
     data,
     isLoading,
+  };
+};
+
+export const usePasswordReset = (params?: MutationQuery) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: (userId: number) => resetPassword(userId),
+    onSuccess: params?.onSuccess,
+    onError: params?.onError,
+  });
+
+  return {
+    mutate,
+    isPending,
   };
 };

@@ -10,10 +10,20 @@ import { IOption } from "@/interfaces/common";
 import { ICreateUser } from "@/interfaces/user";
 import { useGroupsQuery } from "@/queries/groups";
 import {
+  usePasswordReset,
   useUserDeletion,
   useUserDetailsQuery,
   useUserMutation,
 } from "@/queries/users";
+import {
+  Button,
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
@@ -21,7 +31,6 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const initialValues: ICreateUser = {
   username: "",
-  password: "",
   phone: "",
   role: Role.STUDENT,
   firstName: "",
@@ -34,6 +43,8 @@ const initialValues: ICreateUser = {
 
 function UserDetails() {
   const { id } = useParams();
+
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
@@ -103,7 +114,25 @@ function UserDetails() {
     id: +id!,
   });
 
+  const { mutate: resetPassword, isPending: isResetingPassword } =
+    usePasswordReset({
+      onSuccess: () => {
+        showSuccessNotification("Пароль успешно сброшен!");
+        onClose();
+      },
+      onError: () => {
+        showErrorNotification("Не удалось сбросить пароль");
+        onClose();
+      },
+    });
+
   const isValid = Object.values(userForm.formState.errors).length === 0;
+
+  const handleResetPassword = () => {
+    if (!existingUser) return;
+
+    resetPassword(existingUser.id);
+  };
 
   const onSubmit: SubmitHandler<ICreateUser> = (data: ICreateUser) => {
     if (userForm.getValues("email")?.length === 0) {
@@ -114,14 +143,17 @@ function UserDetails() {
       delete data["phone"];
     }
 
-    mutate(data);
+    if (userForm.watch("role") !== Role.STUDENT) {
+      delete data["groupId"];
+    }
+
+    mutate({ ...data, age: Number(data.age) });
   };
 
   useEffect(() => {
     if (existingUser && id) {
       userForm.reset({
         username: existingUser.username,
-        password: existingUser.password,
         email: existingUser.email,
         phone: existingUser.phone,
         age: existingUser.profile?.age,
@@ -200,39 +232,27 @@ function UserDetails() {
         )}
       />
 
-      <Controller
-        name="password"
-        control={userForm.control}
-        render={({ field }) => (
-          <CustomInput
-            {...field}
-            label="Пароль"
-            placeholder="Введите пароль..."
-            errorMessage={userForm.formState.errors.password?.message}
+      {existingUser?.role === Role.STUDENT ||
+        (userForm.watch("role") === Role.STUDENT && (
+          <CustomSelect
+            options={groupOptions || []}
+            activeValue={activeGroup}
+            onChange={(e) => {
+              setActiveGroup({
+                label: groupOptions?.find(
+                  (option) => option.value === e.target.value
+                )?.label,
+                value: e.target.value,
+              });
+              userForm.setValue("groupId", +e.target.value, {
+                shouldDirty: true,
+              });
+            }}
+            label="Группа"
+            placeholder="Выберите группу..."
+            isLoading={isGroupsLoading}
           />
-        )}
-      />
-
-      {existingUser?.role !== Role.ADMIN && (
-        <CustomSelect
-          options={groupOptions || []}
-          activeValue={activeGroup}
-          onChange={(e) => {
-            setActiveGroup({
-              label: groupOptions?.find(
-                (option) => option.value === e.target.value
-              )?.label,
-              value: e.target.value,
-            });
-            userForm.setValue("groupId", +e.target.value, {
-              shouldDirty: true,
-            });
-          }}
-          label="Группа"
-          placeholder="Выберите группу..."
-          isLoading={isGroupsLoading}
-        />
-      )}
+        ))}
 
       <CustomSelect
         options={ROLES_OPTIONS}
@@ -291,6 +311,43 @@ function UserDetails() {
           />
         )}
       />
+
+      {!!existingUser && (
+        <div>
+          <Button
+            color="danger"
+            size="sm"
+            isLoading={isResetingPassword}
+            onPress={onOpen}
+          >
+            Cбросить пароль
+          </Button>
+        </div>
+      )}
+
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="sm">
+        <ModalBody>
+          <ModalContent>
+            {(onClose) => (
+              <>
+                <ModalHeader>
+                  Вы уверены что хотите сбросить пароль?
+                </ModalHeader>
+                <ModalFooter>
+                  <Button onPress={onClose}>Отмена</Button>
+                  <Button
+                    onPress={handleResetPassword}
+                    color="danger"
+                    isLoading={isResetingPassword}
+                  >
+                    Подтвердить
+                  </Button>
+                </ModalFooter>
+              </>
+            )}
+          </ModalContent>
+        </ModalBody>
+      </Modal>
     </Resource>
   );
 }

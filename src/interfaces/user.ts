@@ -24,7 +24,6 @@ export interface IProfile {
 
 export interface ICreateUser {
   username: string;
-  password: string;
   email?: string;
   phone?: string;
   role: Role;
