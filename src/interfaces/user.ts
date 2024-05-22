@@ -1,4 +1,5 @@
-import { IGroup, Role } from "./auth";
+import { Role } from "./auth";
+import { IGroup } from "./group";
 
 export interface IUser {
   id: number;

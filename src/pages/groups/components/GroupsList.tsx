@@ -50,7 +50,6 @@ function GroupsList({ groups, isLoading }: Props) {
                 onClick={() => navigate(`${ROUTES.GROUP}/${group.id}`)}
               >
                 {(columnKey) => (
-                  // @ts-expect-error render relation fields
                   <TableCell>{renderCell(group, columnKey)}</TableCell>
                 )}
               </TableRow>
