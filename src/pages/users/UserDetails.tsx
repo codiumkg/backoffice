@@ -160,6 +160,7 @@ function UserDetails() {
         firstName: existingUser.profile?.firstName,
         lastName: existingUser.profile?.lastName,
         groupId: existingUser.groupId,
+        role: existingUser.role,
       });
 
       setActiveGroup({
@@ -180,12 +181,14 @@ function UserDetails() {
         label: groups?.[0]?.title,
         value: groups?.[0]?.id.toString(),
       });
-    }
 
-    if (groups) {
-      userForm.setValue("groupId", groups[0]?.id);
+      if (groups) {
+        userForm.setValue("groupId", groups[0]?.id);
+      }
     }
   }, [groups, userForm, existingUser, id]);
+
+  console.log(userForm.getValues());
 
   return (
     <Resource
@@ -254,27 +257,26 @@ function UserDetails() {
         placeholder="Выберите роль..."
       />
 
-      {existingUser?.role === Role.STUDENT ||
-        (userForm.watch("role") === Role.STUDENT && (
-          <CustomSelect
-            options={groupOptions || []}
-            activeValue={activeGroup}
-            onChange={(e) => {
-              setActiveGroup({
-                label: groupOptions?.find(
-                  (option) => option.value === e.target.value
-                )?.label,
-                value: e.target.value,
-              });
-              userForm.setValue("groupId", +e.target.value, {
-                shouldDirty: true,
-              });
-            }}
-            label="Группа"
-            placeholder="Выберите группу..."
-            isLoading={isGroupsLoading}
-          />
-        ))}
+      {userForm.watch("role") === Role.STUDENT && (
+        <CustomSelect
+          options={groupOptions || []}
+          activeValue={activeGroup}
+          onChange={(e) => {
+            setActiveGroup({
+              label: groupOptions?.find(
+                (option) => option.value === e.target.value
+              )?.label,
+              value: e.target.value,
+            });
+            userForm.setValue("groupId", +e.target.value, {
+              shouldDirty: true,
+            });
+          }}
+          label="Группа"
+          placeholder="Выберите группу..."
+          isLoading={isGroupsLoading}
+        />
+      )}
 
       <Controller
         name="age"
