@@ -19,4 +19,5 @@ export const ROUTES = {
   TASKS: "/office/tasks",
   TASK: "/office/task",
   TASK_RESULTS: "/office/task-results",
+  MY_GROUPS: "/office/my-groups",
 };

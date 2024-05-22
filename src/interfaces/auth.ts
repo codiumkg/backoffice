@@ -12,6 +12,7 @@ export interface ILogin {
 }
 
 export interface IUserData {
+  id: number;
   username: string;
   role: Role;
   group: IGroup;

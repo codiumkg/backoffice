@@ -31,10 +31,10 @@ export const useGroupMutation = ({ onSuccess, onError, id }: MutationQuery) => {
   };
 };
 
-export const useGroupsQuery = () => {
+export const useGroupsQuery = (params?: { teacherId?: number }) => {
   const { data, isLoading } = useQuery({
-    queryFn: getGroups,
-    queryKey: [QUERY_KEYS.GROUPS],
+    queryFn: () => getGroups({ teacherId: params?.teacherId }),
+    queryKey: [QUERY_KEYS.GROUPS, params?.teacherId],
     refetchOnWindowFocus: false,
     staleTime: 35 * 1000,
   });

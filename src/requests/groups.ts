@@ -2,8 +2,12 @@ import { request } from "./request";
 import { API_GROUPS } from "../constants/apiConstants";
 import { IGroup, IGroupCreate } from "../interfaces/group";
 
-export async function getGroups(): Promise<IGroup[]> {
-  return request.get(API_GROUPS).then(({ data }) => data);
+export async function getGroups(params?: {
+  teacherId?: number;
+}): Promise<IGroup[]> {
+  return request
+    .get(API_GROUPS, { params: { teacherId: params?.teacherId } })
+    .then(({ data }) => data);
 }
 
 export async function getGroupDetails(id: number) {

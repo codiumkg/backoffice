@@ -1,5 +1,6 @@
 import { Role } from "../interfaces/auth";
 import { IResource } from "@/interfaces/resource";
+import { ROUTES } from "./routes";
 
 export const RESOURCES: IResource[] = [
   {
@@ -57,4 +58,13 @@ export const RESOURCES: IResource[] = [
   //   href: "/task-results",
   //   roles: [Role.MANAGER, Role.TEACHER],
   // },
+];
+
+export const TEACHER_MENU = [
+  {
+    id: "my-groups",
+    title: "Мои группы",
+    description: "Получить список моих групп",
+    href: ROUTES.MY_GROUPS,
+  },
 ];

@@ -1,10 +1,10 @@
-import { RESOURCES } from "@/constants/resource";
+import { RESOURCES, TEACHER_MENU } from "@/constants/resource";
 import NavElement from "../NavElement/NavElement";
 import Typography from "../Typography/Typography";
-import styles from "./Sidebar.module.scss";
 import { useUserData } from "@/queries/userdata";
 import { Role } from "@/interfaces/auth";
 import { useNavigate } from "react-router-dom";
+import { Listbox, ListboxItem } from "@nextui-org/react";
 
 export default function Sidebar() {
   const { data: userData } = useUserData();
@@ -16,15 +16,15 @@ export default function Sidebar() {
   const isTeacher = role === Role.TEACHER;
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.container}>
-        <div className={styles.header}>
+    <div className="flex-[0_0_20%] mt-6 px-4">
+      <div>
+        <div className="bg-bgSecondary p-4 rounded-xl">
           <Typography weight="600">
             {isTeacher ? "Преподаватель" : "Администрация"}
           </Typography>
         </div>
 
-        <div className={styles.content}>
+        <div className="mt-2">
           {RESOURCES.map(
             (resource) =>
               (role === Role.ADMIN || resource.roles?.includes(role!)) && (
@@ -38,6 +38,20 @@ export default function Sidebar() {
                   }
                 />
               )
+          )}
+
+          {isTeacher && (
+            <Listbox items={TEACHER_MENU} variant="flat">
+              {(item) => (
+                <ListboxItem
+                  key={item.id}
+                  onClick={() => navigate(item.href)}
+                  description={item.description}
+                >
+                  <h1 className="font-bold">{item.title}</h1>
+                </ListboxItem>
+              )}
+            </Listbox>
           )}
         </div>
       </div>

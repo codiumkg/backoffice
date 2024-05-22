@@ -44,11 +44,13 @@ ul {
 
 ol {
   list-style: decimal;
+
+  li {
+    margin-left: 32px;
+  }
 }
 
-li {
-  margin-left: 32px;
-}
+
 
 p {
   margin: 12px 0;

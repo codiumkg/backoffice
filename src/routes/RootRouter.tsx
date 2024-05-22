@@ -19,6 +19,7 @@ import UserDetails from "@/pages/users/UserDetails";
 import UsersPage from "@/pages/users/UsersPage";
 import OfficeIndex from "@/pages/OfficeIndex";
 import Profile from "@/pages/profile/Profile";
+import MyGroupsPage from "@/pages/my-groups/MyGroupsPage";
 
 function RootRouter({ children }) {
   return (
@@ -52,6 +53,7 @@ function RootRouter({ children }) {
             <Route path="tasks" element={<TasksPage />} />
             <Route path="task" element={<TaskDetails />} />
             <Route path="task/:id" element={<TaskDetails />} />
+            <Route path="my-groups" element={<MyGroupsPage />} />
           </Route>
         </Route>
       </Routes>
