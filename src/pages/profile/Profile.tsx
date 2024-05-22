@@ -52,7 +52,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="p-8">
+    <div className="mt-6 mx-6 p-8 bg-bgSecondary rounded-xl">
       <section className="flex flex-col gap-4">
         <h1 className="font-bold text-xl">Изменение пароля</h1>
         <form className="flex flex-col gap-3">
@@ -82,13 +82,15 @@ export default function ProfilePage() {
             }
           />
 
-          <Button
-            color="primary"
-            onPress={onOpen}
-            isDisabled={isChangePasswordDisabled}
-          >
-            Изменить
-          </Button>
+          <div>
+            <Button
+              color="primary"
+              onPress={onOpen}
+              isDisabled={isChangePasswordDisabled}
+            >
+              Изменить
+            </Button>
+          </div>
         </form>
       </section>
 
