@@ -4,10 +4,10 @@ import Typography from "../Typography/Typography";
 import { useUserData } from "@/queries/userdata";
 import { Role } from "@/interfaces/auth";
 import { useNavigate } from "react-router-dom";
-import { Listbox, ListboxItem } from "@nextui-org/react";
+import { Listbox, ListboxItem, Spinner } from "@nextui-org/react";
 
 export default function Sidebar() {
-  const { data: userData } = useUserData();
+  const { data: userData, isFetching } = useUserData();
 
   const navigate = useNavigate();
 
@@ -19,9 +19,12 @@ export default function Sidebar() {
     <div className="flex-[0_0_20%] mt-6 px-4">
       <div>
         <div className="bg-bgSecondary p-4 rounded-xl">
-          <Typography weight="600">
-            {isTeacher ? "Преподаватель" : "Администрация"}
-          </Typography>
+          {!isFetching && (
+            <Typography weight="600">
+              {isTeacher ? "Преподаватель" : "Администрация"}
+            </Typography>
+          )}
+          {isFetching && <Spinner />}
         </div>
 
         <div className="mt-2">
@@ -40,7 +43,7 @@ export default function Sidebar() {
               )
           )}
 
-          {isTeacher && (
+          {!isFetching && isTeacher && (
             <Listbox items={TEACHER_MENU} variant="flat">
               {(item) => (
                 <ListboxItem

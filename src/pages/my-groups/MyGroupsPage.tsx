@@ -1,8 +1,29 @@
 import { useGroupsQuery } from "@/queries/groups";
-import { useUserData } from "@/queries/userdata";
+import { Spinner } from "@nextui-org/react";
 
 export default function MyGroupsPage() {
-  //   const { data: groups, isLoading } = useGroupsQuery({ teacherId });
+  const { data: groups, isLoading } = useGroupsQuery();
 
-  return <div></div>;
+  if (!groups) return;
+
+  return (
+    <div className="flex flex-col gap-6 mt-8 px-6">
+      <div className="bg-bgSecondary p-4 rounded-xl">Список моих групп</div>
+
+      {isLoading && <Spinner size="lg" />}
+
+      <div className="grid grid-cols-2">
+        {!isLoading &&
+          groups.map((group) => (
+            <div
+              key={group.id}
+              className="p-6 bg-bgSecondary rounded-xl border border-transparent hover:border-highlight"
+            >
+              <h1 className="font-bold">{group.title}</h1>
+              <h2 className="text-sm">{group.subject.title}</h2>
+            </div>
+          ))}
+      </div>
+    </div>
+  );
 }
