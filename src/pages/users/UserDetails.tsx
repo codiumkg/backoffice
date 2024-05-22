@@ -317,7 +317,7 @@ function UserDetails() {
         )}
       />
 
-      {!!existingUser && (
+      {!!existingUser && id && (
         <div>
           <Button
             color="danger"

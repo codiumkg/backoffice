@@ -1,4 +1,4 @@
-import { ISubject } from "./subject";
+import { IGroup } from "./group";
 
 export enum Role {
   ADMIN = "ADMIN",
@@ -9,12 +9,6 @@ export enum Role {
 export interface ILogin {
   username: string;
   password: string;
-}
-
-export interface IGroup {
-  id: number;
-  title: string;
-  subject: ISubject;
 }
 
 export interface IUserData {

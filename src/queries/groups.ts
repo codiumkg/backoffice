@@ -1,5 +1,5 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { IGroup } from "../interfaces/auth";
+import { IGroup } from "@/interfaces/group";
 import {
   createGroup,
   getGroupDetails,

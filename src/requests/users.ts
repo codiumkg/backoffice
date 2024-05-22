@@ -1,9 +1,10 @@
 import { API_USERS } from "@/constants/apiConstants";
 import { ICreateUser, IUser } from "@/interfaces/user";
 import { request } from "./request";
+import { Role } from "@/interfaces/auth";
 
-export async function getUsers(): Promise<IUser[]> {
-  return request.get(API_USERS).then(({ data }) => data);
+export async function getUsers(params?: { role?: Role }): Promise<IUser[]> {
+  return request.get(API_USERS, { params }).then(({ data }) => data);
 }
 
 export async function getUserDetails(id: number): Promise<IUser> {

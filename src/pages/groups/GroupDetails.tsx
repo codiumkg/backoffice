@@ -4,6 +4,7 @@ import Resource from "@/components/shared/Resource/Resource";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
 import { useNotification } from "@/hooks/useNotification";
+import { Role } from "@/interfaces/auth";
 import { IOption } from "@/interfaces/common";
 import { IGroupCreate } from "@/interfaces/group";
 import {
@@ -12,6 +13,7 @@ import {
   useGroupMutation,
 } from "@/queries/groups";
 import { useSubjectsQuery } from "@/queries/subjects";
+import { useUsersQuery } from "@/queries/users";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useQueryClient } from "@tanstack/react-query";
 import { useEffect, useMemo, useState } from "react";
@@ -25,6 +27,7 @@ const groupValidationSchema = Yup.object({
     .max(32, "Название должно быть не более 32 символов")
     .required("Это поле обязательное"),
   subjectId: Yup.number().nullable().required(),
+  teacherId: Yup.number().nullable().required(),
 });
 
 const initialValues = {
@@ -35,6 +38,7 @@ const initialValues = {
 interface GroupForm {
   title: string;
   subjectId: number;
+  teacherId: number;
 }
 
 function GroupDetails() {
@@ -60,6 +64,8 @@ function GroupDetails() {
   } = useSubjectsQuery({
     // params: { search },
   });
+
+  const { data: teachers } = useUsersQuery({ role: Role.TEACHER });
 
   const { mutate, isPending } = useGroupMutation({
     onSuccess: () => {
@@ -102,6 +108,20 @@ function GroupDetails() {
     value: subjects?.[0]?.id.toString(),
   });
 
+  const [activeGroup, setActiveGroup] = useState<IOption>({
+    label: teachers?.[0]?.username,
+    value: teachers?.[0]?.id.toString(),
+  });
+
+  const teacherOptions = useMemo(
+    () =>
+      teachers?.map((teacher) => ({
+        label: teacher.username,
+        value: teacher.id.toString(),
+      })) || [],
+    [teachers]
+  );
+
   const subjectOptions = useMemo(
     () =>
       subjects?.map((subject) => ({
@@ -133,6 +153,10 @@ function GroupDetails() {
         label: existingGroup.subject.title,
         value: existingGroup.subject.id.toString(),
       });
+      setActiveGroup({
+        label: existingGroup.teacher.username,
+        value: existingGroup.teacher.id.toString(),
+      });
     }
   }, [isSuccess, existingGroup, groupForm, id]);
 
@@ -143,11 +167,16 @@ function GroupDetails() {
         value: subjects?.[0]?.id.toString(),
       });
 
+      setActiveGroup({
+        label: teachers?.[0]?.username,
+        value: teachers?.[0]?.id.toString(),
+      });
+
       if (subjects) {
         groupForm.setValue("subjectId", subjects[0]?.id);
       }
     }
-  }, [subjects, groupForm, id, existingGroup]);
+  }, [subjects, groupForm, id, existingGroup, teachers]);
 
   return (
     <Resource
@@ -193,6 +222,24 @@ function GroupDetails() {
         label="Предмет"
         placeholder="Выберите предмет..."
         isLoading={isFetching}
+      />
+
+      <CustomSelect
+        options={teacherOptions}
+        activeValue={activeGroup}
+        onChange={(e) => {
+          setActiveGroup({
+            label: teacherOptions?.find(
+              (option) => option.value === e.target.value
+            )?.label,
+            value: e.target.value,
+          });
+          groupForm.setValue("teacherId", +e.target.value, {
+            shouldDirty: true,
+          });
+        }}
+        label="Преподаватель"
+        placeholder="Выберите преподавателя..."
       />
     </Resource>
   );

@@ -34,6 +34,7 @@ function CustomSelect({
         <SelectItem
           key={option.value}
           value={option.value}
+          className="mx-0"
           classNames={{ wrapper: ["bg-bgPrimary"] }}
         >
           {option.label}

@@ -1,4 +1,5 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
+import { Role } from "@/interfaces/auth";
 import { ICreateUser, IUser } from "@/interfaces/user";
 import {
   createUser,
@@ -44,10 +45,10 @@ export const useUserDeletion = ({ onSuccess, onError }: MutationQuery) => {
   };
 };
 
-export const useUsersQuery = () => {
+export const useUsersQuery = (params?: { role: Role }) => {
   const { data, isLoading } = useQuery({
-    queryFn: getUsers,
-    queryKey: [QUERY_KEYS.USERS],
+    queryFn: () => getUsers({ role: params?.role }),
+    queryKey: [QUERY_KEYS.USERS, params?.role],
   });
 
   return {
