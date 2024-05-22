@@ -2,22 +2,13 @@ import Typography from "../Typography/Typography";
 
 import styles from "./Header.module.scss";
 import useAuth from "@/hooks/useAuth";
-import { ROUTES } from "@/constants/routes";
 // import { useUserData } from "@/queries/userdata";
-import { useNavigate } from "react-router-dom";
 import { Button } from "@nextui-org/react";
 
 export default function Header() {
-  const navigate = useNavigate();
-
-  const { removeTokenFromStorage } = useAuth();
+  const { logout } = useAuth();
 
   // const { data: userData, isFetching } = useUserData();
-
-  const handleLogout = () => {
-    removeTokenFromStorage();
-    navigate(ROUTES.LOGIN, { replace: true });
-  };
 
   return (
     <div className={styles.wrapper}>
@@ -35,7 +26,7 @@ export default function Header() {
           </div>
         </div>
 
-        <Button onClick={handleLogout}>Выйти</Button>
+        <Button onClick={() => logout()}>Выйти</Button>
       </div>
     </div>
   );
