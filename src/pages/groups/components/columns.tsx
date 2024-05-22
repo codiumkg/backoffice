@@ -18,6 +18,6 @@ export const renderCell = (group: IGroup, columnKey: React.Key) => {
     case "teacher":
       return group.teacher.username;
     default:
-      return cellValue;
+      return cellValue as string;
   }
 };
