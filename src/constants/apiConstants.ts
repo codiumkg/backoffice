@@ -12,3 +12,5 @@ export const API_TOPICS = BASE_URL.concat("/topics/");
 export const API_LECTURES = BASE_URL.concat("/lectures/");
 export const API_TASKS = BASE_URL.concat("/tasks/");
 export const API_TOPIC_CONTENT = BASE_URL.concat("/topic-content");
+export const API_GROUP_STUDENTS = (groupId: number) =>
+  BASE_URL.concat(`/groups/${groupId}/get-students`);

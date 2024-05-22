@@ -3,6 +3,7 @@ export const QUERY_KEYS = {
   USERDATA: "userdata",
   SUBJECTS: "subjects",
   GROUPS: "groups",
+  GROUP_STUDENTS: "group-students",
   TOPICS: "topics",
   TOPIC_CONTENT: "topic-content",
   SECTIONS: "sections",

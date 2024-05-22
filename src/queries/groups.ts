@@ -4,6 +4,7 @@ import {
   createGroup,
   getGroupDetails,
   getGroups,
+  getGroupStudents,
   removeGroup,
   updateGroup,
 } from "../requests/groups";
@@ -76,5 +77,17 @@ export const useGroupDeletion = (
   return {
     mutate,
     isPending,
+  };
+};
+
+export const useGroupStudents = (groupId: number) => {
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERY_KEYS.GROUPS, groupId, QUERY_KEYS.GROUP_STUDENTS],
+    queryFn: () => getGroupStudents(groupId),
+  });
+
+  return {
+    students: data,
+    isStudentsLoading: isLoading,
   };
 };

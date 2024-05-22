@@ -1,6 +1,7 @@
 import { request } from "./request";
-import { API_GROUPS } from "../constants/apiConstants";
+import { API_GROUP_STUDENTS, API_GROUPS } from "../constants/apiConstants";
 import { IGroup, IGroupCreate } from "../interfaces/group";
+import { IUser } from "@/interfaces/user";
 
 export async function getGroups(params?: {
   teacherId?: number;
@@ -27,4 +28,10 @@ export async function updateGroup(
 
 export async function removeGroup(id: number) {
   return request.delete(`${API_GROUPS}${id}`).then(({ data }) => data);
+}
+
+export async function getGroupStudents(groupId: number): Promise<IUser[]> {
+  return request
+    .get(API_GROUP_STUDENTS(groupId))
+    .then(({ data }) => data.students);
 }

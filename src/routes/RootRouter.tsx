@@ -20,6 +20,7 @@ import UsersPage from "@/pages/users/UsersPage";
 import OfficeIndex from "@/pages/OfficeIndex";
 import Profile from "@/pages/profile/Profile";
 import MyGroupsPage from "@/pages/my-groups/MyGroupsPage";
+import GroupStudentsPage from "@/pages/my-groups/GroupStudentsPage";
 
 function RootRouter({ children }) {
   return (
@@ -54,6 +55,10 @@ function RootRouter({ children }) {
             <Route path="task" element={<TaskDetails />} />
             <Route path="task/:id" element={<TaskDetails />} />
             <Route path="my-groups" element={<MyGroupsPage />} />
+            <Route
+              path="my-groups/:id/students"
+              element={<GroupStudentsPage />}
+            />
           </Route>
         </Route>
       </Routes>
