@@ -32,3 +32,8 @@ export interface ILoginResponse {
     group: IGroup;
   };
 }
+
+export interface IChangePassword {
+  currentPassword: string;
+  newPassword: string;
+}

@@ -1,11 +1,12 @@
-import { IUserData } from "../interfaces/auth";
-import { useQuery } from "@tanstack/react-query";
+import { IChangePassword, IUserData } from "../interfaces/auth";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { QUERY_KEYS } from "../constants/queryKeys";
 import getUserData from "../requests/auth/getUserData";
 import { useEffect } from "react";
 import { useNotification } from "@/hooks/useNotification";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
+import { changePassword } from "@/requests/auth/changePassword";
 
 export const useUserData = () => {
   const { data, isFetching, isSuccess, isError, error } = useQuery<IUserData>({
@@ -29,5 +30,21 @@ export const useUserData = () => {
     isFetching,
     isSuccess,
     isError,
+  };
+};
+
+export const useChangePassword = (params?: {
+  onSuccess?: () => void;
+  onError?: () => void;
+}) => {
+  const { mutate, isPending } = useMutation({
+    mutationFn: (data: IChangePassword) => changePassword(data),
+    onSuccess: params?.onSuccess,
+    onError: params?.onError,
+  });
+
+  return {
+    mutate,
+    isPending,
   };
 };

@@ -13,11 +13,15 @@ export default function Sidebar() {
 
   const role = userData?.role;
 
+  const isTeacher = role === Role.TEACHER;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <Typography weight="600">Администрация</Typography>
+          <Typography weight="600">
+            {isTeacher ? "Преподаватель" : "Администрация"}
+          </Typography>
         </div>
 
         <div className={styles.content}>

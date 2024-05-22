@@ -1,32 +1,67 @@
+import {
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+  Spinner,
+} from "@nextui-org/react";
+import { Icons } from "../Icons";
 import Typography from "../Typography/Typography";
-
-import styles from "./Header.module.scss";
+import { useUserData } from "@/queries/userdata";
 import useAuth from "@/hooks/useAuth";
-// import { useUserData } from "@/queries/userdata";
-import { Button } from "@nextui-org/react";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const { data: userData, isFetching } = useUserData();
+
   const { logout } = useAuth();
 
-  // const { data: userData, isFetching } = useUserData();
+  const username = userData?.username;
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.header}>
-        <div className="flex center">
-          {/* <div className={styles.user}>
-            <Typography variant="body2" weight="600">
-              {!isFetching ? userData?.username : "Пользователь"}
-            </Typography>
-          </div> */}
-          <div className={styles.logo}>
-            <Typography variant="h2" color="var(--text-color)">
-              Codium Office
-            </Typography>
-          </div>
+    <div className="w-full h-16">
+      <div className="w-full h-full flex justify-between items-center bg-bgSecondary p-8">
+        <div>
+          <Typography variant="h2" color="var(--text-color)">
+            Codium Office
+          </Typography>
         </div>
 
-        <Button onClick={() => logout()}>Выйти</Button>
+        {isFetching ? (
+          <Spinner size="sm" />
+        ) : (
+          <Dropdown>
+            <DropdownTrigger>
+              <div className="flex gap-2 items-center cursor-pointer">
+                <div className="grid place-content-center w-10 h-10 border border-foreground rounded-full">
+                  <Icons.USER />
+                </div>
+
+                <h1 className="text-sm">{username}</h1>
+              </div>
+            </DropdownTrigger>
+            <DropdownMenu
+              aria-label="Выпадающий список действий пользователя"
+              items={[
+                { label: "Профиль", onClick: () => navigate(ROUTES.PROFILE) },
+                { label: "Выйти", onClick: () => logout() },
+              ]}
+            >
+              {(item) => (
+                <DropdownItem
+                  key={item.label}
+                  className="m-0"
+                  onClick={item.onClick}
+                >
+                  {item.label}
+                </DropdownItem>
+              )}
+            </DropdownMenu>
+          </Dropdown>
+        )}
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ export const ROUTES = {
   HOME: "/",
   LOGIN: "/login",
   OFFICE: "/office",
+  PROFILE: "/office/profile",
   USER: "/office/user",
   USERS: "/office/users",
   REG_REQUESTS: "/office/reg-requests",
