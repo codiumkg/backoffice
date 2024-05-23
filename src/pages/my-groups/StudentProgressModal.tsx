@@ -111,8 +111,8 @@ export default function StudentProgressModal({
               </div>
             </ModalBody>
             <ModalFooter>
-              <Button onPress={onClose} color="primary">
-                ОК
+              <Button onPress={onClose} color="secondary">
+                Закрыть
               </Button>
             </ModalFooter>
           </>
