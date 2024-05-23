@@ -1,3 +1,4 @@
+import { Icons } from "@/components/shared/Icons";
 import { ROUTES } from "@/constants/routes";
 import { useGroupsQuery } from "@/queries/groups";
 import { Spinner } from "@nextui-org/react";
@@ -24,6 +25,7 @@ export default function MyGroupsPage() {
               onClick={() => navigate(ROUTES.GROUP_STUDENTS(group.id))}
               className="p-6 bg-bgSecondary rounded-xl border border-transparent hover:border-highlight"
             >
+              <Icons.GROUP className="text-4xl" />
               <h1 className="font-bold">{group.title}</h1>
               <h2 className="text-sm">{group.subject.title}</h2>
             </div>
