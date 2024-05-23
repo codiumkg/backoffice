@@ -35,3 +35,7 @@ export interface ICreateUser {
   age?: number;
   groupId?: number;
 }
+
+export interface IUserProgress {
+  percent: number;
+}

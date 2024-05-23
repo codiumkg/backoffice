@@ -1,3 +1,4 @@
+import { API_STUDENT_PROGRESS } from "@/constants/apiConstants";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { Role } from "@/interfaces/auth";
 import { ICreateUser, IUser } from "@/interfaces/user";
@@ -5,6 +6,7 @@ import {
   createUser,
   deleteUser,
   getUserDetails,
+  getUserProgress,
   getUsers,
   resetPassword,
   updateUser,
@@ -84,5 +86,17 @@ export const usePasswordReset = (params?: MutationQuery) => {
   return {
     mutate,
     isPending,
+  };
+};
+
+export const useUserProgress = (id: number) => {
+  const { data, isLoading } = useQuery({
+    queryFn: () => getUserProgress(id),
+    queryKey: [API_STUDENT_PROGRESS, id],
+  });
+
+  return {
+    userProgress: data,
+    isUserProgressLoading: isLoading,
   };
 };

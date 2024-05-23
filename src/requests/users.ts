@@ -1,5 +1,5 @@
-import { API_USERS } from "@/constants/apiConstants";
-import { ICreateUser, IUser } from "@/interfaces/user";
+import { API_STUDENT_PROGRESS, API_USERS } from "@/constants/apiConstants";
+import { ICreateUser, IUser, IUserProgress } from "@/interfaces/user";
 import { request } from "./request";
 import { Role } from "@/interfaces/auth";
 
@@ -30,4 +30,8 @@ export async function updateUser(
 
 export async function deleteUser(id: number): Promise<IUser> {
   return request.delete(`${API_USERS}${id}`).then(({ data }) => data);
+}
+
+export async function getUserProgress(id: number): Promise<IUserProgress> {
+  return request.get(API_STUDENT_PROGRESS(id)).then(({ data }) => data);
 }

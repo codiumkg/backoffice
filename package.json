@@ -37,6 +37,7 @@
     "match-sorter": "^6.3.3",
     "path": "^0.12.7",
     "react": "^18.2.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.49.3",
     "react-hot-toast": "^2.4.1",

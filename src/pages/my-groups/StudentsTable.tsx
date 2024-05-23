@@ -19,12 +19,10 @@ interface Props {
 export default function StudentsTable({ students }: Props) {
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
 
-  const [selectedStudentId, setSelectedStudentId] = useState<
-    number | undefined
-  >();
+  const [selectedStudent, setSelectedStudent] = useState<IUser | undefined>();
 
-  const handleRowClick = (studentId: number) => {
-    setSelectedStudentId(studentId);
+  const handleRowClick = (student: IUser) => {
+    setSelectedStudent(student);
     onOpen();
   };
 
@@ -38,10 +36,7 @@ export default function StudentsTable({ students }: Props) {
         </TableHeader>
         <TableBody items={students || []} emptyContent="Нет студентов.">
           {(student) => (
-            <TableRow
-              key={student.id}
-              onClick={() => handleRowClick(student.id)}
-            >
+            <TableRow key={student.id} onClick={() => handleRowClick(student)}>
               {(columnKey) => (
                 <TableCell>{renderCell(student, columnKey)}</TableCell>
               )}
@@ -50,11 +45,11 @@ export default function StudentsTable({ students }: Props) {
         </TableBody>
       </Table>
 
-      {selectedStudentId && (
+      {selectedStudent && (
         <StudentProgressModal
           isOpen={isOpen}
           onOpenChange={onOpenChange}
-          studentId={selectedStudentId}
+          student={selectedStudent}
         />
       )}
     </>
