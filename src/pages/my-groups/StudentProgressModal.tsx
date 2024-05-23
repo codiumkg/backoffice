@@ -11,6 +11,8 @@ import {
 } from "@nextui-org/react";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
+import LecturesTable from "../lectures/LecturesTable";
+import TasksTable from "../tasks/TasksTable";
 
 interface Props {
   student: IUser;
@@ -26,7 +28,7 @@ export default function StudentProgressModal({
   const { userProgress, isUserProgressLoading } = useUserProgress(student.id);
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="full">
       <ModalContent>
         {(onClose) => (
           <>
@@ -39,7 +41,7 @@ export default function StudentProgressModal({
               <div className="flex flex-col items-center justify-center">
                 {isUserProgressLoading && <Spinner />}
                 {!isUserProgressLoading && userProgress && (
-                  <div className="flex flex-col w-full">
+                  <div className="flex flex-col w-full gap-10">
                     <div className="flex gap-8 items-center">
                       <div className="w-32 h-32">
                         <CircularProgressbar
@@ -80,6 +82,27 @@ export default function StudentProgressModal({
                             <h1 className="font-bold">Всего завершено задач</h1>
                             <div>{userProgress.completedTasks.length}</div>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col gap-12">
+                      <div>
+                        <h1>Список завершенных лекций</h1>
+
+                        <div className="max-h-64 overflow-y-scroll mt-4">
+                          <LecturesTable
+                            lectures={userProgress.completedLectures || []}
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <h1>Список завершенных задач</h1>
+                        <div className="max-h-64 overflow-y-scroll mt-4">
+                          <TasksTable
+                            tasks={userProgress.completedTasks || []}
+                          />
                         </div>
                       </div>
                     </div>

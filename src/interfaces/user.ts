@@ -1,6 +1,7 @@
 import { Role } from "./auth";
 import { IGroup } from "./group";
 import { ILecture } from "./lecture";
+import { ITask } from "./task";
 import { ITopicContent } from "./topicContent";
 
 export interface IUser {
@@ -40,6 +41,6 @@ export interface ICreateUser {
 
 export interface IUserProgress {
   percent: number;
-  completedLectures: ITopicContent[];
-  completedTasks: ITopicContent[];
+  completedLectures: ILecture[];
+  completedTasks: ITask[];
 }
