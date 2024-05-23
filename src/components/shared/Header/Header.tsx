@@ -15,7 +15,7 @@ import { ROUTES } from "@/constants/routes";
 export default function Header() {
   const navigate = useNavigate();
 
-  const { data: userData, isFetching } = useUserData();
+  const { data: userData, isLoading } = useUserData();
 
   const { logout } = useAuth();
 
@@ -30,7 +30,7 @@ export default function Header() {
           </Typography>
         </div>
 
-        {isFetching ? (
+        {isLoading ? (
           <Spinner size="sm" />
         ) : (
           <Dropdown>

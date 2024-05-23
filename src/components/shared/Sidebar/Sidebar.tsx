@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Listbox, ListboxItem, Spinner } from "@nextui-org/react";
 
 export default function Sidebar() {
-  const { data: userData, isFetching } = useUserData();
+  const { data: userData, isLoading } = useUserData();
 
   const navigate = useNavigate();
 
@@ -19,12 +19,12 @@ export default function Sidebar() {
     <div className="flex-[0_0_20%] mt-6 px-4">
       <div>
         <div className="bg-bgSecondary p-4 rounded-xl">
-          {!isFetching && (
+          {!isLoading && (
             <Typography weight="600">
               {isTeacher ? "Преподаватель" : "Администрация"}
             </Typography>
           )}
-          {isFetching && <Spinner />}
+          {isLoading && <Spinner />}
         </div>
 
         <div className="mt-2">
@@ -43,7 +43,7 @@ export default function Sidebar() {
               )
           )}
 
-          {!isFetching && isTeacher && (
+          {!isLoading && isTeacher && (
             <Listbox items={TEACHER_MENU} variant="flat">
               {(item) => (
                 <ListboxItem

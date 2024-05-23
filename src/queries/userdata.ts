@@ -7,9 +7,10 @@ import { useNotification } from "@/hooks/useNotification";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
 import { changePassword } from "@/requests/auth/changePassword";
+import { StorageKeys } from "@/constants/storageKeys";
 
 export const useUserData = () => {
-  const { data, isFetching, isSuccess, isError, error } = useQuery<IUserData>({
+  const { data, isLoading, isSuccess, isError, error } = useQuery<IUserData>({
     queryKey: [QUERY_KEYS.USERDATA],
     queryFn: getUserData,
   });
@@ -25,9 +26,15 @@ export const useUserData = () => {
     }
   }, [isError, showErrorNotification, navigate, error]);
 
+  useEffect(() => {
+    if (data?.role) {
+      localStorage.setItem(StorageKeys.ROLE, data.role);
+    }
+  }, [isLoading, data?.role]);
+
   return {
     data,
-    isFetching,
+    isLoading,
     isSuccess,
     isError,
   };
