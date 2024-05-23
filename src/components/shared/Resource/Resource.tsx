@@ -4,6 +4,7 @@ import { ReactNode, useState } from "react";
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 import { Button } from "@nextui-org/react";
 import Modal from "../Modal/Modal";
+import useIsTeacher from "@/hooks/useIsTeacher";
 
 interface Props {
   title: string;
@@ -30,6 +31,8 @@ export default function Resource({
 }: Props) {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
 
+  const isTeacher = useIsTeacher();
+
   const handleDeleteClick = () => {
     setShowConfirmModal(true);
   };
@@ -39,27 +42,29 @@ export default function Resource({
       <div className={styles.header}>
         <Typography>{title}</Typography>
 
-        <div className={styles.buttons}>
-          {isExisting && (
-            <Button
-              onClick={handleDeleteClick}
-              color="danger"
-              variant="light"
-              isLoading={isDeleting}
-            >
-              Удалить
-            </Button>
-          )}
+        {!isTeacher && (
+          <div className={styles.buttons}>
+            {isExisting && (
+              <Button
+                onClick={handleDeleteClick}
+                color="danger"
+                variant="light"
+                isLoading={isDeleting}
+              >
+                Удалить
+              </Button>
+            )}
 
-          <Button
-            color="primary"
-            onPress={onSaveClick}
-            isDisabled={isSaveDisabled}
-            isLoading={isSaveButtonLoading}
-          >
-            Сохранить
-          </Button>
-        </div>
+            <Button
+              color="primary"
+              onPress={onSaveClick}
+              isDisabled={isSaveDisabled}
+              isLoading={isSaveButtonLoading}
+            >
+              Сохранить
+            </Button>
+          </div>
+        )}
       </div>
 
       <div className={styles.content}>

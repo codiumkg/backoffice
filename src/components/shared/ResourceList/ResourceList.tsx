@@ -5,6 +5,7 @@ import Typography from "../Typography/Typography";
 import { Button } from "@nextui-org/react";
 
 import styles from "./ResourceList.module.scss";
+import useIsTeacher from "@/hooks/useIsTeacher";
 interface Props {
   title: string;
   onCreateClick?: () => void;
@@ -17,6 +18,8 @@ export default function ResourceList({
   children,
   onCreateClick,
 }: Props) {
+  const isTeacher = useIsTeacher();
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.header}>
@@ -25,7 +28,7 @@ export default function ResourceList({
           <Typography>{title}</Typography>
         </div>
 
-        {onCreateClick && (
+        {!isTeacher && onCreateClick && (
           <div className={styles.buttons}>
             <Button
               onClick={onCreateClick}
