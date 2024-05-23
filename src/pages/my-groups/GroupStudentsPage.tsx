@@ -9,7 +9,8 @@ export default function GroupStudentsPage() {
   const { students, isStudentsLoading } = useGroupStudents(+id!);
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
+      <h1 className="font-bold">Список студентов группы</h1>
       {isStudentsLoading && <Spinner />}
       {!isStudentsLoading && <StudentsTable students={students || []} />}
     </div>

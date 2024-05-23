@@ -9,17 +9,19 @@ export default function MyGroupsPage() {
 
   const { data: groups, isLoading } = useGroupsQuery();
 
-  if (!groups) return;
-
   return (
     <div className="flex flex-col gap-6">
       <div className="bg-bgSecondary p-4 rounded-xl">Список моих групп</div>
 
-      {isLoading && <Spinner size="lg" />}
+      {isLoading && (
+        <div className="grid place-content-center h-32">
+          <Spinner size="lg" />
+        </div>
+      )}
 
       <div className="grid grid-cols-2">
         {!isLoading &&
-          groups.map((group) => (
+          groups?.map((group) => (
             <div
               key={group.id}
               onClick={() => navigate(ROUTES.GROUP_STUDENTS(group.id))}

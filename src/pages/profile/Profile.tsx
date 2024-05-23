@@ -52,7 +52,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="p-8 bg-bgSecondary rounded-xl">
+    <div className="p-6 bg-bgSecondary rounded-xl">
       <section className="flex flex-col gap-4">
         <h1 className="font-bold text-xl">Изменение пароля</h1>
         <form className="flex flex-col gap-3">

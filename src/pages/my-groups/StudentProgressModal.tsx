@@ -38,7 +38,7 @@ export default function StudentProgressModal({
               </h1>
             </ModalHeader>
             <ModalBody>
-              <div className="flex flex-col items-center justify-center">
+              <div className="flex flex-col items-center justify-center h-full">
                 {isUserProgressLoading && <Spinner />}
                 {!isUserProgressLoading && userProgress && (
                   <div className="flex flex-col w-full gap-10">
