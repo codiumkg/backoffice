@@ -26,7 +26,7 @@ export default function StudentProgressModal({
   const { userProgress, isUserProgressLoading } = useUserProgress(student.id);
 
   return (
-    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="lg">
+    <Modal isOpen={isOpen} onOpenChange={onOpenChange} size="2xl">
       <ModalContent>
         {(onClose) => (
           <>
@@ -38,7 +38,7 @@ export default function StudentProgressModal({
             <ModalBody>
               <div className="flex flex-col items-center justify-center">
                 {isUserProgressLoading && <Spinner />}
-                {!isUserProgressLoading && (
+                {!isUserProgressLoading && userProgress && (
                   <div className="flex flex-col w-full">
                     <div className="flex gap-8 items-center">
                       <div className="w-32 h-32">
@@ -60,13 +60,27 @@ export default function StudentProgressModal({
                         />
                       </div>
 
-                      <div>
-                        <div className="font-bold">{student.username}</div>
-                        <div className="font-light">
-                          {student.profile?.firstName}{" "}
-                          {student.profile?.lastName}
+                      <div className="flex flex-col gap-4">
+                        <div>
+                          <div className="font-bold">{student.username}</div>
+                          <div className="font-light">
+                            {student.profile?.firstName}{" "}
+                            {student.profile?.lastName}
+                          </div>
                         </div>
-                        <div>{student.phone}</div>
+
+                        <div className="flex text-sm gap-12">
+                          <div>
+                            <h1 className="font-bold">
+                              Всего завершено лекций
+                            </h1>
+                            <div>{userProgress.completedLectures.length}</div>
+                          </div>
+                          <div>
+                            <h1 className="font-bold">Всего завершено задач</h1>
+                            <div>{userProgress.completedTasks.length}</div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

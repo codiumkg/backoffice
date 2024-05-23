@@ -1,5 +1,7 @@
 import { Role } from "./auth";
 import { IGroup } from "./group";
+import { ILecture } from "./lecture";
+import { ITopicContent } from "./topicContent";
 
 export interface IUser {
   id: number;
@@ -38,4 +40,6 @@ export interface ICreateUser {
 
 export interface IUserProgress {
   percent: number;
+  completedLectures: ITopicContent[];
+  completedTasks: ITopicContent[];
 }
