@@ -11,6 +11,7 @@ import { useUserData } from "@/queries/userdata";
 import useAuth from "@/hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
+import { ROLES_DISPLAY } from "@/constants/common";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -20,6 +21,7 @@ export default function Header() {
   const { logout } = useAuth();
 
   const username = userData?.username;
+  const role = userData ? ROLES_DISPLAY[userData?.role] : "";
 
   return (
     <div className="w-full h-16">
@@ -40,7 +42,10 @@ export default function Header() {
                   <Icons.USER />
                 </div>
 
-                <h1 className="text-sm">{username}</h1>
+                <div>
+                  <h1 className="text-sm">{username}</h1>
+                  <h3 className="text-xs">{role}</h3>
+                </div>
               </div>
             </DropdownTrigger>
             <DropdownMenu

@@ -62,6 +62,7 @@ function RootRouter({ children }) {
               element={<GroupStudentsPage />}
             />
             <Route path="methodologies" element={<MethodologiesPage />} />
+            <Route path="methodology" element={<MethodologyDetails />} />
             <Route path="methodology/:id" element={<MethodologyDetails />} />
           </Route>
         </Route>
