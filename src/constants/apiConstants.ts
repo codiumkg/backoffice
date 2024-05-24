@@ -16,3 +16,4 @@ export const API_GROUP_STUDENTS = (groupId: number) =>
   BASE_URL.concat(`/groups/${groupId}/get-students`);
 export const API_STUDENT_PROGRESS = (userId: number) =>
   BASE_URL.concat(`/users/${userId}/get-progress`);
+export const API_METHODOLOGIES = BASE_URL.concat("/methodologies");
