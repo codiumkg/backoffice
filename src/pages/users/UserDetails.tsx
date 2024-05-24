@@ -85,7 +85,7 @@ function UserDetails() {
     onSuccess: () => {
       queryClient.invalidateQueries({
         refetchType: "all",
-        queryKey: [QUERY_KEYS.USERS],
+        queryKey: [QUERY_KEYS.USERS, QUERY_KEYS.GROUP_STUDENTS],
       });
 
       navigate(ROUTES.USERS);
@@ -101,7 +101,7 @@ function UserDetails() {
     onSuccess: () => {
       queryClient.invalidateQueries({
         refetchType: "all",
-        queryKey: [QUERY_KEYS.USERS],
+        queryKey: [QUERY_KEYS.USERS, QUERY_KEYS.GROUP_STUDENTS],
       });
 
       navigate(ROUTES.USERS);
