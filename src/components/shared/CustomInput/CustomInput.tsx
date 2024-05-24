@@ -5,6 +5,7 @@ import {
   forwardRef,
 } from "react";
 import { Input } from "@nextui-org/react";
+import useIsTeacher from "@/hooks/useIsTeacher";
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
@@ -13,14 +14,25 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   placeholder?: string;
   label?: string;
   errorMessage?: string;
+  isViewOnly?: boolean;
   onChangeCallback?: (value: string) => void;
 }
 
 const CustomInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
   function InputCustom(
-    { value, placeholder, label, type, errorMessage, onChange },
+    {
+      value,
+      placeholder,
+      label,
+      type,
+      errorMessage,
+      onChange,
+      isViewOnly = false,
+    },
     ref?
   ) {
+    const isTeacher = useIsTeacher();
+
     return (
       <Input
         classNames={{ inputWrapper: ["bg-bgPrimary"] }}
@@ -32,6 +44,7 @@ const CustomInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
         type={type}
         isInvalid={!!errorMessage}
         errorMessage={errorMessage}
+        isDisabled={isViewOnly || isTeacher}
       />
     );
   }

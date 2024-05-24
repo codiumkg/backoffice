@@ -1,3 +1,4 @@
+import useIsTeacher from "@/hooks/useIsTeacher";
 import { Select, SelectItem } from "@nextui-org/react";
 import { ChangeEventHandler } from "react";
 
@@ -6,6 +7,7 @@ interface Props {
   placeholder?: string;
   label: string;
   isLoading?: boolean;
+  isViewOnly?: boolean;
   options: { label: string; value: string }[];
   errorMessage?: string;
   activeValue: { label?: string; value?: string };
@@ -20,7 +22,10 @@ function CustomSelect({
   placeholder,
   isLoading,
   onChange,
+  isViewOnly = false,
 }: Props) {
+  const isTeacher = useIsTeacher();
+
   return (
     <Select
       label={label}
@@ -29,6 +34,7 @@ function CustomSelect({
       isLoading={isLoading}
       errorMessage={errorMessage}
       selectedKeys={[activeValue.value || ""]}
+      isDisabled={isViewOnly || isTeacher}
     >
       {options.map((option) => (
         <SelectItem
