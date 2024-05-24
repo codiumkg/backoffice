@@ -23,6 +23,8 @@ import MyGroupsPage from "@/pages/my-groups/MyGroupsPage";
 import GroupStudentsPage from "@/pages/my-groups/GroupStudentsPage";
 import MethodologiesPage from "@/pages/methodologies/MethodologiesPage";
 import MethodologyDetails from "@/pages/methodologies/MethodologyDetails";
+import PresentationsPage from "@/pages/presentations/PresentationsPage";
+import PresentationDetails from "@/pages/presentations/PresentationDetails";
 
 function RootRouter({ children }) {
   return (
@@ -64,6 +66,9 @@ function RootRouter({ children }) {
             <Route path="methodologies" element={<MethodologiesPage />} />
             <Route path="methodology" element={<MethodologyDetails />} />
             <Route path="methodology/:id" element={<MethodologyDetails />} />
+            <Route path="presentations" element={<PresentationsPage />} />
+            <Route path="presentation" element={<PresentationDetails />} />
+            <Route path="presentation/:id" element={<PresentationDetails />} />
           </Route>
         </Route>
       </Routes>

@@ -58,6 +58,12 @@ export const RESOURCES: IResource[] = [
     href: "/methodologies",
     roles: [Role.MANAGER, Role.TEACHER],
   },
+  {
+    id: "presentations",
+    title: "Презентации",
+    href: "/presentations",
+    roles: [Role.MANAGER, Role.TEACHER],
+  },
   // {
   //   id: "task-results",
   //   title: "Результаты заданий",

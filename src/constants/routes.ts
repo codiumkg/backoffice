@@ -23,4 +23,6 @@ export const ROUTES = {
   GROUP_STUDENTS: (groupId: number) => `/office/my-groups/${groupId}/students`,
   METHODOLOGIES: "/office/methodologies",
   METHODOLOGY: "/office/methodology",
+  PRESENTATIONS: "/office/presentations",
+  PRESENTATION: "/office/presentation",
 };

@@ -11,4 +11,5 @@ export const QUERY_KEYS = {
   LECTURES: "lectures",
   TASKS: "tasks",
   METHODOLOGIES: "methodologies",
+  PRESENTATIONS: "presentations",
 };
