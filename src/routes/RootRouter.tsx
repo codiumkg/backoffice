@@ -21,6 +21,7 @@ import OfficeIndex from "@/pages/OfficeIndex";
 import Profile from "@/pages/profile/Profile";
 import MyGroupsPage from "@/pages/my-groups/MyGroupsPage";
 import GroupStudentsPage from "@/pages/my-groups/GroupStudentsPage";
+import MethodologiesPage from "@/pages/methodologies/MethodologiesPage";
 
 function RootRouter({ children }) {
   return (
@@ -59,6 +60,7 @@ function RootRouter({ children }) {
               path="my-groups/:id/students"
               element={<GroupStudentsPage />}
             />
+            <Route path="methodologies" element={<MethodologiesPage />} />
           </Route>
         </Route>
       </Routes>
