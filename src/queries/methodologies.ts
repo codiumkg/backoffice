@@ -1,16 +1,17 @@
-import { API_METHODOLOGIES } from "@/constants/apiConstants";
+import { QUERY_KEYS } from "@/constants/queryKeys";
 import { IMethodologyCreate } from "@/interfaces/methodology";
 import {
   createMethodology,
   deleteMethodology,
   getMethodologies,
+  getMethodologyDetails,
   updateMethodology,
 } from "@/requests/methodologies";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 export const useMethodologies = () => {
   const { data, isLoading } = useQuery({
-    queryKey: [API_METHODOLOGIES],
+    queryKey: [QUERY_KEYS.METHODOLOGIES],
     queryFn: getMethodologies,
   });
 
@@ -20,12 +21,24 @@ export const useMethodologies = () => {
   };
 };
 
+export const useMethodologyDetails = (id: number) => {
+  const { data, isLoading } = useQuery({
+    queryKey: [QUERY_KEYS.METHODOLOGIES, id],
+    queryFn: () => getMethodologyDetails(id),
+  });
+
+  return {
+    methodology: data,
+    isMethodologyLoading: isLoading,
+  };
+};
+
 export const useMethodologyMutation = (params?: {
   onSuccess: () => void;
   onError: () => void;
 }) => {
   const { mutate, isPending } = useMutation({
-    mutationFn: ({ id, data }: { id: number; data: IMethodologyCreate }) =>
+    mutationFn: ({ id, data }: { id?: number; data: IMethodologyCreate }) =>
       id ? updateMethodology(id, data) : createMethodology(data),
     onSuccess: params?.onSuccess,
     onError: params?.onError,

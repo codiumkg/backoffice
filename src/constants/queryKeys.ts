@@ -10,4 +10,5 @@ export const QUERY_KEYS = {
   REG_REQUESTS: "reg-requests",
   LECTURES: "lectures",
   TASKS: "tasks",
+  METHODOLOGIES: "methodologies",
 };

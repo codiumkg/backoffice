@@ -22,6 +22,7 @@ import Profile from "@/pages/profile/Profile";
 import MyGroupsPage from "@/pages/my-groups/MyGroupsPage";
 import GroupStudentsPage from "@/pages/my-groups/GroupStudentsPage";
 import MethodologiesPage from "@/pages/methodologies/MethodologiesPage";
+import MethodologyDetails from "@/pages/methodologies/MethodologyDetails";
 
 function RootRouter({ children }) {
   return (
@@ -61,6 +62,7 @@ function RootRouter({ children }) {
               element={<GroupStudentsPage />}
             />
             <Route path="methodologies" element={<MethodologiesPage />} />
+            <Route path="methodology/:id" element={<MethodologyDetails />} />
           </Route>
         </Route>
       </Routes>

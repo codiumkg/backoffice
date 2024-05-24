@@ -6,6 +6,10 @@ export async function getMethodologies(): Promise<IMethodology[]> {
   return request.get(API_METHODOLOGIES).then(({ data }) => data);
 }
 
+export async function getMethodologyDetails(id: number): Promise<IMethodology> {
+  return request.get(`${API_METHODOLOGIES}/${id}`).then(({ data }) => data);
+}
+
 export async function createMethodology(
   data: IMethodologyCreate
 ): Promise<IMethodology> {

@@ -66,9 +66,9 @@ function LectureDetails() {
 
   const topicOptions = useMemo(
     () =>
-      topics?.map((subject) => ({
-        label: subject.title,
-        value: subject.id.toString(),
+      topics?.map((topic) => ({
+        label: topic.title,
+        value: topic.id.toString(),
       })) || [],
     [topics]
   );
@@ -151,7 +151,7 @@ function LectureDetails() {
     }
 
     if (topics) {
-      lectureForm.setValue("topicId", topics[0].id);
+      lectureForm.setValue("topicId", topics?.[0]?.id);
     }
   }, [topics, lectureForm, existingLecture, id]);
 

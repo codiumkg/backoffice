@@ -9,6 +9,8 @@ import {
 } from "@nextui-org/react";
 import { columns, renderCell } from "./columns";
 import { IMethodology } from "@/interfaces/methodology";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   methodologies: IMethodology[];
@@ -19,6 +21,8 @@ export default function MethodologiesTable({
   methodologies,
   isLoading,
 }: Props) {
+  const navigate = useNavigate();
+
   return (
     <>
       {isLoading && (
@@ -39,7 +43,12 @@ export default function MethodologiesTable({
             isLoading={isLoading}
           >
             {(methodology) => (
-              <TableRow key={methodology.id}>
+              <TableRow
+                key={methodology.id}
+                onClick={() =>
+                  navigate(`${ROUTES.METHODOLOGY}/${methodology.id}`)
+                }
+              >
                 {(columnKey) => (
                   <TableCell>{renderCell(methodology, columnKey)}</TableCell>
                 )}
