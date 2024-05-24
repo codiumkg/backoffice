@@ -6,8 +6,10 @@ export const cleanHtml = (html: string) =>
 export function formatDocUrl(url: string): string {
   let newUrl = url.replace("/edit", "/preview");
 
-  if (!url.endsWith("/edit") && !url.endsWith("/preview")) {
-    newUrl = url += "/preview";
+  if (url.startsWith("https://docs.google.com")) {
+    if (!url.endsWith("/edit") && !url.endsWith("/preview")) {
+      newUrl = url += "/preview";
+    }
   }
 
   return newUrl;

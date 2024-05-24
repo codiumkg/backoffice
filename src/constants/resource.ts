@@ -64,12 +64,12 @@ export const RESOURCES: IResource[] = [
     href: "/presentations",
     roles: [Role.MANAGER, Role.TEACHER],
   },
-  // {
-  //   id: "task-results",
-  //   title: "Результаты заданий",
-  //   href: "/task-results",
-  //   roles: [Role.MANAGER, Role.TEACHER],
-  // },
+  {
+    id: "my-groups",
+    title: "Мои группы",
+    href: "/my-groups",
+    roles: [Role.TEACHER],
+  },
 ];
 
 export const TEACHER_MENU = [

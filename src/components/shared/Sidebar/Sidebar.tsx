@@ -42,20 +42,6 @@ export default function Sidebar() {
                 />
               )
           )}
-
-          {!isLoading && isTeacher && (
-            <Listbox items={TEACHER_MENU} variant="flat">
-              {(item) => (
-                <ListboxItem
-                  key={item.id}
-                  onClick={() => navigate(item.href)}
-                  description={item.description}
-                >
-                  <h1 className="font-bold">{item.title}</h1>
-                </ListboxItem>
-              )}
-            </Listbox>
-          )}
         </div>
       </div>
     </div>
