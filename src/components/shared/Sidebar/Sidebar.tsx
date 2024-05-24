@@ -1,10 +1,10 @@
-import { RESOURCES, TEACHER_MENU } from "@/constants/resource";
+import { RESOURCES } from "@/constants/resource";
 import NavElement from "../NavElement/NavElement";
 import Typography from "../Typography/Typography";
 import { useUserData } from "@/queries/userdata";
 import { Role } from "@/interfaces/auth";
 import { useNavigate } from "react-router-dom";
-import { Listbox, ListboxItem, Spinner } from "@nextui-org/react";
+import { Spinner } from "@nextui-org/react";
 
 export default function Sidebar() {
   const { data: userData, isLoading } = useUserData();
@@ -30,7 +30,7 @@ export default function Sidebar() {
         <div className="mt-2">
           {RESOURCES.map(
             (resource) =>
-              (role === Role.ADMIN || resource.roles?.includes(role!)) && (
+              resource.roles?.includes(role!) && (
                 <NavElement
                   key={resource.id}
                   title={resource.title}
