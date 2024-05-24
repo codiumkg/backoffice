@@ -15,6 +15,7 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   errorMessage?: string;
   isViewOnly?: boolean;
+  ignoreRole?: boolean;
   onChangeCallback?: (value: string) => void;
 }
 
@@ -28,6 +29,7 @@ const CustomInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
       errorMessage,
       onChange,
       isViewOnly = false,
+      ignoreRole = false,
     },
     ref?
   ) {
@@ -44,7 +46,7 @@ const CustomInput: FC<Props> = forwardRef<HTMLInputElement, Props>(
         type={type}
         isInvalid={!!errorMessage}
         errorMessage={errorMessage}
-        isDisabled={isViewOnly || isTeacher}
+        isDisabled={isViewOnly || (!ignoreRole && isTeacher)}
       />
     );
   }

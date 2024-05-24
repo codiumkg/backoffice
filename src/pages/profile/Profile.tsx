@@ -67,6 +67,7 @@ export default function ProfilePage() {
                 currentPassword: e.target.value,
               })
             }
+            ignoreRole
           />
 
           <CustomInput
@@ -80,6 +81,7 @@ export default function ProfilePage() {
                 newPassword: e.target.value,
               })
             }
+            ignoreRole
           />
 
           <div>
