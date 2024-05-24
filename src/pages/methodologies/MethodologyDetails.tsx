@@ -1,5 +1,6 @@
 import CustomInput from "@/components/shared/CustomInput/CustomInput";
 import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
+import DocsViewer from "@/components/shared/DocsViewer";
 import Resource from "@/components/shared/Resource/Resource";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { ROUTES } from "@/constants/routes";
@@ -174,6 +175,12 @@ export default function MethodologyDetails() {
         placeholder="Выберите топик..."
         isLoading={isTopicsLoading}
       />
+
+      {methodologyForm.watch("filePath") && (
+        <div>
+          <DocsViewer docUrl={methodologyForm.watch("filePath")} />
+        </div>
+      )}
     </Resource>
   );
 }
