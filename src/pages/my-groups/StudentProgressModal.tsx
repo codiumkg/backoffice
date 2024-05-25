@@ -69,6 +69,9 @@ export default function StudentProgressModal({
                             {student.profile?.firstName}{" "}
                             {student.profile?.lastName}
                           </div>
+                          <div className="text-sm font-thin">
+                            {student.group?.title}
+                          </div>
                         </div>
 
                         <div className="flex text-sm gap-12">

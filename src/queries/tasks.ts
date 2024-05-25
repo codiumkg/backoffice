@@ -73,10 +73,11 @@ export const useTaskDeletion = (params?: MutationQuery) => {
   };
 };
 
-export const useTaskUserAnswers = (userId: number) => {
+export const useTaskUserAnswers = (userId?: number, enabled?: boolean) => {
   const { data, isLoading } = useQuery({
-    queryFn: () => getUserTaskAnswers(userId),
+    queryFn: () => getUserTaskAnswers(userId!),
     queryKey: [QUERY_KEYS.TASK_USER_ANSWERS, userId],
+    enabled,
   });
 
   return {
