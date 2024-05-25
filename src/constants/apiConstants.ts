@@ -3,7 +3,8 @@ export const API_LOGIN = BASE_URL.concat("/auth/login/");
 export const API_USERDATA = BASE_URL.concat("/auth/userdata/");
 export const API_CHANGE_PASSWORD = BASE_URL.concat("/auth/change-password");
 export const API_USERS = BASE_URL.concat("/users/");
-
+export const API_GET_USER_ANSWERS = (userId: number) =>
+  BASE_URL.concat(`/users/${userId}/get-task-answers`);
 export const API_REG_REQUESTS = BASE_URL.concat("/reg-requests/");
 export const API_GROUPS = BASE_URL.concat("/groups/");
 export const API_SUBJECTS = BASE_URL.concat("/subjects/");

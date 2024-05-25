@@ -4,6 +4,7 @@ import {
   createTask,
   getTaskDetails,
   getTasks,
+  getUserTaskAnswers,
   removeTask,
   updateTask,
 } from "@/requests/tasks";
@@ -69,5 +70,17 @@ export const useTaskDeletion = (params?: MutationQuery) => {
   return {
     mutate,
     isPending,
+  };
+};
+
+export const useTaskUserAnswers = (userId: number) => {
+  const { data, isLoading } = useQuery({
+    queryFn: () => getUserTaskAnswers(userId),
+    queryKey: [QUERY_KEYS.TASK_USER_ANSWERS, userId],
+  });
+
+  return {
+    userAnswers: data,
+    isUserAnswersLoading: isLoading,
   };
 };

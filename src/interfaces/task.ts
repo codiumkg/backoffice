@@ -1,5 +1,6 @@
 import { IAnswer, ICreateAnswer } from "./answer";
 import { ITopic } from "./topic";
+import { IUser } from "./user";
 
 export interface ITask {
   id: number;
@@ -23,4 +24,14 @@ export interface ITaskCreate {
   correctAnswerExplanation: string;
   answers: ICreateAnswer[];
   isUserAnswer: boolean;
+}
+
+export interface ITaskUserAnswer {
+  id: number;
+  text: string;
+  answer: IAnswer;
+  user: IUser;
+  task: ITask;
+  createdAt: string;
+  updatedAt: string;
 }

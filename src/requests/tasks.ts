@@ -1,5 +1,5 @@
-import { API_TASKS } from "@/constants/apiConstants";
-import { ITask, ITaskCreate } from "@/interfaces/task";
+import { API_GET_USER_ANSWERS, API_TASKS } from "@/constants/apiConstants";
+import { ITask, ITaskCreate, ITaskUserAnswer } from "@/interfaces/task";
 import { request } from "./request";
 
 export async function getTasks(): Promise<ITask[]> {
@@ -23,4 +23,10 @@ export async function updateTask(
 
 export async function removeTask(id: number) {
   return request.delete(`${API_TASKS}${id}`).then(({ data }) => data);
+}
+
+export async function getUserTaskAnswers(
+  userId: number
+): Promise<ITaskUserAnswer[]> {
+  return request.get(API_GET_USER_ANSWERS(userId)).then(({ data }) => data);
 }
