@@ -6,6 +6,8 @@ import { FaUserLarge } from "react-icons/fa6";
 import { MdOutlineGroup } from "react-icons/md";
 import { GoTasklist } from "react-icons/go";
 import { HiMiniPresentationChartLine } from "react-icons/hi2";
+import { GrPowerReset } from "react-icons/gr";
+import { FiDelete } from "react-icons/fi";
 
 interface Props extends HTMLAttributes<SVGElement> {}
 
@@ -19,4 +21,6 @@ export const Icons = {
     <HiMiniPresentationChartLine {...props} />
   ),
   SEARCH: (props: Props) => <IoSearchOutline {...props} />,
+  RESET: (props: Props) => <GrPowerReset {...props} />,
+  DELETE: (props: Props) => <FiDelete {...props} />,
 };

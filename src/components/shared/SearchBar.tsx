@@ -13,7 +13,7 @@ export default function SearchBar() {
     if (!text.length) {
       searchParams.delete("search");
     } else {
-      searchParams.append("search", text);
+      searchParams.set("search", text);
     }
     setSearchParams(searchParams);
   }, 500);
