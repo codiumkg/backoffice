@@ -1,6 +1,7 @@
 import { useTaskUserAnswers } from "@/queries/tasks";
 import { useParams } from "react-router-dom";
 import cn from "classnames";
+import { Spinner } from "@nextui-org/react";
 
 export default function StudentTaskAnswersPage() {
   const { id } = useParams();
@@ -11,6 +12,11 @@ export default function StudentTaskAnswersPage() {
     <div className="flex flex-col gap-4 w-full">
       <h1 className="font-bold">Результаты студента</h1>
 
+      {isUserAnswersLoading && (
+        <div className="py-20">
+          <Spinner />
+        </div>
+      )}
       {!isUserAnswersLoading && userAnswers && (
         <div className="grid gap-4">
           {!userAnswers.length && (

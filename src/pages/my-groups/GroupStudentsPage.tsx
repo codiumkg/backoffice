@@ -11,7 +11,11 @@ export default function GroupStudentsPage() {
   return (
     <div className="flex flex-col gap-4">
       <h1 className="font-bold">Список студентов группы</h1>
-      {isStudentsLoading && <Spinner />}
+      {isStudentsLoading && (
+        <div className="py-20">
+          <Spinner />
+        </div>
+      )}
       {!isStudentsLoading && <StudentsTable students={students || []} />}
     </div>
   );
