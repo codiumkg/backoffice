@@ -13,3 +13,8 @@ export interface IGroupCreate {
   subjectId: number;
   teacherId: number;
 }
+
+export interface IGroupFilters {
+  search?: string | null;
+  teacherId?: number | null;
+}

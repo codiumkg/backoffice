@@ -11,11 +11,13 @@ interface Props {
   onCreateClick?: () => void;
   children?: ReactNode;
   itemsLength?: number;
+  withSearch?: boolean;
 }
 
 export default function ResourceList({
   title,
   children,
+  withSearch = false,
   onCreateClick,
 }: Props) {
   const isTeacher = useIsTeacher();
@@ -29,7 +31,7 @@ export default function ResourceList({
         </div>
 
         <div className="flex gap-4">
-          <SearchBar />
+          {withSearch && <SearchBar />}
 
           {!isTeacher && onCreateClick && (
             <div>

@@ -3,11 +3,15 @@ import { ROUTES } from "@/constants/routes";
 import { useTasksQuery } from "@/queries/tasks";
 import { Spinner } from "@nextui-org/react";
 
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import TasksTable from "./TasksTable";
 
 function TasksPage() {
-  const { data: tasks, isPending } = useTasksQuery();
+  const [searchParams] = useSearchParams();
+
+  const { data: tasks, isPending } = useTasksQuery({
+    search: searchParams.get("search"),
+  });
 
   const navigate = useNavigate();
 
@@ -16,6 +20,7 @@ function TasksPage() {
       title="Задачи"
       onCreateClick={() => navigate(ROUTES.TASK)}
       itemsLength={tasks?.length}
+      withSearch
     >
       {isPending && (
         <div className="p-40">

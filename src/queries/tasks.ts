@@ -1,5 +1,5 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { ITask, ITaskCreate } from "@/interfaces/task";
+import { ITask, ITaskCreate, ITaskFilters } from "@/interfaces/task";
 import {
   createTask,
   getTaskDetails,
@@ -10,10 +10,10 @@ import {
 } from "@/requests/tasks";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const useTasksQuery = () => {
+export const useTasksQuery = (filters?: ITaskFilters) => {
   const { data, isPending } = useQuery({
-    queryFn: getTasks,
-    queryKey: [QUERY_KEYS.TASKS],
+    queryFn: () => getTasks(filters),
+    queryKey: [QUERY_KEYS.TASKS, filters?.search, filters?.topicId],
   });
 
   return {

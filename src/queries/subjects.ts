@@ -1,5 +1,9 @@
 import { QUERY_KEYS } from "../constants/queryKeys";
-import { ISubject, ISubjectCreate } from "../interfaces/subject";
+import {
+  ISubject,
+  ISubjectCreate,
+  ISubjectFilters,
+} from "../interfaces/subject";
 import {
   createSubject,
   getSubjectDetails,
@@ -10,16 +14,16 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface QueryParams {
-  params?: any;
+  filters?: ISubjectFilters;
   enabled?: boolean;
 }
 
-export const useSubjectsQuery = ({ params, enabled }: QueryParams) => {
+export const useSubjectsQuery = ({ filters, enabled }: QueryParams) => {
   const { data, isLoading, isFetching, isSuccess, isError, refetch } = useQuery<
     ISubject[]
   >({
-    queryKey: [QUERY_KEYS.SUBJECTS, params?.search],
-    queryFn: () => getSubjects(params?.search || ""),
+    queryKey: [QUERY_KEYS.SUBJECTS, filters?.search],
+    queryFn: () => getSubjects(filters),
     refetchOnWindowFocus: false,
     enabled,
   });

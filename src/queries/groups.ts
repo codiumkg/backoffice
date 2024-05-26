@@ -1,5 +1,5 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { IGroup } from "@/interfaces/group";
+import { IGroup, IGroupFilters } from "@/interfaces/group";
 import {
   createGroup,
   getGroupDetails,
@@ -32,12 +32,11 @@ export const useGroupMutation = ({ onSuccess, onError, id }: MutationQuery) => {
   };
 };
 
-export const useGroupsQuery = (params?: { teacherId?: number }) => {
+export const useGroupsQuery = (filters?: IGroupFilters) => {
   const { data, isLoading } = useQuery({
-    queryFn: () => getGroups({ teacherId: params?.teacherId }),
-    queryKey: [QUERY_KEYS.GROUPS, params?.teacherId],
+    queryFn: () => getGroups(filters),
+    queryKey: [QUERY_KEYS.GROUPS, filters?.teacherId, filters?.search],
     refetchOnWindowFocus: false,
-    staleTime: 35 * 1000,
   });
 
   return {

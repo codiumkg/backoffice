@@ -27,6 +27,7 @@ function TopicsPage() {
       title="Топики"
       onCreateClick={() => navigate(ROUTES.TOPIC)}
       itemsLength={topics?.length}
+      withSearch
     >
       {isLoading && (
         <div className="p-40">

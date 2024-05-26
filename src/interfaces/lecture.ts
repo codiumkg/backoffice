@@ -17,3 +17,8 @@ export interface ILectureCreate {
   image?: string | null;
   topicId: number;
 }
+
+export interface ILectureFilters {
+  search?: string | null;
+  topicId?: number | null;
+}

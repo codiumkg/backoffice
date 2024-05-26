@@ -1,13 +1,17 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import { ROUTES } from "@/constants/routes";
 import { useLecturesQuery } from "@/queries/lectures";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 import LecturesTable from "./LecturesTable";
 import { Spinner } from "@nextui-org/react";
 
 function LecturesPage() {
-  const { data: lectures, isLoading } = useLecturesQuery();
+  const [seachParams] = useSearchParams();
+
+  const { data: lectures, isLoading } = useLecturesQuery({
+    search: seachParams.get("search"),
+  });
 
   const navigate = useNavigate();
 
@@ -16,6 +20,7 @@ function LecturesPage() {
       title="Лекции"
       onCreateClick={() => navigate(ROUTES.LECTURE)}
       itemsLength={lectures?.length}
+      withSearch
     >
       {isLoading && (
         <div className="p-40">

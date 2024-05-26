@@ -35,3 +35,8 @@ export interface ITaskUserAnswer {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface ITaskFilters {
+  search?: string | null;
+  topicId?: number | null;
+}

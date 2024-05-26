@@ -1,7 +1,7 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import { ROUTES } from "@/constants/routes";
 import { useSubjectsQuery } from "@/queries/subjects";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Table,
   TableHeader,
@@ -14,7 +14,11 @@ import {
 import { columns, renderCell } from "./columns";
 
 function SubjectsPage() {
-  const { data: subjects, isLoading } = useSubjectsQuery({});
+  const [searchParams] = useSearchParams();
+
+  const { data: subjects, isLoading } = useSubjectsQuery({
+    filters: { search: searchParams.get("search") },
+  });
 
   const navigate = useNavigate();
 
@@ -23,6 +27,7 @@ function SubjectsPage() {
       title="Предметы"
       onCreateClick={() => navigate(ROUTES.SUBJECT)}
       itemsLength={subjects?.length}
+      withSearch
     >
       {isLoading && (
         <div className="p-40">

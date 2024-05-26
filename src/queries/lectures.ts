@@ -1,5 +1,9 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { ILecture, ILectureCreate } from "@/interfaces/lecture";
+import {
+  ILecture,
+  ILectureCreate,
+  ILectureFilters,
+} from "@/interfaces/lecture";
 import {
   createLecture,
   getLectureDetails,
@@ -9,10 +13,10 @@ import {
 } from "@/requests/lectures";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const useLecturesQuery = () => {
+export const useLecturesQuery = (filters?: ILectureFilters) => {
   const { data, isLoading } = useQuery({
-    queryFn: () => getLectures(),
-    queryKey: [QUERY_KEYS.LECTURES],
+    queryFn: () => getLectures(filters),
+    queryKey: [QUERY_KEYS.LECTURES, filters?.search, filters?.topicId],
     refetchOnWindowFocus: false,
     staleTime: 30 * 1000,
   });

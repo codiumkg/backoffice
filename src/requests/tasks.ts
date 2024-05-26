@@ -1,9 +1,21 @@
 import { API_GET_USER_ANSWERS, API_TASKS } from "@/constants/apiConstants";
-import { ITask, ITaskCreate, ITaskUserAnswer } from "@/interfaces/task";
+import {
+  ITask,
+  ITaskCreate,
+  ITaskFilters,
+  ITaskUserAnswer,
+} from "@/interfaces/task";
 import { request } from "./request";
 
-export async function getTasks(): Promise<ITask[]> {
-  return request.get(API_TASKS).then(({ data }) => data);
+export async function getTasks(filters?: ITaskFilters): Promise<ITask[]> {
+  return request
+    .get(API_TASKS, {
+      params: {
+        ...(filters?.search && { search: filters.search }),
+        ...(filters?.topicId && { topicId: filters.topicId }),
+      },
+    })
+    .then(({ data }) => data);
 }
 
 export async function getTaskDetails(id: number): Promise<ITask> {

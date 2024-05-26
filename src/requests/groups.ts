@@ -1,13 +1,13 @@
 import { request } from "./request";
 import { API_GROUP_STUDENTS, API_GROUPS } from "../constants/apiConstants";
-import { IGroup, IGroupCreate } from "../interfaces/group";
+import { IGroup, IGroupCreate, IGroupFilters } from "../interfaces/group";
 import { IUser } from "@/interfaces/user";
 
-export async function getGroups(params?: {
-  teacherId?: number;
-}): Promise<IGroup[]> {
+export async function getGroups(filters?: IGroupFilters): Promise<IGroup[]> {
   return request
-    .get(API_GROUPS, { params: { teacherId: params?.teacherId } })
+    .get(API_GROUPS, {
+      params: { teacherId: filters?.teacherId, search: filters?.search },
+    })
     .then(({ data }) => data);
 }
 

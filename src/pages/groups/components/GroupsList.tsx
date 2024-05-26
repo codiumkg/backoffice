@@ -26,6 +26,7 @@ function GroupsList({ groups, isLoading }: Props) {
       title="Группы"
       onCreateClick={() => navigate(ROUTES.GROUP)}
       itemsLength={groups.length}
+      withSearch
     >
       {isLoading && (
         <div className="p-40">

@@ -10,3 +10,7 @@ export interface ISubjectCreate {
   title: string;
   image?: string;
 }
+
+export interface ISubjectFilters {
+  search?: string | null;
+}

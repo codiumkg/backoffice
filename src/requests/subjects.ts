@@ -1,12 +1,18 @@
 import { request } from "./request";
 import { API_SUBJECTS } from "../constants/apiConstants";
-import { ISubject, ISubjectCreate } from "../interfaces/subject";
+import {
+  ISubject,
+  ISubjectCreate,
+  ISubjectFilters,
+} from "../interfaces/subject";
 
-export async function getSubjects(search?: string): Promise<ISubject[]> {
+export async function getSubjects(
+  filters?: ISubjectFilters
+): Promise<ISubject[]> {
   return request
     .get(API_SUBJECTS, {
       params: {
-        title: search,
+        ...(filters?.search && { search: filters.search }),
       },
     })
     .then(({ data }) => data);
