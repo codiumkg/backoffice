@@ -35,9 +35,10 @@ export default function Sidebar() {
                   key={resource.id}
                   title={resource.title}
                   href={resource.href}
-                  onCreateClick={() =>
-                    resource.detailsHref &&
-                    navigate(`office${resource.detailsHref}`)
+                  onCreateClick={
+                    resource.detailsHref
+                      ? () => navigate("/office" + resource.detailsHref)
+                      : undefined
                   }
                 />
               )
