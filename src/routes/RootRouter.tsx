@@ -26,6 +26,7 @@ import MethodologyDetails from "@/pages/methodologies/MethodologyDetails";
 import PresentationsPage from "@/pages/presentations/PresentationsPage";
 import PresentationDetails from "@/pages/presentations/PresentationDetails";
 import StudentTaskAnswersPage from "@/pages/my-groups/StudentTaskAnswersPage";
+import NotFound from "@/pages/NotFound";
 
 function RootRouter({ children }) {
   return (
@@ -75,6 +76,7 @@ function RootRouter({ children }) {
             <Route path="presentation" element={<PresentationDetails />} />
             <Route path="presentation/:id" element={<PresentationDetails />} />
           </Route>
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
 
