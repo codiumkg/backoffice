@@ -23,6 +23,7 @@ function UsersPage() {
       onCreateClick={() => navigate(ROUTES.USER)}
       itemsLength={users?.length}
       withSearch
+      withFiltersBar
     >
       {isLoading && (
         <div className="p-40">
