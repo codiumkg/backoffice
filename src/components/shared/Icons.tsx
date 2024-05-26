@@ -1,6 +1,7 @@
 import { HTMLAttributes } from "react";
 import { CiCirclePlus } from "react-icons/ci";
 import { IoMdListBox } from "react-icons/io";
+import { IoSearchOutline } from "react-icons/io5";
 import { FaUserLarge } from "react-icons/fa6";
 import { MdOutlineGroup } from "react-icons/md";
 import { GoTasklist } from "react-icons/go";
@@ -17,4 +18,5 @@ export const Icons = {
   PRESENTATION_CHART: (props: Props) => (
     <HiMiniPresentationChartLine {...props} />
   ),
+  SEARCH: (props: Props) => <IoSearchOutline {...props} />,
 };

@@ -17,3 +17,8 @@ export interface ITopicCreate {
 export interface IReorderTopicContent {
   topicContentIds: number[];
 }
+
+export interface ITopicFilters {
+  search?: string | null;
+  sectionId?: number;
+}

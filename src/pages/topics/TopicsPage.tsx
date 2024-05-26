@@ -1,7 +1,7 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import { ROUTES } from "@/constants/routes";
 import { useTopicsQuery } from "@/queries/topics";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Table,
   TableHeader,
@@ -14,7 +14,11 @@ import {
 import { columns, renderCell } from "./columns";
 
 function TopicsPage() {
-  const { data: topics, isLoading } = useTopicsQuery({});
+  const [searchParams] = useSearchParams();
+
+  const { data: topics, isLoading } = useTopicsQuery({
+    filters: { search: searchParams.get("search") },
+  });
 
   const navigate = useNavigate();
 
@@ -38,7 +42,7 @@ function TopicsPage() {
           </TableHeader>
           <TableBody
             items={topics || []}
-            emptyContent="Нет заявок."
+            emptyContent="Нет топиков."
             isLoading={isLoading}
           >
             {(topic) => (

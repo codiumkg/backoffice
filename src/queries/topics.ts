@@ -1,5 +1,10 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { IReorderTopicContent, ITopic, ITopicCreate } from "@/interfaces/topic";
+import {
+  IReorderTopicContent,
+  ITopic,
+  ITopicCreate,
+  ITopicFilters,
+} from "@/interfaces/topic";
 import {
   createTopic,
   getTopicContent,
@@ -12,14 +17,14 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface QueryParams {
-  params?: any;
+  filters?: ITopicFilters;
   enabled?: boolean;
 }
 
-export const useTopicsQuery = ({ params, enabled }: QueryParams) => {
+export const useTopicsQuery = ({ filters, enabled }: QueryParams) => {
   const { data, isLoading, refetch } = useQuery({
-    queryFn: () => getTopics(params?.search || ""),
-    queryKey: [QUERY_KEYS.TOPICS, params?.title],
+    queryFn: () => getTopics(filters),
+    queryKey: [QUERY_KEYS.TOPICS, filters?.search, filters?.sectionId],
     refetchOnWindowFocus: false,
     enabled,
   });

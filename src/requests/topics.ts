@@ -2,16 +2,18 @@ import {
   IReorderTopicContent,
   ITopic,
   ITopicCreate,
+  ITopicFilters,
 } from "../interfaces/topic";
 import { API_TOPICS } from "../constants/apiConstants";
 import { request } from "./request";
 import { ITopicContent } from "@/interfaces/topicContent";
 
-export async function getTopics(search?: string): Promise<ITopic[]> {
+export async function getTopics(filters?: ITopicFilters): Promise<ITopic[]> {
   return request
     .get(API_TOPICS, {
       params: {
-        title: search,
+        ...(filters?.search && { search: filters.search }),
+        ...(filters?.sectionId && { sectionId: filters.sectionId }),
       },
     })
     .then(({ data }) => data);
