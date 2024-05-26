@@ -44,8 +44,6 @@ function TopicDetails() {
 
   const navigate = useNavigate();
 
-  // const [search, setSearch] = useState("");
-
   const { showSuccessNotification, showErrorNotification } = useNotification();
 
   const {
@@ -54,11 +52,7 @@ function TopicDetails() {
     isSuccess,
   } = useTopicDetailsQuery(+id!, { enabled: !!id });
 
-  const {
-    data: sections,
-    isPending: isSectionsLoading,
-    // refetch,
-  } = useSectionsQuery({});
+  const { data: sections, isPending: isSectionsLoading } = useSectionsQuery({});
 
   const { data: topicContent, isLoading: isTopicContentLoading } =
     useTopicContent(+id!, { enabled: !!id });
@@ -255,14 +249,7 @@ function TopicDetails() {
       >
         <SortableContext items={topicContentDisplay}>
           {!isTopicContentLoading && (
-            <div
-              style={{
-                marginTop: "16px",
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr 1fr",
-                gap: "16px",
-              }}
-            >
+            <div className="grid grid-cols-3 gap-3">
               {topicContentDisplay.map((content) => (
                 <ContentCard topicContent={content} key={content.id} />
               ))}

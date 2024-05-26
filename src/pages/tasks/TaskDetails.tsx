@@ -20,7 +20,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
 
-import styles from "./TaskDetails.module.scss";
 import CustomSelect from "@/components/shared/CustomSelect/CustomSelect";
 
 const initialValues: ITaskCreate = {
@@ -39,8 +38,6 @@ function TaskDetails() {
 
   const navigate = useNavigate();
 
-  // const [search, setSearch] = useState("");
-
   const [answer, setAnswer] = useState<ICreateAnswer>({
     text: "",
     isCorrectAnswer: false,
@@ -54,11 +51,7 @@ function TaskDetails() {
     { enabled: !!id }
   );
 
-  const {
-    data: topics,
-    isLoading: isTopicsLoading,
-    // refetch,
-  } = useTopicsQuery({});
+  const { data: topics, isLoading: isTopicsLoading } = useTopicsQuery({});
 
   const [activeValue, setActiveValue] = useState<IOption>({
     label: topics?.[0].title,
@@ -143,6 +136,7 @@ function TaskDetails() {
         answers: existingTask.answers,
         tip: existingTask.tip,
         image: existingTask.image,
+        isUserAnswer: existingTask.isUserAnswer,
       });
       setActiveValue({
         label: existingTask.topic.title,
@@ -224,6 +218,18 @@ function TaskDetails() {
         }}
       />
 
+      <Controller
+        control={taskForm.control}
+        name="correctAnswerExplanation"
+        render={({ field }) => (
+          <CustomInput
+            {...field}
+            label="Объяснение правильного ответа"
+            placeholder="Введите объяснение правильного ответа..."
+          />
+        )}
+      />
+
       <Checkbox
         isSelected={taskForm.watch("isUserAnswer")}
         onValueChange={(value) =>
@@ -234,65 +240,55 @@ function TaskDetails() {
       </Checkbox>
 
       {!taskForm.watch("isUserAnswer") && (
-        <Controller
-          control={taskForm.control}
-          name="correctAnswerExplanation"
-          render={({ field }) => (
-            <CustomInput
-              {...field}
-              label="Объяснение правильного ответа"
-              placeholder="Введите объяснение правильного ответа..."
-            />
-          )}
-        />
-      )}
+        <div className="flex flex-col gap-2">
+          {!!answers.length && (
+            <div>
+              <h3 className="mb-3">Варианты ответов</h3>
 
-      {!taskForm.watch("isUserAnswer") && (
-        <>
-          <h3>Варианты ответов</h3>
+              <div className="grid grid-cols-2 place-content-center gap-4 mb-4">
+                {answers.map((answer, index) => (
+                  <div className="flex flex-col" key={index}>
+                    <div className="flex items-center gap-3">
+                      <CustomInput
+                        label={`Ответ ${index + 1}`}
+                        placeholder="Введите вариант ответа..."
+                        name="answers"
+                        value={answer.text}
+                        onChange={(e) => {
+                          setAnswers((prevAnswers) =>
+                            prevAnswers.map((answer, prevAnswerIndex) =>
+                              prevAnswerIndex === index
+                                ? { ...answer, text: e.target.value }
+                                : answer
+                            )
+                          );
+                        }}
+                      />
 
-          <div className={styles["answers-wrapper"]}>
-            {answers.map((answer, index) => (
-              <div className={styles["answer"]} key={index}>
-                <div className={styles["answer-inputs"]}>
-                  <CustomInput
-                    label={`Ответ ${index + 1}`}
-                    placeholder="Введите вариант ответа..."
-                    name="answers"
-                    value={answer.text}
-                    onChange={(e) => {
-                      setAnswers((prevAnswers) =>
-                        prevAnswers.map((answer, prevAnswerIndex) =>
-                          prevAnswerIndex === index
-                            ? { ...answer, text: e.target.value }
-                            : answer
-                        )
-                      );
-                    }}
-                  />
-
-                  <CustomCheckbox
-                    label="Правильный ответ"
-                    value={answer.isCorrectAnswer}
-                    onClick={() => {
-                      setAnswers((prevAnswers) =>
-                        prevAnswers.map((answer, prevAnswerIndex) =>
-                          prevAnswerIndex === index
-                            ? {
-                                ...answer,
-                                isCorrectAnswer: !answer.isCorrectAnswer,
-                              }
-                            : { ...answer, isCorrectAnswer: false }
-                        )
-                      );
-                    }}
-                  />
-                </div>
+                      <CustomCheckbox
+                        label="Правильный ответ"
+                        value={answer.isCorrectAnswer}
+                        onClick={() => {
+                          setAnswers((prevAnswers) =>
+                            prevAnswers.map((answer, prevAnswerIndex) =>
+                              prevAnswerIndex === index
+                                ? {
+                                    ...answer,
+                                    isCorrectAnswer: !answer.isCorrectAnswer,
+                                  }
+                                : { ...answer, isCorrectAnswer: false }
+                            )
+                          );
+                        }}
+                      />
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            </div>
+          )}
 
-          <div className={styles["input-container"]}>
+          <div className="flex flex-col gap-3">
             <CustomInput
               label="Ответ"
               placeholder="Введите вариант ответа..."
@@ -306,16 +302,16 @@ function TaskDetails() {
               onClick={handleNewAnswerToggle}
             />
           </div>
-          <div className={styles["button-container"]}>
+          <div className="mt-8">
             <Button
               color="primary"
               onClick={handleAddAnswer}
-              disabled={answer.text.trim().length === 0}
+              isDisabled={answer.text.trim().length === 0}
             >
               Добавить вариант ответа
             </Button>
           </div>
-        </>
+        </div>
       )}
     </Resource>
   );

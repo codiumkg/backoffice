@@ -34,7 +34,7 @@ export default function ContentCard({ topicContent }: Props) {
       {...listeners}
       ref={setNodeRef}
     >
-      <RiDraggable style={{ fontSize: "20px" }} />
+      <RiDraggable className="flex-shrink-0 text-2xl" />
       <Typography variant="h1" weight="600">
         {topicContent.orderNumber}
       </Typography>
