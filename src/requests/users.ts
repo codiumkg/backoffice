@@ -1,10 +1,22 @@
 import { API_STUDENT_PROGRESS, API_USERS } from "@/constants/apiConstants";
-import { ICreateUser, IUser, IUserProgress } from "@/interfaces/user";
+import {
+  ICreateUser,
+  IUser,
+  IUserFilters,
+  IUserProgress,
+} from "@/interfaces/user";
 import { request } from "./request";
-import { Role } from "@/interfaces/auth";
 
-export async function getUsers(params?: { role?: Role }): Promise<IUser[]> {
-  return request.get(API_USERS, { params }).then(({ data }) => data);
+export async function getUsers(filters?: IUserFilters): Promise<IUser[]> {
+  return request
+    .get(API_USERS, {
+      params: {
+        ...(filters?.groupId && { groupId: filters.groupId }),
+        ...(filters?.role && { role: filters.role }),
+        ...(filters?.search && { search: filters.search }),
+      },
+    })
+    .then(({ data }) => data);
 }
 
 export async function getUserDetails(id: number): Promise<IUser> {

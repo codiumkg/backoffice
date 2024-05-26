@@ -1,7 +1,7 @@
 import { API_STUDENT_PROGRESS } from "@/constants/apiConstants";
 import { QUERY_KEYS } from "@/constants/queryKeys";
 import { Role } from "@/interfaces/auth";
-import { ICreateUser, IUser } from "@/interfaces/user";
+import { ICreateUser, IUser, IUserFilters } from "@/interfaces/user";
 import {
   createUser,
   deleteUser,
@@ -47,10 +47,15 @@ export const useUserDeletion = ({ onSuccess, onError }: MutationQuery) => {
   };
 };
 
-export const useUsersQuery = (params?: { role: Role }) => {
+export const useUsersQuery = (filters?: IUserFilters) => {
   const { data, isLoading } = useQuery({
-    queryFn: () => getUsers({ role: params?.role }),
-    queryKey: [QUERY_KEYS.USERS, params?.role],
+    queryFn: () => getUsers(filters),
+    queryKey: [
+      QUERY_KEYS.USERS,
+      filters?.role,
+      filters?.groupId,
+      filters?.search,
+    ],
   });
 
   return {

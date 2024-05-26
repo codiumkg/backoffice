@@ -1,7 +1,7 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import { ROUTES } from "@/constants/routes";
 import { useSectionsQuery } from "@/queries/sections";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Table,
   TableHeader,
@@ -14,7 +14,11 @@ import {
 import { columns, renderCell } from "./columns";
 
 function SectionsPage() {
-  const { data: sections, isPending } = useSectionsQuery({});
+  const [searchParams] = useSearchParams();
+
+  const { data: sections, isPending } = useSectionsQuery({
+    filters: { search: searchParams.get("search") },
+  });
 
   const navigate = useNavigate();
 
@@ -23,6 +27,7 @@ function SectionsPage() {
       title="Разделы"
       onCreateClick={() => navigate(ROUTES.SECTION)}
       itemsLength={sections?.length}
+      withSearch
     >
       {isPending && (
         <div className="p-40">

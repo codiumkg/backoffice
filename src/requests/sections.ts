@@ -1,12 +1,19 @@
-import { ISection, ISectionCreate } from "../interfaces/section";
+import {
+  ISection,
+  ISectionCreate,
+  ISectionFilters,
+} from "../interfaces/section";
 import { API_SECTIONS } from "../constants/apiConstants";
 import { request } from "./request";
 
-export async function getSections(search?: string): Promise<ISection[]> {
+export async function getSections(
+  filters?: ISectionFilters
+): Promise<ISection[]> {
   return request
     .get(API_SECTIONS, {
       params: {
-        title: search,
+        ...(filters?.search && { search: filters.search }),
+        ...(filters?.subjectId && { subjectId: filters.subjectId }),
       },
     })
     .then(({ data }) => data);

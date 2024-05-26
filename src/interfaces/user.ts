@@ -44,3 +44,9 @@ export interface IUserProgress {
   completedLectures: ILecture[];
   completedTasks: ITask[];
 }
+
+export interface IUserFilters {
+  search?: string | null;
+  groupId?: number | null;
+  role?: Role | null;
+}

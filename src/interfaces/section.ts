@@ -13,3 +13,8 @@ export interface ISectionCreate {
   title: string;
   subjectId: number;
 }
+
+export interface ISectionFilters {
+  search?: string | null;
+  subjectId?: number | null;
+}

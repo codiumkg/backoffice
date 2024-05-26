@@ -1,5 +1,9 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { ISection, ISectionCreate } from "@/interfaces/section";
+import {
+  ISection,
+  ISectionCreate,
+  ISectionFilters,
+} from "@/interfaces/section";
 import {
   createSection,
   getSectionDetails,
@@ -10,14 +14,14 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 interface QueryParams {
-  params?: any;
+  filters?: ISectionFilters;
   enabled?: boolean;
 }
 
-export const useSectionsQuery = ({ params, enabled }: QueryParams) => {
+export const useSectionsQuery = ({ filters, enabled }: QueryParams) => {
   const { data, isPending, refetch } = useQuery({
-    queryFn: () => getSections(params?.search || ""),
-    queryKey: [QUERY_KEYS.SECTIONS, params?.title],
+    queryFn: () => getSections(filters),
+    queryKey: [QUERY_KEYS.SECTIONS, filters?.search, filters?.subjectId],
     refetchOnWindowFocus: false,
     enabled,
   });
