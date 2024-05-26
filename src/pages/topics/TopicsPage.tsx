@@ -17,7 +17,10 @@ function TopicsPage() {
   const [searchParams] = useSearchParams();
 
   const { data: topics, isLoading } = useTopicsQuery({
-    filters: { search: searchParams.get("search") },
+    filters: {
+      search: searchParams.get("search"),
+      sectionId: Number(searchParams.get("sectionId")),
+    },
   });
 
   const navigate = useNavigate();

@@ -7,6 +7,7 @@ function GroupsPage() {
 
   const { data, isLoading } = useGroupsQuery({
     search: searchParams.get("search"),
+    teacherId: Number(searchParams.get("teacherId")),
   });
 
   return <GroupsList groups={data || []} isLoading={isLoading} />;

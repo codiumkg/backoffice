@@ -17,7 +17,10 @@ function SectionsPage() {
   const [searchParams] = useSearchParams();
 
   const { data: sections, isPending } = useSectionsQuery({
-    filters: { search: searchParams.get("search") },
+    filters: {
+      search: searchParams.get("search"),
+      subjectId: Number(searchParams.get("subjectId")),
+    },
   });
 
   const navigate = useNavigate();

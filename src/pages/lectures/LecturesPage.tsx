@@ -7,10 +7,11 @@ import LecturesTable from "./LecturesTable";
 import { Spinner } from "@nextui-org/react";
 
 function LecturesPage() {
-  const [seachParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
 
   const { data: lectures, isLoading } = useLecturesQuery({
-    search: seachParams.get("search"),
+    search: searchParams.get("search"),
+    topicId: Number(searchParams.get("topicId")),
   });
 
   const navigate = useNavigate();

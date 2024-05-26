@@ -11,6 +11,7 @@ function TasksPage() {
 
   const { data: tasks, isPending } = useTasksQuery({
     search: searchParams.get("search"),
+    topicId: Number(searchParams.get("topicId")),
   });
 
   const navigate = useNavigate();
