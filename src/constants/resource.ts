@@ -38,19 +38,19 @@ export const RESOURCES: IResource[] = [
     id: "topics",
     title: "Топики",
     href: "/topics",
-    roles: [Role.ADMIN, Role.MANAGER],
+    roles: [Role.ADMIN, Role.MANAGER, Role.TEACHER],
   },
   {
     id: "lectures",
     title: "Лекции",
     href: "/lectures",
-    roles: [Role.ADMIN, Role.MANAGER],
+    roles: [Role.ADMIN, Role.MANAGER, Role.TEACHER],
   },
   {
     id: "tasks",
     title: "Задачи",
     href: "/tasks",
-    roles: [Role.ADMIN, Role.MANAGER],
+    roles: [Role.ADMIN, Role.MANAGER, Role.TEACHER],
   },
   {
     id: "methodologies",
