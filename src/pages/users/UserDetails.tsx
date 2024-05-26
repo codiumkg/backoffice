@@ -188,8 +188,6 @@ function UserDetails() {
     }
   }, [groups, userForm, existingUser, id]);
 
-  console.log(userForm.getValues());
-
   return (
     <Resource
       title={existingUser?.username || "Пользователь"}

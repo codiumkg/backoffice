@@ -37,7 +37,7 @@ export const useSectionDetailsQuery = (
   id: number,
   { enabled }: QueryParams
 ) => {
-  const { data, isPending, isSuccess } = useQuery({
+  const { data, isLoading, isSuccess } = useQuery({
     queryFn: () => getSectionDetails(id),
     queryKey: [QUERY_KEYS.SECTIONS, id],
     enabled,
@@ -45,7 +45,7 @@ export const useSectionDetailsQuery = (
 
   return {
     data,
-    isPending,
+    isLoading,
     isSuccess,
   };
 };

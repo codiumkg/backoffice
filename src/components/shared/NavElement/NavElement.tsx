@@ -1,7 +1,6 @@
 import Typography from "../Typography/Typography";
 import { CiCirclePlus } from "react-icons/ci";
 import cn from "classnames";
-import styles from "./NavElement.module.scss";
 import { useLocation, useNavigate } from "react-router-dom";
 import React from "react";
 
@@ -19,8 +18,8 @@ export default function NavElement({ title, href, onCreateClick }: Props) {
   return (
     <div
       className={cn(
-        styles.container,
-        location.pathname === `/office${href}` ? styles.active : ""
+        "flex justify-between items-center w-full h-[42px] rounded-2xl border border-background hover:border-secondary duration-300 py-2 px-4 cursor-pointer",
+        location.pathname === `/office${href}` ? "bg-secondary" : ""
       )}
       onClick={() => navigate(`/office${href}`)}
     >

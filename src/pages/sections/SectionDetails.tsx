@@ -34,15 +34,7 @@ function SectionDetails() {
 
   const navigate = useNavigate();
 
-  // const [search, setSearch] = useState("");
-
-  const {
-    data: subjects,
-    isFetching,
-    // refetch,
-  } = useSubjectsQuery({
-    // params: { search },
-  });
+  const { data: subjects, isFetching } = useSubjectsQuery({});
 
   const [activeValue, setActiveValue] = useState<IOption>({
     label: subjects?.[0].title,
@@ -60,7 +52,7 @@ function SectionDetails() {
 
   const {
     data: existingSection,
-    isPending: isSectionLoading,
+    isLoading: isSectionLoading,
     isSuccess,
   } = useSectionDetailsQuery(+id!, { enabled: !!id });
 

@@ -9,7 +9,7 @@ import { Icons } from "../Icons";
 import Typography from "../Typography/Typography";
 import { useUserData } from "@/queries/userdata";
 import useAuth from "@/hooks/useAuth";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
 import { ROLES_DISPLAY } from "@/constants/common";
 
@@ -27,9 +27,11 @@ export default function Header() {
     <div className="w-full h-16">
       <div className="w-full h-full flex justify-between items-center bg-bgSecondary p-8">
         <div>
-          <Typography variant="h2" color="var(--text-color)">
-            Codium Office
-          </Typography>
+          <Link to={ROUTES.OFFICE}>
+            <Typography variant="h2" color="var(--text-color)">
+              Codium Office
+            </Typography>
+          </Link>
         </div>
 
         {isLoading ? (
