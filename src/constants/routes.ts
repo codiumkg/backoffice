@@ -21,6 +21,8 @@ export const ROUTES = {
   TASK_RESULTS: "/office/task-results",
   MY_GROUPS: "/office/my-groups",
   GROUP_STUDENTS: (groupId: number) => `/office/my-groups/${groupId}/students`,
+  STUDENT_TASK_ANSWERS: (studentId: number) =>
+    `/office/students/${studentId}/task-answers`,
   METHODOLOGIES: "/office/methodologies",
   METHODOLOGY: "/office/methodology",
   PRESENTATIONS: "/office/presentations",

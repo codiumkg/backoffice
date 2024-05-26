@@ -29,7 +29,7 @@ export interface ITaskCreate {
 export interface ITaskUserAnswer {
   id: number;
   text: string;
-  answer: IAnswer;
+  answer?: IAnswer;
   user: IUser;
   task: ITask;
   createdAt: string;

@@ -11,8 +11,9 @@ import {
 import { IUser } from "@/interfaces/user";
 import StudentProgressModal from "./StudentProgressModal";
 import { Key, useState } from "react";
-import { useTaskUserAnswers } from "@/queries/tasks";
 import { Icons } from "@/components/shared/Icons";
+import { useNavigate } from "react-router-dom";
+import { ROUTES } from "@/constants/routes";
 
 interface Props {
   students: IUser[];
@@ -29,16 +30,17 @@ const columns = [
 export default function StudentsTable({ students }: Props) {
   const { isOpen, onOpenChange, onOpen } = useDisclosure();
 
-  const [selectedStudent, setSelectedStudent] = useState<IUser | undefined>();
+  const navigate = useNavigate();
 
-  const { userAnswers, isUserAnswersLoading } = useTaskUserAnswers(
-    selectedStudent?.id,
-    !!selectedStudent
-  );
+  const [selectedStudent, setSelectedStudent] = useState<IUser | undefined>();
 
   const handleShowProgress = (student: IUser) => {
     setSelectedStudent(student);
     onOpen();
+  };
+
+  const handleStudentTaskAnswers = (student: IUser) => {
+    navigate(ROUTES.STUDENT_TASK_ANSWERS(student.id));
   };
 
   return (
@@ -58,6 +60,7 @@ export default function StudentsTable({ students }: Props) {
                     user={student}
                     columnKey={columnKey}
                     onShowProgress={() => handleShowProgress(student)}
+                    onShowStudentTasks={() => handleStudentTaskAnswers(student)}
                   />
                 </TableCell>
               )}
@@ -81,10 +84,12 @@ function StudentRow({
   user,
   columnKey,
   onShowProgress,
+  onShowStudentTasks,
 }: {
   user: IUser;
   columnKey: Key;
   onShowProgress: () => void;
+  onShowStudentTasks: () => void;
 }) {
   const cellValue = user[columnKey as keyof IUser];
 
@@ -103,7 +108,10 @@ function StudentRow({
           </Tooltip>
 
           <Tooltip content="Результаты задач студента">
-            <span className="text-xl cursor-pointer">
+            <span
+              className="text-xl cursor-pointer"
+              onClick={onShowStudentTasks}
+            >
               <Icons.TASKS_LIST />
             </span>
           </Tooltip>
