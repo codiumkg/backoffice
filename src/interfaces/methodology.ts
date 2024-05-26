@@ -10,3 +10,7 @@ export interface IMethodologyCreate {
   filePath: string;
   topicId: number;
 }
+
+export interface IMethodologyFilters {
+  topicId?: number | null;
+}

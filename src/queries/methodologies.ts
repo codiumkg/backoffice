@@ -1,5 +1,8 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { IMethodologyCreate } from "@/interfaces/methodology";
+import {
+  IMethodologyCreate,
+  IMethodologyFilters,
+} from "@/interfaces/methodology";
 import {
   createMethodology,
   deleteMethodology,
@@ -9,10 +12,10 @@ import {
 } from "@/requests/methodologies";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const useMethodologies = () => {
+export const useMethodologies = (filters?: IMethodologyFilters) => {
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEYS.METHODOLOGIES],
-    queryFn: getMethodologies,
+    queryKey: [QUERY_KEYS.METHODOLOGIES, filters?.topicId],
+    queryFn: () => getMethodologies(filters),
   });
 
   return {

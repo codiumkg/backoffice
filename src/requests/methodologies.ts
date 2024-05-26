@@ -1,9 +1,21 @@
 import { API_METHODOLOGIES } from "@/constants/apiConstants";
 import { request } from "./request";
-import { IMethodology, IMethodologyCreate } from "@/interfaces/methodology";
+import {
+  IMethodology,
+  IMethodologyCreate,
+  IMethodologyFilters,
+} from "@/interfaces/methodology";
 
-export async function getMethodologies(): Promise<IMethodology[]> {
-  return request.get(API_METHODOLOGIES).then(({ data }) => data);
+export async function getMethodologies(
+  filters?: IMethodologyFilters
+): Promise<IMethodology[]> {
+  return request
+    .get(API_METHODOLOGIES, {
+      params: {
+        ...(filters?.topicId && { topicId: filters.topicId }),
+      },
+    })
+    .then(({ data }) => data);
 }
 
 export async function getMethodologyDetails(id: number): Promise<IMethodology> {

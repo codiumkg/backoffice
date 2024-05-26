@@ -1,5 +1,8 @@
 import { QUERY_KEYS } from "@/constants/queryKeys";
-import { IPresentationCreate } from "@/interfaces/presentation";
+import {
+  IPresentationCreate,
+  IPresentationFilters,
+} from "@/interfaces/presentation";
 import {
   createPresentation,
   deletePresentation,
@@ -9,10 +12,10 @@ import {
 } from "@/requests/presentations";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
-export const usePresentations = () => {
+export const usePresentations = (filters?: IPresentationFilters) => {
   const { data, isLoading } = useQuery({
-    queryKey: [QUERY_KEYS.PRESENTATIONS],
-    queryFn: getPresentations,
+    queryKey: [QUERY_KEYS.PRESENTATIONS, filters?.topicId],
+    queryFn: () => getPresentations(filters),
   });
 
   return {

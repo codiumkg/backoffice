@@ -10,3 +10,7 @@ export interface IPresentationCreate {
   filePath: string;
   topicId: number;
 }
+
+export interface IPresentationFilters {
+  topicId?: number | null;
+}

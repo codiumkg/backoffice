@@ -1,9 +1,21 @@
 import { API_PRESENTATIONS } from "@/constants/apiConstants";
 import { request } from "./request";
-import { IPresentation, IPresentationCreate } from "@/interfaces/presentation";
+import {
+  IPresentation,
+  IPresentationCreate,
+  IPresentationFilters,
+} from "@/interfaces/presentation";
 
-export async function getPresentations(): Promise<IPresentation[]> {
-  return request.get(API_PRESENTATIONS).then(({ data }) => data);
+export async function getPresentations(
+  filters?: IPresentationFilters
+): Promise<IPresentation[]> {
+  return request
+    .get(API_PRESENTATIONS, {
+      params: {
+        ...(filters?.topicId && { topicId: filters.topicId }),
+      },
+    })
+    .then(({ data }) => data);
 }
 
 export async function getPresentationDetails(

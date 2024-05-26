@@ -1,13 +1,17 @@
 import ResourceList from "@/components/shared/ResourceList/ResourceList";
 import PresentationsTable from "./components/PresentationsTable";
 import { usePresentations } from "@/queries/presentations";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ROUTES } from "@/constants/routes";
 
 function PresentationsPage() {
   const navigate = useNavigate();
 
-  const { presentations, isPresentationsLoading } = usePresentations();
+  const [searchParams] = useSearchParams();
+
+  const { presentations, isPresentationsLoading } = usePresentations({
+    topicId: Number(searchParams.get("topicId")),
+  });
 
   return (
     <ResourceList
