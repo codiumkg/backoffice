@@ -108,7 +108,7 @@ function GroupDetails() {
     value: subjects?.[0]?.id.toString(),
   });
 
-  const [activeGroup, setActiveGroup] = useState<IOption>({
+  const [activeTeacher, setActiveTeacher] = useState<IOption>({
     label: teachers?.[0]?.username,
     value: teachers?.[0]?.id.toString(),
   });
@@ -140,6 +140,7 @@ function GroupDetails() {
   const isValid = Object.values(groupForm.formState.errors).length === 0;
 
   const onSubmit: SubmitHandler<GroupForm> = (data: IGroupCreate) => {
+    console.log(data);
     mutate(data);
   };
 
@@ -148,12 +149,13 @@ function GroupDetails() {
       groupForm.reset({
         title: existingGroup.title,
         subjectId: existingGroup.subject.id,
+        teacherId: existingGroup.teacher.id,
       });
       setActiveValue({
         label: existingGroup.subject.title,
         value: existingGroup.subject.id.toString(),
       });
-      setActiveGroup({
+      setActiveTeacher({
         label: existingGroup.teacher.username,
         value: existingGroup.teacher.id.toString(),
       });
@@ -167,13 +169,17 @@ function GroupDetails() {
         value: subjects?.[0]?.id.toString(),
       });
 
-      setActiveGroup({
+      setActiveTeacher({
         label: teachers?.[0]?.username,
         value: teachers?.[0]?.id.toString(),
       });
 
       if (subjects) {
         groupForm.setValue("subjectId", subjects[0]?.id);
+      }
+
+      if (teachers) {
+        groupForm.setValue("teacherId", teachers[0]?.id);
       }
     }
   }, [subjects, groupForm, id, existingGroup, teachers]);
@@ -226,9 +232,9 @@ function GroupDetails() {
 
       <CustomSelect
         options={teacherOptions}
-        activeValue={activeGroup}
+        activeValue={activeTeacher}
         onChange={(e) => {
-          setActiveGroup({
+          setActiveTeacher({
             label: teacherOptions?.find(
               (option) => option.value === e.target.value
             )?.label,
