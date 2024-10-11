@@ -4,6 +4,10 @@ FROM node:20.17.0-alpine AS base
 
 WORKDIR /backoffice
 
+ARG VITE_BASE_URL
+
+ENV VITE_BASE_URL=${VITE_BASE_URL}
+
 COPY package*.json /
 
 RUN npm install
