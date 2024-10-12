@@ -1,6 +1,6 @@
 # Base
 
-FROM node:20.17.0-alpine AS base
+FROM node:20.18.0-slim AS base
 
 WORKDIR /backoffice
 
@@ -8,7 +8,7 @@ ARG VITE_BASE_URL
 
 ENV VITE_BASE_URL=${VITE_BASE_URL}
 
-COPY package*.json /
+COPY package*.json /backoffice/
 
 RUN npm install
 
@@ -30,10 +30,10 @@ FROM base AS production
 
 ENV NODE_ENV=production
 
-WORKDIR /backoffice
+RUN npm install -g serve
 
 RUN npm run build
 
 EXPOSE 4000
 
-CMD ["npm", "run", "preview"]
+CMD ["serve", "-s", "dist", "-p", "4000"]
