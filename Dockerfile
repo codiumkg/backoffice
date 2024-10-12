@@ -10,13 +10,15 @@ ENV VITE_BASE_URL=${VITE_BASE_URL}
 
 COPY package*.json /
 
-RUN npm ci
+RUN npm install
 
 COPY . .
 
 # Development
 
 FROM base AS dev 
+
+ENV NODE_ENV=development
 
 EXPOSE 4000
 
@@ -25,6 +27,8 @@ CMD ["npm", "run", "dev"]
 # Production
 
 FROM base AS production
+
+ENV NODE_ENV=production
 
 WORKDIR /backoffice
 
