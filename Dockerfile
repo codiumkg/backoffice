@@ -10,7 +10,7 @@ ENV VITE_BASE_URL=${VITE_BASE_URL}
 
 COPY package*.json /
 
-RUN npm install
+RUN npm ci
 
 COPY . .
 
