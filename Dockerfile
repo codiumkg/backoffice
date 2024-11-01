@@ -23,9 +23,9 @@ FROM base AS production
 
 ENV NODE_ENV=production
 
-RUN npm install -g serve
+RUN pnpm install -g serve
 
-RUN npm run build
+RUN pnpm run build
 
 EXPOSE 4000
 
