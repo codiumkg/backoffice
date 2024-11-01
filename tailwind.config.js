@@ -15,8 +15,8 @@ export default {
         bgPrimary: "var(--bg-primary-color)",
         bgSecondary: "var(--bg-secondary-color)",
         primary: {
-          foreground: "var(--text-color-dark)",
-          DEFAULT: "var(--primary-color)"
+          DEFAULT: "#30cfc7",
+          foreground: "#ffffff"
         },
         secondary: {
           DEFAULT: "var(--secondary-color)",
@@ -30,7 +30,7 @@ export default {
   darkMode: "class",
   plugins: [nextui({
     addCommonColors: true,
-    defaultTheme: "codium-dark",
+    defaultTheme: "codium-light",
     themes: {
       "codium-dark": {
         extend: "dark",
@@ -82,6 +82,42 @@ export default {
             100: '#4e2300',
             50: '#1f0a00',
           }
+        }
+      
+      },
+      "codium-light": {
+        extend: "light",
+        layout: {},
+        colors: {
+          content1: "#ffffff",
+          content2: "#ffffff",
+          content3: "#ffffff",
+          content4: "#ffffff",
+          default: {
+            DEFAULT: "#f8f8f8",
+            100: "#f9f9f9",
+            200: "#ffffff"
+          },
+          background: {
+            DEFAULT: "#f2f2f2",
+            900: '#f3f3f3',
+            800: '#f5f5f5',
+            700: '#f8f8f8',
+            600: '#f9f9f9',
+            500: '#d9d9d9',
+            400: '#d5d5d5',
+            300: '#d2d2d2',
+            200: '#e7e7e7',
+            100: '#e5e5e5',
+            50: '#e1e1e1',
+
+          },
+          focus: "#ffc38d",
+          foreground: "#404040",
+          bgSecondary: {
+            DEFAULT: "#ffffff",
+          },
+          highlight: "#e5e5e5",
         }
       
       },
