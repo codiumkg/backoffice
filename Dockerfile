@@ -2,27 +2,20 @@
 
 FROM node:20.18.0-slim AS base
 
+RUN corepack enable
+RUN corepack prepare pnpm@latest --activate
+
 WORKDIR /backoffice
 
 ARG VITE_BASE_URL
 
 ENV VITE_BASE_URL=${VITE_BASE_URL}
 
-COPY package*.json /backoffice/
+COPY package.json .npmrc pnpm-lock.yaml /backoffice/
 
-RUN npm install
+RUN pnpm install --frozen-lockfile
 
 COPY . .
-
-# Development
-
-FROM base AS dev 
-
-ENV NODE_ENV=development
-
-EXPOSE 4000
-
-CMD ["npm", "run", "dev"]
 
 # Production
 

@@ -24,8 +24,7 @@ jobs:
       - name: Build docker image
         run: |
           docker build -t ${{ secrets.DOCKER_USERNAME }}/backoffice \
-                        --build-arg VITE_BASE_URL=${{ secrets.VITE_BASE_URL }} \
-                        --target=production .
+                        --build-arg VITE_BASE_URL=${{ secrets.VITE_BASE_URL }} .
       - name: Push docker image to Docker Hub
         run: docker push ${{ secrets.DOCKER_USERNAME }}/backoffice:latest
 
@@ -47,4 +46,4 @@ jobs:
             docker stop backoffice;
             docker rm backoffice;
             docker pull akmatoff/backoffice:latest;
-            docker run --restart always -d -p 4000:4000 --name backoffice akmatoff/backoffice:latest  
+            docker run --restart always -d -p 4000:4000 --name backoffice akmatoff/backoffice:latest
