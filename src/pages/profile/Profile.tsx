@@ -60,6 +60,7 @@ export default function ProfilePage() {
             name="currentPassword"
             label="Текущий пароль"
             placeholder="Введите текущий пароль..."
+            type="password"
             value={passwordData.currentPassword}
             onChange={(e) =>
               setPasswordData({
@@ -74,6 +75,7 @@ export default function ProfilePage() {
             name="newPassword"
             label="Новый пароль"
             placeholder="Введите новый пароль..."
+            type="password"
             value={passwordData.newPassword}
             onChange={(e) =>
               setPasswordData({
