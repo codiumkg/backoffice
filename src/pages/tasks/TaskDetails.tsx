@@ -265,7 +265,7 @@ function TaskDetails() {
                         }}
                       />
 
-                      <CustomCheckbox
+                      {/* <CustomCheckbox
                         label="Правильный ответ"
                         value={answer.isCorrectAnswer}
                         onClick={() => {
@@ -280,7 +280,27 @@ function TaskDetails() {
                             )
                           );
                         }}
-                      />
+                      /> */}
+
+                      <Checkbox
+                        aria-label="Правильный ответ"
+                        color="primary"
+                        isSelected={answer.isCorrectAnswer}
+                        onValueChange={() => {
+                          setAnswers((prevAnswers) =>
+                            prevAnswers.map((answer, prevAnswerIndex) =>
+                              prevAnswerIndex === index
+                                ? {
+                                    ...answer,
+                                    isCorrectAnswer: !answer.isCorrectAnswer,
+                                  }
+                                : { ...answer, isCorrectAnswer: false }
+                            )
+                          );
+                        }}
+                      >
+                        Правильный ответ
+                      </Checkbox>
                     </div>
                   </div>
                 ))}
@@ -296,11 +316,17 @@ function TaskDetails() {
               value={answer.text}
               onChange={(e) => setAnswer({ ...answer, text: e.target.value })}
             />
-            <CustomCheckbox
+            <Checkbox
+              isSelected={answer.isCorrectAnswer}
+              onValueChange={handleNewAnswerToggle}
+            >
+              Правильный ответ
+            </Checkbox>
+            {/* <CustomCheckbox
               label="Правильный ответ"
               value={answer.isCorrectAnswer}
               onClick={handleNewAnswerToggle}
-            />
+            /> */}
           </div>
           <div className="mt-8">
             <Button

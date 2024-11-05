@@ -90,7 +90,7 @@ export default {
           content3: "#ffffff",
           content4: "#ffffff",
           default: {
-            DEFAULT: "#f8f8f8",
+            DEFAULT: "#ffffff",
             100: "#f9f9f9",
             200: "#ffffff"
           },
