@@ -60,8 +60,8 @@ function LectureDetails() {
   });
 
   const [activeValue, setActiveValue] = useState<IOption>({
-    label: topics?.[0].title,
-    value: topics?.[0].id.toString(),
+    label: topics?.[0]?.title,
+    value: topics?.[0]?.id.toString(),
   });
 
   const topicOptions = useMemo(
@@ -145,8 +145,8 @@ function LectureDetails() {
   useEffect(() => {
     if (!existingLecture || !id) {
       setActiveValue({
-        label: topics?.[0].title,
-        value: topics?.[0].id.toString(),
+        label: topics?.[0]?.title,
+        value: topics?.[0]?.id.toString(),
       });
     }
 

@@ -62,8 +62,8 @@ function TopicDetails() {
   >(topicContent || []);
 
   const [activeValue, setActiveValue] = useState<IOption>({
-    label: sections?.[0].title,
-    value: sections?.[0].id.toString(),
+    label: sections?.[0]?.title,
+    value: sections?.[0]?.id.toString(),
   });
 
   const topicContentIds = useMemo(
@@ -170,13 +170,13 @@ function TopicDetails() {
   useEffect(() => {
     if (!existingTopic || !id) {
       setActiveValue({
-        label: sections?.[0].title,
-        value: sections?.[0].id.toString(),
+        label: sections?.[0]?.title,
+        value: sections?.[0]?.id.toString(),
       });
     }
 
     if (sections) {
-      topicForm.setValue("sectionId", sections[0].id);
+      topicForm.setValue("sectionId", sections[0]?.id);
     }
   }, [sections, topicForm, existingTopic, id]);
 

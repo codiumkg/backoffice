@@ -37,8 +37,8 @@ function SectionDetails() {
   const { data: subjects, isFetching } = useSubjectsQuery({});
 
   const [activeValue, setActiveValue] = useState<IOption>({
-    label: subjects?.[0].title,
-    value: subjects?.[0].id.toString(),
+    label: subjects?.[0]?.title,
+    value: subjects?.[0]?.id.toString(),
   });
 
   const subjectOptions = useMemo(
@@ -122,13 +122,13 @@ function SectionDetails() {
   useEffect(() => {
     if (!existingSection || !id) {
       setActiveValue({
-        label: subjects?.[0].title,
-        value: subjects?.[0].id.toString(),
+        label: subjects?.[0]?.title,
+        value: subjects?.[0]?.id.toString(),
       });
     }
 
     if (subjects) {
-      sectionForm.setValue("subjectId", subjects[0].id);
+      sectionForm.setValue("subjectId", subjects[0]?.id);
     }
   }, [subjects, sectionForm, existingSection, id]);
 

@@ -75,8 +75,8 @@ export default function MethodologyDetails() {
   const { data: topics, isLoading: isTopicsLoading } = useTopicsQuery({});
 
   const [activeTopic, setActiveTopic] = useState<IOption>({
-    label: topics?.[0].title,
-    value: topics?.[0].id.toString(),
+    label: topics?.[0]?.title,
+    value: topics?.[0]?.id.toString(),
   });
 
   const topicOptions = useMemo(
@@ -121,8 +121,8 @@ export default function MethodologyDetails() {
   useEffect(() => {
     if (!methodology || !id) {
       setActiveTopic({
-        label: topics?.[0].title,
-        value: topics?.[0].id.toString(),
+        label: topics?.[0]?.title,
+        value: topics?.[0]?.id.toString(),
       });
     }
 

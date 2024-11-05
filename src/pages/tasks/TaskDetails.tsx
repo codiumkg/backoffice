@@ -54,8 +54,8 @@ function TaskDetails() {
   const { data: topics, isLoading: isTopicsLoading } = useTopicsQuery({});
 
   const [activeValue, setActiveValue] = useState<IOption>({
-    label: topics?.[0].title,
-    value: topics?.[0].id.toString(),
+    label: topics?.[0]?.title,
+    value: topics?.[0]?.id.toString(),
   });
 
   const topicOptions = useMemo(
@@ -150,13 +150,13 @@ function TaskDetails() {
   useEffect(() => {
     if (!existingTask || !id) {
       setActiveValue({
-        label: topics?.[0].title,
-        value: topics?.[0].id.toString(),
+        label: topics?.[0]?.title,
+        value: topics?.[0]?.id.toString(),
       });
     }
 
     if (topics) {
-      taskForm.setValue("topicId", topics[0].id);
+      taskForm.setValue("topicId", topics[0]?.id);
     }
   }, [topics, taskForm, existingTask, id]);
 

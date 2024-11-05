@@ -77,8 +77,8 @@ export default function PresentationDetails() {
   const { data: topics, isLoading: isTopicsLoading } = useTopicsQuery({});
 
   const [activeTopic, setActiveTopic] = useState<IOption>({
-    label: topics?.[0].title,
-    value: topics?.[0].id.toString(),
+    label: topics?.[0]?.title,
+    value: topics?.[0]?.id.toString(),
   });
 
   const topicOptions = useMemo(
@@ -123,8 +123,8 @@ export default function PresentationDetails() {
   useEffect(() => {
     if (!presentation || !id) {
       setActiveTopic({
-        label: topics?.[0].title,
-        value: topics?.[0].id.toString(),
+        label: topics?.[0]?.title,
+        value: topics?.[0]?.id.toString(),
       });
     }
 
