@@ -18,9 +18,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "/src"),
     },
   },
-  build: {
-    rollupOptions: {
-      external: ["highlight.js/lib/languages/python", "highlight.js/scss/atom-one-dark.scss"]
-    }
-  }
 });
