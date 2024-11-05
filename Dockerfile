@@ -27,11 +27,6 @@ FROM base AS build
 # Set environment to production
 ENV NODE_ENV=production
 
-# Install only production dependencies
-RUN pnpm install --frozen-lockfile --prod
-
-RUN pnpm install typescript
-
 # Build the application
 RUN pnpm run build
 
