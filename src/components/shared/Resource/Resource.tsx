@@ -39,7 +39,7 @@ export default function Resource({
 
   return (
     <div className={styles.wrapper}>
-      <div className={styles.header}>
+      <div>
         <Typography>{title}</Typography>
 
         {!isTeacher && (

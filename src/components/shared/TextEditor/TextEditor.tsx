@@ -8,7 +8,7 @@ import Image from "@tiptap/extension-image";
 import Heading from "@tiptap/extension-heading";
 import { common, createLowlight } from "lowlight";
 import { FC, forwardRef, useEffect, useState } from "react";
-
+import cn from "classnames";
 import Typography from "../Typography/Typography";
 import EditorMenu from "./EditorMenu";
 
@@ -108,7 +108,7 @@ const TextEditor: FC<Props> = forwardRef<any, Props>(function InputComponent(
   return (
     <div>
       {label && <Typography variant="body3">{label}</Typography>}
-      <div className={styles.container}>
+      <div className={cn(styles.container, "bg-default")}>
         <EditorMenu
           editor={editor}
           onYoutubeClick={() => setShowYoutubeModal(true)}

@@ -19,7 +19,7 @@ export default function NavElement({ title, href, onCreateClick }: Props) {
     <div
       className={cn(
         "flex justify-between items-center w-full h-[42px] rounded-2xl border border-background hover:border-secondary duration-300 py-2 px-4 cursor-pointer",
-        location.pathname === `/office${href}` ? "bg-primary" : ""
+        location.pathname === `/office${href}` ? "bg-default" : ""
       )}
       onClick={() => navigate(`/office${href}`)}
     >

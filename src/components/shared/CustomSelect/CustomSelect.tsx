@@ -35,17 +35,14 @@ function CustomSelect({
       errorMessage={errorMessage}
       selectedKeys={[activeValue.value || ""]}
       isDisabled={isViewOnly || isTeacher}
+      items={options}
+      classNames={{ selectorIcon: "self-end" }}
     >
-      {options.map((option) => (
-        <SelectItem
-          key={option.value}
-          value={option.value}
-          className="mx-0"
-          classNames={{ wrapper: ["bg-bgPrimary"] }}
-        >
+      {(option) => (
+        <SelectItem key={option.value} value={option.value}>
           {option.label}
         </SelectItem>
-      ))}
+      )}
     </Select>
   );
 }

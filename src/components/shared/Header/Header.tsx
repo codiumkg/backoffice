@@ -25,7 +25,7 @@ export default function Header() {
 
   return (
     <div className="w-full h-16">
-      <div className="w-full h-full flex justify-between items-center bg-bgSecondary p-8">
+      <div className="w-full h-full flex justify-between items-center bg-default p-8">
         <div>
           <Link to={ROUTES.OFFICE}>
             <Typography variant="h2" color="var(--text-color)">

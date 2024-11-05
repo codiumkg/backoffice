@@ -10,8 +10,6 @@ export default {
   theme: {
     extend: {
       colors: {
-        "text-color": "var(--text-color)",
-        "text-color-dark": "var(--text-color-dark)",
         bgPrimary: "var(--bg-primary-color)",
         bgSecondary: "var(--bg-secondary-color)",
         primary: {
@@ -22,8 +20,6 @@ export default {
           DEFAULT: "var(--secondary-color)",
           foreground: "var(--text-color)"
         },
-        danger: "var(--danger-color)",
-        focus: "var(--primary-color)"
       }
     },
   },
@@ -81,7 +77,7 @@ export default {
             200: '#803c00',
             100: '#4e2300',
             50: '#1f0a00',
-          }
+          },
         }
       
       },

@@ -18,7 +18,7 @@ export default function Sidebar() {
   return (
     <div className="flex-[0_0_20%] mt-6 px-4">
       <div>
-        <div className="bg-bgSecondary p-4 rounded-xl">
+        <div className="bg-default p-4 rounded-xl">
           {!isLoading && (
             <Typography weight="600">
               {isTeacher ? "Преподаватель" : "Администрация"}

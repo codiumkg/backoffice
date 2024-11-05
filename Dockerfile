@@ -1,5 +1,7 @@
 # Base Image
 FROM node:20.18.0-slim AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
 
 # Enable Corepack and Prepare PNPM
 RUN corepack enable
