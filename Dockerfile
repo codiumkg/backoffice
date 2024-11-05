@@ -3,7 +3,7 @@
 FROM node:20.18.0-slim AS base
 
 RUN corepack enable
-RUN corepack prepare pnpm@latest --activate
+RUN corepack prepare pnpm@9.12.1 --activate
 
 WORKDIR /backoffice
 
@@ -23,11 +23,9 @@ FROM base AS production
 
 ENV NODE_ENV=production
 
-RUN pnpm setup
+RUN npm install -g serve
 
-RUN pnpm install -g serve
-
-RUN pnpm run build
+RUN npm run build
 
 EXPOSE 4000
 
