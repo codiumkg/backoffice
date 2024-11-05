@@ -9,7 +9,7 @@ import RootRouter from "./routes/RootRouter";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60000,
+      staleTime: 30 * 1000,
       gcTime: 60000 * 10,
       refetchOnWindowFocus: false,
       refetchOnMount: false,

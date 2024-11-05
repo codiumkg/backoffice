@@ -84,8 +84,13 @@ function UserDetails() {
   const { mutate: deleteUser, isPending: isDeleting } = useUserDeletion({
     onSuccess: () => {
       queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.USERS],
+        exact: true,
+      });
+
+      queryClient.invalidateQueries({
         refetchType: "all",
-        queryKey: [QUERY_KEYS.USERS, QUERY_KEYS.GROUP_STUDENTS],
+        queryKey: [QUERY_KEYS.GROUP_STUDENTS],
       });
 
       navigate(ROUTES.USERS);
@@ -101,7 +106,7 @@ function UserDetails() {
     onSuccess: () => {
       queryClient.invalidateQueries({
         refetchType: "all",
-        queryKey: [QUERY_KEYS.USERS, QUERY_KEYS.GROUP_STUDENTS],
+        queryKey: [QUERY_KEYS.USERS],
       });
 
       navigate(ROUTES.USERS);

@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import Typography from "../Typography/Typography";
 import styles from "./Modal.module.scss";
 import { Button } from "@nextui-org/react";
+import cn from "classnames";
 
 interface Props {
   title: string;
@@ -30,7 +31,7 @@ function Modal({
     <div className={styles["modal-wrapper"]}>
       <div className={styles.backdrop} onClick={onClose} />
 
-      <div className={styles.modal}>
+      <div className={cn(styles.modal, "bg-default")}>
         <div className={styles.title}>
           <Typography variant="h2" weight="600">
             {title}

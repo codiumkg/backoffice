@@ -39,7 +39,7 @@ export default function Resource({
 
   return (
     <div className={styles.wrapper}>
-      <div>
+      <div className="flex justify-between items-center bg-default rounded-xl px-4 py-2">
         <Typography>{title}</Typography>
 
         {!isTeacher && (
@@ -79,7 +79,7 @@ export default function Resource({
       <Modal
         show={showConfirmModal}
         title="Удаление"
-        subtitle="Вы уверене что хотите удалить?"
+        subtitle="Вы уверены, что хотите удалить?"
         primaryButtonText="Удалить"
         isLoading={isDeleting}
         onPrimaryClick={onDeleteClick}
