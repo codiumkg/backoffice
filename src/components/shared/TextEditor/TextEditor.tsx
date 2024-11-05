@@ -8,8 +8,6 @@ import Image from "@tiptap/extension-image";
 import Heading from "@tiptap/extension-heading";
 import { common, createLowlight } from "lowlight";
 import { FC, forwardRef, useEffect, useState } from "react";
-import python from "highlight.js/lib/languages/python";
-import "highlight.js/scss/atom-one-dark.scss";
 
 import Typography from "../Typography/Typography";
 import EditorMenu from "./EditorMenu";
@@ -20,7 +18,6 @@ import CustomInput from "../CustomInput/CustomInput";
 import { useNotification } from "@/hooks/useNotification";
 
 const lowlight = createLowlight(common);
-lowlight.register("python", python);
 
 interface Props {
   value: string;
