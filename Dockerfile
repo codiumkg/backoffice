@@ -23,6 +23,8 @@ FROM base AS production
 
 ENV NODE_ENV=production
 
+RUN pnpm setup
+
 RUN pnpm install -g serve
 
 RUN pnpm run build
