@@ -16,6 +16,10 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20.18.0"
+      - name: Setup pnpm and dependencies
+        uses: pnpm/action-setup@v4
+        with:
+          version: "9.12.1"
       - name: Login to docker hub
         uses: docker/login-action@v3
         with:
