@@ -35,6 +35,9 @@ RUN pnpm run build
 # Production Image
 FROM node:20.18.0-slim AS production
 
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+
 # Enable Corepack and Prepare PNPM
 RUN corepack enable
 RUN corepack prepare pnpm@9.12.1 --activate
