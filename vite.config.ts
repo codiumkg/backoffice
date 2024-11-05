@@ -20,7 +20,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      external: "highlight.js/lib/languages/python"
+      external: ["highlight.js/lib/languages/python", "highlight.js/scss/atom-one-dark.scss"]
     }
   }
 });
